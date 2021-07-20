@@ -51,6 +51,8 @@ It is just slightly better than a Windows notepad or a typewriter. Wiki pages ar
 * Low maintenance.
 * You can add whatever feature you want.
 
+![demo](example2.png)
+
 ## Install and Use
 Download WyPyPlus and extract it to a folder (E.g wypy_wiki). This folder should already contain a cgi-bin directory and a "w" directory. Your file will save into the "w" directory.
 
