@@ -9,7 +9,7 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 * A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
 * Wiki pages save to plain text files under the "w" directory
 * Delete a wiki page from disk by saving an empty content.
-* Support common markdown syntax as shown in the DemoPage.
+* Support common markdown syntax as shown in the [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage).
 
 ## Text Formatting
 * WikiNames are replaced with internal links.
@@ -20,9 +20,9 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 * "\n#" inserts H1
 * "\n##" inserts H2
 * "\n###" inserts H3
-* "\n```" inserts <pre><code>
-* "\n``'" inserts </code></pre>
-* "---" creates an <hr> element.
+* "\n\`\`\`" inserts \<pre\>\<code\>
+* "\n\`\`\'" inserts \<\/code\>\<\/pre\>
+* "---" creates an \<hr\> element.
 * Markdown style [link](https://www.markdownguide.org/basic-syntax/#links) and [image tag](https://www.markdownguide.org/basic-syntax/#images-1).
 * All HTML is replaced with its quoted equivalent (i.e. is forbidden).
 
@@ -40,7 +40,7 @@ It is just slightly better than a Windows notepad or a typewriter. Wiki pages ar
 
 **Other Features** 
 * Fast!!
-* Support just enough markdown to be useful. (See DemoPage)
+* Support just enough markdown to be useful. (See [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage))
 * Takes less than one minute to setup.
 * Runs anywhere that has Python.
 * Works perfectly offline.
@@ -62,7 +62,7 @@ python3 -m http.server --bind localhost --cgi 8000 # if you have python 3
 
 Open this url in your browser
 http://127.0.0.1:8000/cgi-bin/wypyplus
-``'
+```
 
 Since the wypyplus file is just a cgi script, you can use any web server to host it. 
 
@@ -81,10 +81,10 @@ The UI should be fairly self-explanatory.
 
 The original wypy code is highly compressed. However, variable names are carefully picked so that the code is still somewhat readable. If you read it through, it is not that hard to change.
 
-For example, if you don't like the CSS, just remove <head><link rel='stylesheet' href='https://unpkg.com/sakura.css/css/sakura.css' type='text/css'></head> to whatever you like.
+For example, if you don't like the CSS, just replace ```<head><link rel='stylesheet' href='https://unpkg.com/sakura.css/css/sakura.css' type='text/css'></head> ```with whatever you like.
 
-To support new syntax, you can add a tuple of (regex_pattern, replace_pattern). The following example extracts content after ## and replace it with <h2>content</h2>. 
+To support new syntax, you can add a tuple of (regex_pattern, replace_pattern). The following example extracts content after ## and enclose it with an h2 headline
 ```
 ('^## (.*)$', '<h2>\g<1></h2>')
-``'
+```
 
