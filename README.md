@@ -10,6 +10,7 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 * Wiki pages save to plain text files under the "w" directory
 * Delete a wiki page from disk by saving an empty content.
 * Support common markdown syntax as shown in the [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage).
+* Aggregate wiki page by tags.
 
 ## Text Formatting
 * WikiNames are replaced with internal links.
@@ -74,6 +75,11 @@ The UI should be fairly self-explanatory.
 * Click the ? mark after a CamelCased word to create a new page.
 * Click the Submit button to save a page. If you save an empty page, WyPyPlus will delete it from disk.
 
+### How to create tags
+There's no different between Tags and WikiWords. When you create a new page, there will be a link on the top of the screen to show all pages that reference it. 
+
+For example, you can create a page called MyTag, and put the word MyTag to other pages and see references here:
+http://127.0.0.1:8000/cgi-bin/wypyplus?p=MyTag&q=f
 
 # Design Tradeoffs
 
