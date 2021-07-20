@@ -50,7 +50,7 @@ It is just slightly better than a Windows notepad or a typewriter. Wiki pages ar
 * No database. Wiki pages are just text files.
 * No Javascript.
 * Low maintenance. Just backup the entire folder. 
-* Extandable
+* Extendable
 
 ![demo](example2.png)
 
