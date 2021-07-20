@@ -32,7 +32,7 @@ WyPyPlus is the result of a deep meditation and soul searching process to find o
 
 I tried many wiki software in the last decade including MoinMoin wiki, DokuWiki, TiddlyWiki, ZIM, and many more. 
 
-I want to keep control of my personal data so cloud hosting is not an option. When I ask for a wiki, I usually got a front-end to config, a database to back up, a Linux server to maintain and secure. The more features it has, the higher maintenance cost I need to pay. Things add up pretty quickly. 
+I want to keep control of my personal data so cloud hosting is not an option. When I ask for a wiki, I usually get a front-end to config, a database to back up, a Linux server to maintain and secure. The more features it has, the higher maintenance cost I need to pay. Things add up pretty quickly. 
 
 ### The key feature of WyPyPluse is the lack of features. (Think about it for a moment)
 
