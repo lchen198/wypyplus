@@ -31,18 +31,18 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 
 WyPyPlus is the result of a deep meditation and soul searching to find out what do I really need for taking personal notes. 
 
-I tried many solutions in the last decade including MoinMoin wiki, DokuWiki, TiddlyWiki, ZIM，Emacs Org mode and many more. Today, I take work-related notes using Org mode and it works well for me. 
+I tried many solutions in the last decade including MoinMoin wiki, DokuWiki, TiddlyWiki, ZIM，Emacs Org mode and many more. I take work-related notes with Org mode and it works well for me. 
 
-I want to keep control of my personal data. Cloud-based services is not ideal for me. Desktop wiki often have display issues when running across multi platforms and various size of screens.
-Setting up a personal wiki server is not easy. I would set up a Linux and secure it, configure the web front-end, and initialize a database. After that I also need to worry about backing up the data. The more features it has, the higher maintenance cost I need to pay. Things add up pretty quickly. 
+I want to keep control of my personal data. Cloud-based services are not ideal for me. Desktop wiki often have display issues when running across multi platforms and various size of screens.
+Setting up a personal wiki server is not easy. I would set up a Linux and secure it, configure a web front-end, and initialize a database. After that I also need to worry about backing up the data and keep the system up-to-date. The more features it has, the higher maintenance cost I need to pay. Things add up pretty quickly. 
 
 ### The key feature of WyPyPluse is the lack of features. (AKA Less is More)
 
-It is just slightly better than a Windows notepad or a typewriter. Wiki pages are just text files. If you don't want WyPyPlus, you can easily move to somewhere else.
+It is just slightly better than a Windows notepad. Wiki pages are just text files. If you don't want WyPyPlus, you can easily move to somewhere else.
 
 **Benefits** 
 * Fast!!
-* Support just enough wiki synatax to be useful. (See [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage))
+* Support just enough wiki synataxes to be useful. (See [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage))
 * Takes less than one minute to setup.
 * Runs anywhere that has Python and a browser.
 * Works perfectly offline.
@@ -51,7 +51,7 @@ It is just slightly better than a Windows notepad or a typewriter. Wiki pages ar
 * No database. Wiki pages are just text files.
 * No Javascript.
 * Low maintenance. Just backup the entire folder. 
-* Extendable
+* Extendable.
 
 ![demo](example2.png)
 
