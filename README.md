@@ -28,28 +28,29 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 
 ## WyPyPlus vs Other Wiki Software
 
-WyPyPlus is the result of a deep meditation and soul searching process to find out what I really need for a personal note-taking software.
+WyPyPlus is the result of a deep meditation and soul searching to find out what do I really need for taking personal notes. 
 
-I tried many wiki software in the last decade including MoinMoin wiki, DokuWiki, TiddlyWiki, ZIM, and many more. 
+I tried many solutions in the last decade including MoinMoin wiki, DokuWiki, TiddlyWiki, ZIM，Emacs Org mode and many more. Today, I take work-related notes using Org mode and it works well for me. 
 
-I want to keep control of my personal data so cloud hosting is not an option. When I ask for a wiki, I usually get a front-end to config, a database to back up, a Linux server to maintain and secure. The more features it has, the higher maintenance cost I need to pay. Things add up pretty quickly. 
+I want to keep control of my personal data. Cloud-based services is not ideal for me. Desktop wiki often have display issues when running across multi platforms and various size of screens.
+Setting up a personal wiki server is not easy. I would set up a Linux and secure it, configure the web front-end, and initialize a database. After that I also need to worry about backing up the data. The more features it has, the higher maintenance cost I need to pay. Things add up pretty quickly. 
 
-### The key feature of WyPyPluse is the lack of features. (Think about it for a moment)
+### The key feature of WyPyPluse is the lack of features. (AKA Less is More)
 
 It is just slightly better than a Windows notepad or a typewriter. Wiki pages are just text files. If you don't want WyPyPlus, you can easily move to somewhere else.
 
-**Other Features** 
+**Benefits** 
 * Fast!!
-* Support just enough markdown to be useful. (See [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage))
+* Support just enough wiki synatax to be useful. (See [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage))
 * Takes less than one minute to setup.
-* Runs anywhere that has Python.
+* Runs anywhere that has Python and a browser.
 * Works perfectly offline.
 * No config file to mess with.
 * No authentication. It's a personal wiki and you should run it on your own machine. 
 * No database. Wiki pages are just text files.
 * No Javascript.
-* Low maintenance.
-* You can add whatever feature you want.
+* Low maintenance. Just backup the entire folder. 
+* Extandable
 
 ![demo](example2.png)
 
@@ -60,13 +61,14 @@ Download WyPyPlus and extract it to a folder (E.g wypy_wiki). This folder should
 cd wypy_wiki
 
 python -m CGIHTTPServer 8000 # if you only have python 2
+Or
 python3 -m http.server --bind localhost --cgi 8000 # if you have python 3
 
 Open this url in your browser
 http://127.0.0.1:8000/cgi-bin/wypyplus
 ```
 
-Since the wypyplus file is just a cgi script, you can use any web server to host it. 
+Since the wypyplus file is just a cgi script, you can also use any web server to host it. 
 
 The UI should be fairly self-explanatory. 
 * Click the ? mark after a CamelCased word to create a new page.
