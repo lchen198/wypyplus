@@ -88,7 +88,7 @@ The original wypy code is highly compressed. However, variable names are careful
 
 For example, if you don't like the CSS, just replace ```<head><link rel='stylesheet' href='https://unpkg.com/sakura.css/css/sakura.css' type='text/css'></head> ```with whatever you like.
 
-To support new syntax, you can add a tuple of (regex_pattern, replace_pattern). The following example extracts content after ## and enclose it with an h2 headline
+To support new syntax, you can add a tuple of (regex_pattern, replace_pattern). The following example extracts content after ## and enclose it with an h2 headline. 
 ```
 ('^## (.*)$', '<h2>\g<1></h2>')
 ```
