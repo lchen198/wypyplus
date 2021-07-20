@@ -84,7 +84,7 @@ http://127.0.0.1:8000/cgi-bin/wypyplus?p=MyTag&q=f
 # Design Tradeoffs
 
 * To keep things minimum, WyPyPlus only supports a subset of markdown syntaxes. 
-* To avoid depending on external parser, WyPyPlus uses regular expresisons to match tags. It is not perfect, but farily useable.
+* To avoid depending on an external parser, WyPyPlus uses regular expresisons to match tags. It is not perfect, but farily useable.
 * WyPyPlus has no config file. You can't mis-config it. If you really need something, just edit the source code.
 * WyPyPlus doesn't automatically save for you. Don't refresh the page before submitting your change.
 
