@@ -77,9 +77,10 @@ The UI should be fairly self-explanatory.
 
 # Design Tradeoffs
 
-* To keep things minimum, WyPyPlus doesn't support a large range of markdown syntaxes. Keep in mind that it doesn't depend on any markdown parser. 
-* WyPyPlus doesn't use any config file. You can't mis-config it. If you really need something, just edit the source code.
-* Don't refresh the page before submitting your change.
+* To keep things minimum, WyPyPlus only supports a subset of markdown syntaxes. 
+* To avoid depending on external parser, WyPyPlus uses regular expresisons to match tags. It is not perfect, but farily useable.
+* WyPyPlus has no config file. You can't mis-config it. If you really need something, just edit the source code.
+* WyPyPlus doesn't automatically save for you. Don't refresh the page before submitting your change.
 
 # Source Code
 
