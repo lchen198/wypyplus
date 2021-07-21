@@ -10,6 +10,8 @@ This is a **Bold** text!
 
 ## Links
 
+List all files in this wiki: [All](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f)
+
 Wiki link: DemoPage
 
 Raw URL link:   http://www.google.com

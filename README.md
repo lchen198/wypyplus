@@ -10,8 +10,9 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 * A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
 * Wiki pages save to plain text files under the "w" directory
 * Delete a wiki page from disk by saving an empty content.
-* Support common markdown syntax as shown in the [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage).
-* Aggregate wiki page by tags.
+* Support common markdown syntax such as headline style and links [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage).
+* Each WikiPage has a reverse index. You can use this feature to group pages by tags.
+* A special page ["All"](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) shows every file in the wiki.  
 
 ## Text Formatting
 * WikiNames are replaced with internal links.
@@ -69,7 +70,7 @@ cd wypy_wiki
 
 python -m CGIHTTPServer 8000 
 
-Open this url in your browser
+Open this url in your browser. It takes a few moment to start.
 http://127.0.0.1:8000/cgi-bin/wypyplus.py
 ```
 

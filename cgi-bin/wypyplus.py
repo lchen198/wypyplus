@@ -13,9 +13,9 @@ fs,do,main=lambda s:reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),(
 ('(^|[^"])http[s]?:[^<>"\s]+'," "+h+'"\g<0>">\g<0></a>'),('\n\n','<p>')
 ),q(s)),lambda m,n:{'get':'<h1>'+h+w+'>WyPyPlus</a>:%s%s%s&amp;q=f>%s</a></h1>(%s%s%s&amp;q=e>edit</a>)<p>%s'%(\
 h,w,n,n,h,w,n,fs(load(n)) or n),'edit':'<form action=%s%s method=POST><h1>%s <in'\
-'%s=hidden name=p value=%s><in%s=submit></h1><textarea name=t cols=79 rows=17'\
+'%s=hidden name=p value=%s><in%s=submit></h1><textarea name=t cols=80 rows=24'\
 '>%s'%(w,n,fs(n),i,n,i,q(load(n)))+t,'find':('<h1>Links: %s</h1>'%fs(n))+fs(
-'{{\n* %s\n}}'%'\n* '.join([d for d in os.listdir('w/') if load(d).count(n)]))
+'{{\n* %s\n}}'%'\n* '.join([d for d in os.listdir('w/') if n == "All" or load(d).count(n)]))
 }.get(m),lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or ('t' in f or (os.remove('w/'+y) and False))\
 and open('w/'+y,'w').write(f['t'][0])`+`sys.stdout.write("Content-type: text/html; charset=utf-8"\
 "\r\n\r\n<head><link rel='stylesheet' href='https://unpkg.com/sakura.css/css/sakura.css'\
