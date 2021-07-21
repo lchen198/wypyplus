@@ -9,7 +9,7 @@ fs,do,main=lambda s:reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),(\
 ('^\{\{$','\n<ul>'),('^\* ','<li>'),('^}}$','</ul>'),('^---$','<hr>'),
 ('^```$','<pre><code>'),('^``\'$','</code></pre>'),('^# (.*)$','<h1>\g<1></h1>'),
 ('^## (.*)$', '<h2>\g<1></h2>'),('^### (.*)$', '<h3>\g<1></h3>'),('\*\*(.*)\*\*','<b>\g<1></b>'),
-('[^!]'+link," "+h+'"\g<2>">\g<1></a>'),('\!'+link,'<img src="\g<2>" alt="\g<1>">'),
+('([^!])'+link,"\g<1>"+h+'"\g<3>">\g<2></a>'),('\!'+link,'<img src="\g<2>" alt="\g<1>">'),
 ('(^|[^"])http[s]?:[^<>"\s]+'," "+h+'"\g<0>">\g<0></a>'),('\n\n','<p>')),q(s)),\
 lambda m,n:{'get':'<h1>%s%s>WyPyPlus</a>:%s%s%s&amp;q=f>%s</a></h1>(%s%s%s&amp;q=e>edit</a>)<p>%s'%(\
 h,w,h,w,n,n,h,w,n,fs(load(n)) or n),'edit':'<form action=%s%s method=POST><h1>%s <in'\
