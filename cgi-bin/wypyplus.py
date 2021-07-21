@@ -1,6 +1,6 @@
 #!/usr/bin/python
 link='\[([^]]*)]\(\s*((?:http[s]?://)*[^)]+)\s*\)'
-import sys,re,os,cgi;q,x,h,w=cgi.escape,os.path.exists,'<a href=','wypyplus?p='
+import sys,re,os,cgi;q,x,h,w=cgi.escape,os.path.exists,'<a href=','wypyplus.py?p='
 load,t=lambda n:(x('w/'+n) and open('w/'+n).read()) or '','</textarea></form>'
 f,i=cgi.FormContent(),'put type';y=f.get('p',[''])[0];y=('WyPyPlus',y)[y.isalpha()]
 fs,do,main=lambda s:reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),(
@@ -11,7 +11,7 @@ fs,do,main=lambda s:reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),(
 ('\*\*(.*)\*\*','<b>\g<1></b>'),('^## (.*)$', '<h2>\g<1></h2>'),('^### (.*)$', '<h3>\g<1></h3>'),
 ('[^!]'+link," "+h+'"\g<2>">\g<1></a>'),('\!'+link,'<img src="\g<2>" alt="\g<1>">'),
 ('(^|[^"])http[s]?:[^<>"\s]+'," "+h+'"\g<0>">\g<0></a>'),('\n\n','<p>')
-),q(s)),lambda m,n:{'get':'<h1>WyPyPlus:%s%s%s&amp;q=f>%s</a></h1>(%s%s%s&amp;q=e>edit</a>)<p>%s'%(\
+),q(s)),lambda m,n:{'get':'<h1>'+h+w+'>WyPyPlus<\a>:%s%s%s&amp;q=f>%s</a></h1>(%s%s%s&amp;q=e>edit</a>)<p>%s'%(\
 h,w,n,n,h,w,n,fs(load(n)) or n),'edit':'<form action=%s%s method=POST><h1>%s <in'\
 '%s=hidden name=p value=%s><in%s=submit></h1><textarea name=t cols=79 rows=17'\
 '>%s'%(w,n,fs(n),i,n,i,q(load(n)))+t,'find':('<h1>Links: %s</h1>'%fs(n))+fs(

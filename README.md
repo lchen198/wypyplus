@@ -5,11 +5,12 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 ![screenshot](example.png)
 
 ## New Features:
-* Only 23 lines of Python code with no external dependencies.
+* Only 23 lines of Python code.
 * A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
 * Wiki pages save to plain text files under the "w" directory
 * Delete a wiki page from disk by saving an empty content.
 * Support common markdown syntax as shown in the [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage).
+* Aggregate wiki page by tags.
 
 ## Text Formatting
 * WikiNames are replaced with internal links.
@@ -28,56 +29,66 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 
 ## WyPyPlus vs Other Wiki Software
 
-WyPyPlus is the result of a deep meditation and soul searching process to find out what I really need for a personal note-taking software.
+WyPyPlus is the result of a deep meditation and soul searching to find out what do I really need for taking personal notes. 
 
-I tried many wiki software in the last decade including MoinMoin wiki, DokuWiki, TiddlyWiki, ZIM, and many more. 
+I tried many solutions in the last decade including MoinMoin wiki, DokuWiki, TiddlyWiki, ZIM，Emacs Org mode and many more. I take work-related notes with Org mode and it works well for me. 
 
-I want to keep control of my personal data so cloud hosting is not an option. When I ask for a wiki, I usually got a front-end to config, a database to back up, a Linux server to maintain and secure. The more features it has, the higher maintenance cost I need to pay. Things add up pretty quickly. 
+I want to keep control of my personal data. Cloud-based services are not ideal for me. Desktop wiki often have display issues when running across multi platforms and various size of screens.
+Setting up a personal wiki server is not easy. I would set up a Linux and secure it, configure a web front-end, and initialize a database. After that I also need to worry about backing up the data and keep the system up-to-date. The more features it has, the higher maintenance cost I need to pay. Things add up pretty quickly. 
 
-### The key feature of WyPyPluse is the lack of features. (Think about it for a moment)
+### The key feature of WyPyPluse is the lack of features. (AKA Less is More)
 
-It is just slightly better than a Windows notepad or a typewriter. Wiki pages are just text files. If you don't want WyPyPlus, you can easily move to somewhere else.
+It is just slightly better than a Windows notepad. Wiki pages are just text files. If you don't want WyPyPlus, you can easily move to somewhere else.
 
-**Other Features** 
+**Benefits** 
 * Fast!!
-* Support just enough markdown to be useful. (See [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage))
+* Support just enough wiki synataxes to be useful. (See [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage))
 * Takes less than one minute to setup.
-* Runs anywhere that has Python.
+* Runs anywhere that has Python and a browser.
 * Works perfectly offline.
 * No config file to mess with.
 * No authentication. It's a personal wiki and you should run it on your own machine. 
 * No database. Wiki pages are just text files.
 * No Javascript.
-* Low maintenance.
-* You can add whatever feature you want.
+* Low maintenance. Just backup the entire folder. 
+* Extendable.
 
 ![demo](example2.png)
 
 ## Install and Use
-Download WyPyPlus and extract it to a folder (E.g wypy_wiki). This folder should already contain a cgi-bin directory and a "w" directory. Your file will save into the "w" directory.
+On linux & Mac, Download WyPyPlus and extract it to a folder (E.g wypy_wiki). This folder should already contain a cgi-bin directory and a "w" directory. Your file will save into the "w" directory.
 
 ```
 cd wypy_wiki
 
+On linux & Mac
+
 python -m CGIHTTPServer 8000 # if you only have python 2
+Or
 python3 -m http.server --bind localhost --cgi 8000 # if you have python 3
 
 Open this url in your browser
 http://127.0.0.1:8000/cgi-bin/wypyplus
 ```
 
-Since the wypyplus file is just a cgi script, you can use any web server to host it. 
+Since the wypyplus file is just a cgi script, you can also use any web server to host it. 
 
 The UI should be fairly self-explanatory. 
 * Click the ? mark after a CamelCased word to create a new page.
 * Click the Submit button to save a page. If you save an empty page, WyPyPlus will delete it from disk.
 
+### How to create tags
+There's no different between Tags and WikiWords. When you create a new page, there will be a link on the top of the screen to show all pages that reference it. 
+
+For example, you can create a page called MyTag, and put the word MyTag to other pages and see references here:
+http://127.0.0.1:8000/cgi-bin/wypyplus?p=MyTag&q=f
 
 # Design Tradeoffs
 
-* To keep things minimum, WyPyPlus doesn't support a large range of markdown syntaxes. Keep in mind that it doesn't depend on any markdown parser. 
-* WyPyPlus doesn't use any config file. You can't mis-config it. If you really need something, just edit the source code.
-* Don't refresh the page before submitting your change.
+* To keep things minimum, WyPyPlus only supports a subset of markdown syntaxes. 
+* To avoid depending on an external parser, WyPyPlus uses regular expresisons to match tags. It is not perfect, but farily useable.
+* WyPyPlus has no config file. You can't mis-config it. If you really need something, just edit the source code.
+* WyPyPlus doesn't automatically save for you. Don't refresh the page before submitting your change.
 
 # Source Code
 
@@ -85,7 +96,7 @@ The original wypy code is highly compressed. However, variable names are careful
 
 For example, if you don't like the CSS, just replace ```<head><link rel='stylesheet' href='https://unpkg.com/sakura.css/css/sakura.css' type='text/css'></head> ```with whatever you like.
 
-To support new syntax, you can add a tuple of (regex_pattern, replace_pattern). The following example extracts content after ## and enclose it with an h2 headline
+To support new syntax, you can add a tuple of (regex_pattern, replace_pattern). The following example extracts content after ## and enclose it with an h2 headline. 
 ```
 ('^## (.*)$', '<h2>\g<1></h2>')
 ```
