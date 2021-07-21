@@ -12,7 +12,7 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 * Delete a wiki page from disk by saving an empty content.
 * Support common markdown syntax such as headline style and links [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage).
 * Each WikiPage has a reverse index. You can use this feature to group pages by tags.
-* A special page ["All"](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) shows every file in the wiki.  
+* A [top-level index](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show every page in the wiki.
 
 ## Text Formatting
 * WikiNames are replaced with internal links.
