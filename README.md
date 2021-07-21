@@ -56,19 +56,20 @@ It is just slightly better than a Windows notepad. Wiki pages are just text file
 ![demo](example2.png)
 
 ## Install and Use
-On linux & Mac, Download WyPyPlus and extract it to a folder (E.g wypy_wiki). This folder should already contain a cgi-bin directory and a "w" directory. Your file will save into the "w" directory.
+
+* You need Python 2 to run this applicaiton. Mac and Linux already have python 2. For Windows users, please install Python 2.7.
+
+* Download WyPyPlus and extract it to a folder (E.g wypy_wiki). This folder should already contain a cgi-bin directory and a "w" directory. Your file will save into the "w" directory.
+
+* The following command should work under Mac, Linux and Windows.
 
 ```
 cd wypy_wiki
 
-On linux & Mac
-
-python -m CGIHTTPServer 8000 # if you only have python 2
-Or
-python3 -m http.server --bind localhost --cgi 8000 # if you have python 3
+python -m CGIHTTPServer 8000 
 
 Open this url in your browser
-http://127.0.0.1:8000/cgi-bin/wypyplus
+http://127.0.0.1:8000/cgi-bin/wypyplus.py
 ```
 
 Since the wypyplus file is just a cgi script, you can also use any web server to host it. 
