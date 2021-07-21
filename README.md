@@ -31,7 +31,7 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 
 ## WyPyPlus vs Other Wiki Software
 
-WyPyPlus is the result of a deep meditation and soul searching to find out what do I really need for taking personal notes. 
+WyPyPlus is the result of a deep meditation to find out the essental of wiki and get rid of everything else. It is the purest form of wiki packed in the tiniest space possible.
 
 I tried many solutions in the last decade including MoinMoin wiki, DokuWiki, TiddlyWiki, ZIM，Emacs Org mode and many more. I take work-related notes with Org mode and it works well for me. 
 
