@@ -58,7 +58,7 @@ It is just slightly better than a Windows notepad. Wiki pages are just text file
 
 ## Install and Use
 
-* You need Python 2 to run this applicaiton. Mac and Linux already have python 2. For Windows users, please install Python 2.7.
+* You need Python 2 to run this application. Mac and Linux already have python 2. For Windows users, please install Python 2.7.
 
 * Download WyPyPlus and extract it to a folder (E.g wypy_wiki). This folder should already contain a cgi-bin directory and a "w" directory. Your file will save into the "w" directory.
 
