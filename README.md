@@ -56,10 +56,12 @@ It is just slightly better than a Windows notepad. Wiki pages are just text file
 ![demo](example2.png)
 
 ## Install and Use
-Download WyPyPlus and extract it to a folder (E.g wypy_wiki). This folder should already contain a cgi-bin directory and a "w" directory. Your file will save into the "w" directory.
+On linux & Mac, Download WyPyPlus and extract it to a folder (E.g wypy_wiki). This folder should already contain a cgi-bin directory and a "w" directory. Your file will save into the "w" directory.
 
 ```
 cd wypy_wiki
+
+On linux & Mac
 
 python -m CGIHTTPServer 8000 # if you only have python 2
 Or
