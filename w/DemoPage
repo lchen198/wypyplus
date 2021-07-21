@@ -26,6 +26,14 @@ External image:
 Local image:
 ![local image](../example.png)
 
+## Quote
+
+```
+def hello():
+  print("hello world")
+
+``'
+
 ## list
 
 {{
