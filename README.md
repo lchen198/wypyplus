@@ -6,6 +6,7 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 
 ## New Features:
 * Only 23 lines of Python code.
+* Runs on Mac, Linux and Windows.
 * A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
 * Wiki pages save to plain text files under the "w" directory
 * Delete a wiki page from disk by saving an empty content.
