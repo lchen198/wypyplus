@@ -33,7 +33,7 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 
 WyPyPlus is the result of a deep meditation to find out the essential of wiki and get rid of everything else. It is the purest form of wiki packed in the tiniest space possible.
 
-I tried many solutions in the last decade including MoinMoin wiki, DokuWiki, TiddlyWiki, ZIM，Emacs Org mode and many more. I take work-related notes with Org mode and it works well for me. 
+I tried many solutions in the last decade including MoinMoin wiki, DokuWiki, TiddlyWiki, ZIM, Emacs Org mode and many more. I take work-related notes with Org mode and it works well for me. 
 
 I want to keep control of my personal data. Cloud-based services are not ideal for me. Desktop wiki often have display issues when running across multi platforms and various sizes of screens.
 Setting up a personal wiki server is not easy. I would set up a Linux and secure it, configure a web front-end, and initialize a database. After that I also need to worry about backing up the data and keeps the system up-to-date. The more features it has, the higher maintenance cost I need to pay. Things add up pretty quickly. 
