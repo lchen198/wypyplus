@@ -35,11 +35,11 @@ Local image:
 
 ## Quote
 
+
 ```
 def hello():
   print("hello world")
-
-``'
+```
 
 ## list
 

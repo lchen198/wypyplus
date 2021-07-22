@@ -16,15 +16,14 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 
 ## Text Formatting
 * WikiNames are replaced with internal links.
-* Markdown style ****bold****
+* Markdown style ****bold****.
 * "\n{{" starts an unordered list.
 * "\n* [text]" is a list item in an unordered list.
 * "\n}}" ends an unordered list.
-* "\n#" inserts H1
-* "\n##" inserts H2
-* "\n###" inserts H3
-* "\n```" inserts <pre><code>
-* "\n``'" inserts </code></pre>
+* "\n#" inserts H1.
+* "\n##" inserts H2.
+* "\n###" inserts H3.
+* To format code or text into its own distinct block, use triple backticks.
 * "---" creates an <hr> element.
 * Markdown style [link](https://www.markdownguide.org/basic-syntax/#links) and [image tag](https://www.markdownguide.org/basic-syntax/#images-1).
 * All HTML is replaced with its quoted equivalent (i.e. is forbidden).
@@ -70,9 +69,9 @@ cd wypy_wiki
 
 python -m CGIHTTPServer 8000 
 
-Open this url in your browser. It takes a few moments to start.
+Open this url in your browser.
 http://127.0.0.1:8000/cgi-bin/wypyplus.py
-``'
+```
 
 Since the wypyplus file is just a cgi script, you can also use any web server to host it. 
 
@@ -102,5 +101,5 @@ For example, if you don't like the CSS, just replace <head><link rel='stylesheet
 To support new syntax, you can add a tuple of (regex_pattern, replace_pattern). The following example extracts content after ## and replace it with <h2>content</h2>. 
 ```
 ('^## (.*)$', '<h2>\g<1></h2>')
-``'
+```
 

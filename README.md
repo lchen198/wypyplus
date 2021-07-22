@@ -24,8 +24,7 @@ Homepage Screenshot:
 * "\n#" inserts H1
 * "\n##" inserts H2
 * "\n###" inserts H3
-* "\n\`\`\`" inserts \<pre\>
-* "\n\`\`\'" inserts \<\/pre\>
+* To format code or text into its own distinct block, use triple backticks: \`\`\`.
 * "---" creates an \<hr\> element.
 * Markdown style [link](https://www.markdownguide.org/basic-syntax/#links) and [image tag](https://www.markdownguide.org/basic-syntax/#images-1).
 * All HTML is replaced with its quoted equivalent (i.e. is forbidden).
