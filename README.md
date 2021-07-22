@@ -41,21 +41,20 @@ A minimal editor that does not get in the way.
 
 ## WyPyPlus vs Other Wiki Software
 
-WyPyPlus is the result of a deep meditation to find out the essential of wiki and get rid of everything else. It is the purest form of wiki packed in the tiniest space possible.
+WyPyPlus is the result of a deep meditation to find out the essence of personal wiki and get rid of everything else. It tries to keep the purest form of wiki packed in the tiniest space possible. 
 
-I tried many solutions in the last decade including MoinMoin wiki, DokuWiki, TiddlyWiki, ZIM, Emacs Org mode and many more. I take work-related notes with Org mode and it works well for me. 
+WyPyPlus helps you control your personal data by keeping data close to you. It doesn't upload your data to the cloud or a remote server.
 
-I want to keep control of my personal data. Cloud-based services are not ideal for me. Desktop wiki often have display issues when running across multi platforms and various sizes of screens.
-Setting up a personal wiki server is not easy. I would set up a Linux and secure it, configure a web front-end, and initialize a database. After that I also need to worry about backing up the data and keeps the system up-to-date. The more features it has, the higher maintenance cost I need to pay. Things add up pretty quickly. 
+Comparing to other self-hosted Wiki, WyPyPlus is much easier to set up and maintain. You don't need to set up a Linux box and secure it. You don't need to mess with web front-end configurations and database. The more features a software has, the higher maintenance cost you will pay. Things add up pretty quickly. At the end of the day, don't you want a Wiki that just works?
 
-### The key feature of WyPyPluse is the lack of features. (AKA Less is More)
+### The key feature of WyPyPluse is the lack of features.
 
-It is just slightly better than a Windows notepad. Wiki pages are just text files. If you don't want WyPyPlus, you can easily move to somewhere else.
+Wiki pages are just text files. If you don't want WyPyPlus, you can easily move to somewhere else that supports markdown.
 
 **Benefits** 
 * Fast!!
 * Support just enough wiki syntaxes to be useful. (See [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage))
-* Takes less than one minute to set up.
+* Takes less than a minute to set up and get going.
 * Runs anywhere that has Python and a browser.
 * Works perfectly offline.
 * No config file to mess with.
@@ -64,9 +63,16 @@ It is just slightly better than a Windows notepad. Wiki pages are just text file
 * Low maintenance. Just backup the entire folder. 
 * Extendable.
 
+**Design Tradeoffs**
+
+* To keep things minimal, WyPyPlus only supports a subset of markdown syntaxes. 
+* To avoid depending on an external parser, WyPyPlus uses regular expresisons to match tags. It is not perfect, but farily useable.
+* WyPyPlus has no config file. You can't mis-configure it. If you really need something, just edit the source code.
+* WyPyPlus doesn't automatically save for you. Don't refresh the page before submitting your change.
+
 ## Install and Use
 
-* You need Python 2 to run this application. Mac and Linux already have python 2. For Windows users, please install Python 2.7.
+* You need Python 2 to run this application. Mac and Linux already have Python 2. For Windows users, please install Python 2.7.
 
 * Download WyPyPlus and extract it to a folder (E.g wypy_wiki). This folder should already contain a cgi-bin directory and a "w" directory. Your file will save into the "w" directory.
 
@@ -86,7 +92,7 @@ Open this url in your browser. It takes a few moments to start.
 http://127.0.0.1:8000/cgi-bin/wypyplus.py
 ```
 
-Since the wypyplus file is just a cgi script, you can also use any web server to host it. 
+Since the wypyplus file is just a cgi script, you can also use any web server to host it. I don't recommend this since you are likely to spend more time to config the cgi server.
 
 The UI should be fairly self-explanatory. 
 * Click the ? mark after a CamelCased word to create a new page.
@@ -95,15 +101,8 @@ The UI should be fairly self-explanatory.
 ### How to create tags
 There's no difference between Tags and WikiWords. When you create a new page, there will be a link on the top of the screen to show all pages that reference it. 
 
-For example, you can create a page called MyTag, and put the word MyTag to other pages and see references here:
-http://127.0.0.1:8000/cgi-bin/wypyplus?p=MyTag&q=f
-
-# Design Tradeoffs
-
-* To keep things minimal, WyPyPlus only supports a subset of markdown syntaxes. 
-* To avoid depending on an external parser, WyPyPlus uses regular expresisons to match tags. It is not perfect, but farily useable.
-* WyPyPlus has no config file. You can't mis-configure it. If you really need something, just edit the source code.
-* WyPyPlus doesn't automatically save for you. Don't refresh the page before submitting your change.
+For example, you can create a page called ToDo, and put the word ToDo to other pages and see references here:
+http://127.0.0.1:8000/cgi-bin/wypyplus?p=ToDo&q=f
 
 # Source Code
 
