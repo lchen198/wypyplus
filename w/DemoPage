@@ -20,10 +20,17 @@ Markdown link: [google homepage](http://google.com)
 
 ## Images
 
+YouTube Video:
+
+[![car video](https://img.youtube.com/vi/0v5lKOQka9c/0.jpg)
+](https://www.youtube.com/watch?v=0v5lKOQka9c)
+
 External image:
+
 ![test image](https://upload.wikimedia.org/wikipedia/commons/5/5f/Emacs-logo.svg)
 
 Local image:
+
 ![local image](../example.png)
 
 ## Quote
