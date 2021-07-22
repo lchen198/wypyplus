@@ -68,7 +68,11 @@ It is just slightly better than a Windows notepad. Wiki pages are just text file
 ```
 cd wypy_wiki
 
+# If you only have Python2. Note that the page is exposed in both 127.0.0.1 and your local network IP (usually 192.168.x.x).
 python -m CGIHTTPServer 8000 
+
+# If you have Python3, you can bind it just to your localhost.
+python3 -m http.server --cgi 8000 --bind 127.0.0.1
 
 Open this url in your browser. It takes a few moments to start.
 http://127.0.0.1:8000/cgi-bin/wypyplus.py
