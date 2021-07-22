@@ -2,6 +2,7 @@
 
 WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of code. It is an extension of [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer. The original project implements a wiki in just 11 lines of Python code, which is an amazing achievement. However, wypy wiki doesn't have many features I consider as essential.
 
+Homepage Screenshot:
 ![screenshot](example.png)
 
 ## New Features:
@@ -16,20 +17,26 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 
 ## Text Formatting
 * WikiNames are replaced with internal links.
-* Markdown style ****bold****
+* Markdown style ```**bold**```
 * "\n{{" starts an unordered list.
 * "\n* [text]" is a list item in an unordered list.
 * "\n}}" ends an unordered list.
 * "\n#" inserts H1
 * "\n##" inserts H2
 * "\n###" inserts H3
-* "\n\`\`\`" inserts \<pre\>\<code\>
-* "\n\`\`\'" inserts \<\/code\>\<\/pre\>
+* "\n\`\`\`" inserts \<pre\>
+* "\n\`\`\'" inserts \<\/pre\>
 * "---" creates an \<hr\> element.
 * Markdown style [link](https://www.markdownguide.org/basic-syntax/#links) and [image tag](https://www.markdownguide.org/basic-syntax/#images-1).
 * All HTML is replaced with its quoted equivalent (i.e. is forbidden).
 
+
+A minimal editor that does not get in the way
 ![demo](editor.png)
+
+Rendered Page:
+
+![demo](example2.png)
 
 ## WyPyPlus vs Other Wiki Software
 
@@ -57,8 +64,6 @@ It is just slightly better than a Windows notepad. Wiki pages are just text file
 * Low maintenance. Just backup the entire folder. 
 * Extendable.
 
-![demo](example2.png)
-
 ## Install and Use
 
 * You need Python 2 to run this application. Mac and Linux already have python 2. For Windows users, please install Python 2.7.
@@ -70,7 +75,8 @@ It is just slightly better than a Windows notepad. Wiki pages are just text file
 ```
 cd wypy_wiki
 
-# If you only have Python2. Note that the page is exposed in both 127.0.0.1 and your local network IP (usually 192.168.x.x).
+# If you only have Python2. Note that the page is exposed in both 127.0.0.1 
+# and your local network IP (usually 192.168.x.x).
 python -m CGIHTTPServer 8000 
 
 # If you have Python3, you can bind it just to your localhost.
