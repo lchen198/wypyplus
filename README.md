@@ -35,8 +35,9 @@ A minimal editor that does not get in the way.
 * Markdown style [link](https://www.markdownguide.org/basic-syntax/#links) and [image tag](https://www.markdownguide.org/basic-syntax/#images-1).
 * All HTML is replaced with its quoted equivalent (i.e. is forbidden).
 
-![demo](example2.png)
-
+<p align="center">
+<img src="example2.png">
+</p>
 ## WyPyPlus vs Other Wiki Software
 
 WyPyPlus is the result of a deep meditation to find out the essential of wiki and get rid of everything else. It is the purest form of wiki packed in the tiniest space possible.
