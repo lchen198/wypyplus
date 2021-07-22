@@ -17,15 +17,15 @@ Homepage Screenshot:
 
 ## Text Formatting
 * WikiNames are replaced with internal links.
-* Markdown style ****bold****
+* Markdown style ```**bold**```
 * "\n{{" starts an unordered list.
 * "\n* [text]" is a list item in an unordered list.
 * "\n}}" ends an unordered list.
 * "\n#" inserts H1
 * "\n##" inserts H2
 * "\n###" inserts H3
-* "\n\`\`\`" inserts \<pre\>\<code\>
-* "\n\`\`\'" inserts \<\/code\>\<\/pre\>
+* "\n\`\`\`" inserts \<pre\>
+* "\n\`\`\'" inserts \<\/pre\>
 * "---" creates an \<hr\> element.
 * Markdown style [link](https://www.markdownguide.org/basic-syntax/#links) and [image tag](https://www.markdownguide.org/basic-syntax/#images-1).
 * All HTML is replaced with its quoted equivalent (i.e. is forbidden).
