@@ -19,7 +19,7 @@ A minimal editor that does not get in the way.
 * Support common markdown syntax such as headline style and links [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage).
 * Each WikiPage has a reverse index. You can use this feature to group pages by tags.
 * A [top-level index](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show every page in the wiki.
-* When you start editing a page, WyPyPlus will auto save it after 30 minutes.
+* When you start editing a page, WyPyPlus will automatically save and close it after 30 minutes.
 
 ## Text Formatting
 * WikiNames are replaced with internal links.
