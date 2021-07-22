@@ -68,16 +68,12 @@ Wiki pages are just text files. If you don't want WyPyPlus, you can easily move 
 * To keep things minimal, WyPyPlus only supports a subset of markdown syntaxes. 
 * To avoid depending on an external parser, WyPyPlus uses regular expresisons to match tags. It is not perfect, but farily useable.
 * WyPyPlus has no config file. You can't mis-configure it. If you really need something, just edit the source code.
-* WyPyPlus doesn't automatically save for you. Don't refresh the page before submitting your change.
 
 ## Install and Use
 
 * You need Python 2 to run this application. Mac and Linux already have Python 2. For Windows users, please install Python 2.7.
 
-* Download WyPyPlus and extract it to a folder (E.g wypy_wiki). This folder should already contain a cgi-bin directory and a "w" directory. Your file will save into the "w" directory.
-
-* The following command should work under Mac, Linux and Windows.
-
+* Download WyPyPlus and extract it to a folder (E.g wypy_wiki).
 ```
 cd wypy_wiki
 
@@ -106,9 +102,9 @@ http://127.0.0.1:8000/cgi-bin/wypyplus?p=ToDo&q=f
 
 # Source Code
 
-The original wypy code is highly compressed. However, variable names are carefully picked so that the code is still somewhat readable. If you read it through, it is not that hard to change.
+The original wypy code is highly compressed. However, variable names are carefully picked so that the code is still somewhat readable. 
 
-For example, if you don't like the CSS, just replace ```<head><link rel='stylesheet' href='https://unpkg.com/sakura.css/css/sakura.css' type='text/css'></head> ```with whatever you like.
+For example, if you don't like the CSS, just replace ```<head><link rel='stylesheet' href='..\sakura.css' type='text/css'></head> ```with whatever you like.
 
 To support new syntax, you can add a tuple of (regex_pattern, replace_pattern). The following example extracts content after ## and enclose it with an h2 headline. 
 ```
