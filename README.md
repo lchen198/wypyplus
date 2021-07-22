@@ -66,7 +66,7 @@ Wiki pages are just text files. If you don't want WyPyPlus, you can easily move 
 **Design Tradeoffs**
 
 * To keep things minimal, WyPyPlus only supports a subset of markdown syntaxes. 
-* To avoid depending on an external parser, WyPyPlus uses regular expresisons to match tags. It is not perfect, but farily useable. Since ^# can be either a headline or a comment in a code block, WyPyPlus inserts a space before # in code block. 
+* To avoid depending on an external parser, WyPyPlus uses regular expresisons to match tags. It is not perfect, but farily useable. 
 * WyPyPlus has no config file. You can't mis-configure it. If you really need something, just edit the source code.
 
 ## Install and Use
