@@ -37,6 +37,7 @@ Local image:
 
 
 ```
+# Python Code
 def hello():
   print("hello world")
 ```
