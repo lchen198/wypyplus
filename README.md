@@ -127,7 +127,7 @@ from datetime import datetime as dt;q,x,h,w=cgi.escape,os.path.exists,'<a href='
 load,t=lambda n:(x('w/'+n) and open('w/'+n).read()) or '','</textarea></form>'
 f,i=cgi.FormContent(),'put type';y=f.get('p',[''])[0];y=('WyPyPlus',y)[y.isalpha()]
 
-# Defines a list of (regular expressions, replace patterns). Apply them one by one to convert wiki tags.
+# Define a list of (regular expressions, replace patterns). Apply them one by one to convert wiki tags.
 # Do cgi.escape on the final content.
 fs,do,main=lambda s:reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),(\
 # Find WikiWords and replace with html links.
@@ -151,11 +151,11 @@ h,w,h,w,n,n,h,w,n,fs(load(n)) or n),'edit':'<form name="e" action=%s%s method=PO
 # Generate a reverse index of a WikiPage. Note tha the "All" page would match every file in the wiki
 '{{\n* %s\n}}'%'\n* '.join([d for d in os.listdir('w/') if n == "All" or load(d).count(n)]))
 
-# This part handles a POST request. If the content is empty, delete the file from disk. Otherwise, write it under the /w folder.
+# This part handles a POST request. If the content is empty, delete the file from disk. Otherwise, write the content to a file under the /w folder.
 }.get(m),lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or ('t' in f or (os.remove('w/'+y) and False))\
 and open('w/'+y,'w').write(f['t'][0])`+`sys.stdout.write("Content-type: text/html; charset=utf-8\r\n\r\n"\
 
-# Insert css and set a timer to save the content in 30 mins (1.8e6 milliseconds) 
+# Insert a CSS link and set a timer to save the content in 30 mins (1.8e6 milliseconds) 
 "<head><link rel='stylesheet' href='../sakura.css'><script>var wait=setTimeout('document.e.submit();',1.8e6);</script>\
 </head><title>%s</title>"%y+do({'e':'edit','f':'find'}.get(f.get('q',[None])[0],'get'),y))`;(__name__=="__main__") and main()
 ```
