@@ -38,6 +38,7 @@ A minimal editor that does not get in the way.
 <p align="center">
 <img src="example2.png">
 </p>
+
 ## WyPyPlus vs Other Wiki Software
 
 WyPyPlus is the result of a deep meditation to find out the essential of wiki and get rid of everything else. It is the purest form of wiki packed in the tiniest space possible.
