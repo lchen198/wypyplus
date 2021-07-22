@@ -61,7 +61,6 @@ It is just slightly better than a Windows notepad. Wiki pages are just text file
 * No config file to mess with.
 * No authentication. It's a personal wiki and you should run it on your own machine. 
 * No database. Wiki pages are just text files.
-* No Javascript.
 * Low maintenance. Just backup the entire folder. 
 * Extendable.
 
