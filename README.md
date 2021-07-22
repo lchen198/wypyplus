@@ -29,6 +29,8 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 * Markdown style [link](https://www.markdownguide.org/basic-syntax/#links) and [image tag](https://www.markdownguide.org/basic-syntax/#images-1).
 * All HTML is replaced with its quoted equivalent (i.e. is forbidden).
 
+![demo](editor.png)
+
 ## WyPyPlus vs Other Wiki Software
 
 WyPyPlus is the result of a deep meditation to find out the essential of wiki and get rid of everything else. It is the purest form of wiki packed in the tiniest space possible.
