@@ -2,8 +2,13 @@
 
 WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of code. It is an extension of [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer. The original project implements a wiki in just 11 lines of Python code, which is an amazing achievement. However, wypy wiki doesn't have many features I consider as essential.
 
-Homepage Screenshot:
-![screenshot](example.png)
+<p align="center">
+<img src="example.png"> 
+</p>
+A minimal editor that does not get in the way.
+<p align="center">
+<img src="editor.png" width="80%">
+</p>
 
 ## New Features:
 * Only 23 lines of Python code with no external dependency other than the standard library.
@@ -29,14 +34,9 @@ Homepage Screenshot:
 * Markdown style [link](https://www.markdownguide.org/basic-syntax/#links) and [image tag](https://www.markdownguide.org/basic-syntax/#images-1).
 * All HTML is replaced with its quoted equivalent (i.e. is forbidden).
 
-
-A minimal editor that does not get in the way
-![demo](editor.png)
-
-Rendered Page:
-
-![demo](example2.png)
-
+<p align="center">
+<img src="example2.png">
+</p>
 ## WyPyPlus vs Other Wiki Software
 
 WyPyPlus is the result of a deep meditation to find out the essential of wiki and get rid of everything else. It is the purest form of wiki packed in the tiniest space possible.
