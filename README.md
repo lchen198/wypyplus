@@ -21,7 +21,7 @@ A minimal editor that does not get in the way.
 * A [top-level index](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show every page in the wiki.
 * When you start editing a page, WyPyPlus will automatically save and close it after 30 minutes.
 * Full-text search.
-* Word count in editing mode.
+* A calendar.
 
 ## Text Formatting
 * WikiNames are replaced with internal links.

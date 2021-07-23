@@ -1,6 +1,6 @@
 # A personal wiki in 23 lines of code
 
-| [Github](https://github.com/lchen198/wypyplus) | DemoPage |
+| [Github](https://github.com/lchen198/wypyplus) | DemoPage | Calendar2021
 
 WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of code. It is an extension of [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer. The original project implements a wiki in just 11 lines of Python code, which is an amazing achievement. However, wypy wiki doesn't have many features I consider as essential.
 
