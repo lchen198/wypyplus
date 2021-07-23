@@ -15,6 +15,8 @@ A minimal editor that does not get in the way.
 ## New Features:
 * Only 23 lines of Python code with no external dependency other than the standard library.
 * Runs on Mac, Linux and Windows.
+* A built-in calendar and daily journal.
+* A GetThingsDone template to help you setup your GTD system quickly.
 * A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
 * Wiki pages save to plain text files under the "w" directory
 * Delete a wiki page from disk by saving an empty content.
