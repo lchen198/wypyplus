@@ -7,7 +7,7 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 </p>
 A minimal editor that does not get in the way.
 <p align="center">
-<img src="editor.png" width="80%">
+<img src="editor.png">
 </p>
 
 ## New Features:
@@ -79,11 +79,12 @@ Wiki pages are just text files. If you don't want WyPyPlus, you can easily move 
 ```
 cd wypy_wiki
 
-# If you only have Python2. Note that the page is exposed in both 127.0.0.1 
-# and your local network IP (usually 192.168.x.x).
+# Fpr Python 2. Note that the page is exposed in both 127.0.0.1 
+# and your local network IP (usually 192.168.x.x). You can use this script to add password authentication.
+# https://github.com/lchen198/wypyplus/wiki#how-to-add-password-authentication-in-python-2
 python -m CGIHTTPServer 8000 
 
-# If you have Python3, you can bind it just to your localhost.
+# For Python 3, you can bind it just to your localhost.
 python3 -m http.server --cgi 8000 --bind 127.0.0.1
 
 Open this url in your browser. It takes a few moments to start.
