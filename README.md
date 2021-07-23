@@ -17,15 +17,15 @@ The Built-in Calendar
 * Runs on Mac, Linux and Windows.
 * A built-in calendar and daily journal.
 * A GetThingsDone template to help you setup your GTD system quickly.
+* Full-text search.
 * A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
 * Wiki pages save to plain text files under the "w" directory
 * Delete a wiki page from disk by saving an empty content.
 * Support common markdown syntax such as headline style and links [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage).
 * Each WikiPage has a reverse index. You can use this feature to group pages by tags.
 * A [top-level index](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show every page in the wiki.
-* When you start editing a page, WyPyPlus will automatically save and close it after 30 minutes.
-* Full-text search.
-* A built-in calendar.
+* AutoSave after 30 minutes of editing.
+
 
 ## Text Formatting
 * WikiNames are replaced with internal links.
