@@ -1,11 +1,13 @@
 # A personal wiki in 23 lines of code
 
-| [Github](https://github.com/lchen198/wypyplus) | DemoPage | Calendar2021
+| [Github](https://github.com/lchen198/wypyplus) | DemoPage | GetThingsDone | Calendar2021
 
 WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of code. It is an extension of [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer. The original project implements a wiki in just 11 lines of Python code, which is an amazing achievement. However, wypy wiki doesn't have many features I consider as essential.
 
 ## New Features:
 * Only 23 lines of Python code with no external dependency other than the standard library.
+* A built-in calendar: Calendar2021
+* A GetThingsDone template to help you setup your GTD system quickly.
 * Runs on Mac, Linux and Windows.
 * A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
 * Wiki pages save to plain text files under the "w" directory
