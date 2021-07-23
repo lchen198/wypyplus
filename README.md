@@ -10,9 +10,7 @@ A minimal editor that does not get in the way.
 <img src="editor.png">
 </p>
 
-<p align="center">
-<img src="calendar.png">
-</p>
+<p align="center"><img src="calendar.png"></p>
 
 ## New Features:
 * Only 23 lines of Python code with no external dependency other than the standard library.
