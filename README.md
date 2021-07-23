@@ -9,7 +9,7 @@ A minimal editor that does not get in the way.
 <p align="center">
 <img src="editor.png">
 </p>
-
+The Built-in Calendar 
 <p align="center"><img src="calendar.png"></p>
 
 ## New Features:
