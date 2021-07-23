@@ -20,6 +20,12 @@ Markdown link: [google homepage](http://google.com)
 
 Reference to a date or a month: Jan1 Jan2021
 
+## Template
+
+A template is a page with a special name: Tpl[three characters]. A page starts with the same three characters will use the template.
+
+For example, when you create TplJan, Any page starts with "Jan" such as Jan21 will include the template. 
+
 ## Images
 
 YouTube Video:

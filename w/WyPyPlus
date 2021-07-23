@@ -6,16 +6,18 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 
 ## New Features:
 * Only 23 lines of Python code with no external dependency other than the standard library.
-* A built-in calendar: Calendar2021
-* A GetThingsDone template to help you setup your GTD system quickly.
 * Runs on Mac, Linux and Windows.
+* A built-in calendar and daily journal.
+* A GetThingsDone template to help you setup your GTD system quickly.
+* A tempalte system that automatically inserts pre-defined content into new wiki pages.
+* Full-text search.
 * A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
 * Wiki pages save to plain text files under the "w" directory
 * Delete a wiki page from disk by saving an empty content.
 * Support common markdown syntax such as headline style and links [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage).
 * Each WikiPage has a reverse index. You can use this feature to group pages by tags.
 * A [top-level index](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show every page in the wiki.
-* Auto save after 30 minutes of editing.
+* AutoSave after 30 minutes of editing.
 
 ## Text Formatting
 * WikiNames are replaced with internal links.
@@ -89,6 +91,10 @@ There's no difference between Tags and WikiWords. When you create a new page, th
 For example, you can create a page called ToDo, and put the word ToDo to other pages and see references here:
 http://127.0.0.1:8000/cgi-bin/wypyplus?p=ToDo&q=f
 
+### How to define and use a tempalte
+You can create a template just like any other wiki page. A tempalte name must start with "Tpl" and follow by three characters. WyPyPlus will automatically insert content to a new wiki page when the first three character of the page matche the tempalte.
+
+For example, If you create a template page called TplJan, a new page called Jan23 will load the content from tempalte. 
 
 # Source Code
 

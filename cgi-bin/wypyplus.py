@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 pre='(?:^|\n)```((?:.|\n)+?)\n```';link='\[([^]]*)]\(\s*((?:http[s]?://)?[^)]+)\s*\)';import sys,re,os,cgi;
 from datetime import timedelta as td,datetime as dt;q,x,h,w=cgi.escape,os.path.exists,'<a href=','wypyplus.py?p='
-load,t=lambda n:(x('w/'+n) and open('w/'+n).read()) or '','</textarea>'
+load,t=lambda n:(x('w/'+n) and open('w/'+n).read()) or (x('w/'+'Tpl'+n[:3]) and open('w/'+'Tpl'+n[:3]).read()) or '','</textarea>'
 f,i=cgi.FormContent(),'put type';y=f.get('p',[''])[0];y=('WyPyPlus',y)[y.isalnum()]
 fs,do,main=lambda s:re.sub('^ #', '#',reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),(\
 '(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]*){1,})',lambda m:(m.group(1)+'%s'+h+w+m.group(2)+\

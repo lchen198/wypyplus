@@ -17,6 +17,7 @@ The Built-in Calendar
 * Runs on Mac, Linux and Windows.
 * A built-in calendar and daily journal.
 * A GetThingsDone template to help you setup your GTD system quickly.
+* A tempalte system that automatically inserts pre-defined content into new wiki pages.
 * Full-text search.
 * A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
 * Wiki pages save to plain text files under the "w" directory
@@ -106,6 +107,11 @@ There's no difference between Tags and WikiWords. When you create a new page, th
 
 For example, you can create a page called ToDo, and put the word ToDo to other pages and see references here:
 http://127.0.0.1:8000/cgi-bin/wypyplus?p=ToDo&q=f
+
+### How to define and use a tempalte
+You can create a template just like any other wiki page. A tempalte name must start with "Tpl" and follow by three characters. WyPyPlus will automatically insert its content to a new wiki page when the first three characters of the page matche the tempalte.
+
+For example, If you create a template page called TplJan, a new page called Jan23 will load the content from template. 
 
 # Source Code
 
