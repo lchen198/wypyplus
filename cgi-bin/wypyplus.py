@@ -8,16 +8,15 @@ fs,do,main=lambda s:re.sub('^ #', '#',reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],
 '(^|[^=/\-_A-Za-z0-9?])(([A-Z][a-z]+){2,})',lambda m:(m.group(1)+'%s'+h+w+m.group(2)+\
 '%s>%s</a>')%((m.group(2),'&amp;q=e','?'),('','',m.group(2)))[x('w/'+m.group(2))]),\
 ('^\{\{$','\n<ul>'),('^\* ','<li>'),('^}}$','</ul>'),('^---$','<hr>'),(pre,'<pre>\g<1></pre>'),
-('^# (.*)$','<h1>\g<1></h1>'),('^## (.*)$', '<h2>\g<1></h2>'),
-('^### (.*)$', '<h3>\g<1></h3>'),('\*\*(.*)\*\*','<b>\g<1></b>'),
+('^# (.*)$','<h1>\g<1></h1>'),('^## (.*)$', '<h2>\g<1></h2>'),('^### (.*)$','<h3>\g<1></h3>'),('\*\*(.*)\*\*','<b>\g<1></b>'),
 ('\!'+link,'<img src="\g<2>" alt="\g<1>">'),('(^|[^!])'+link,"\g<1>"+h+'"\g<3>">\g<2></a>'),
 ('(^|[^"])(http[s]?:[^<>"\s]+)',"\g<1>"+h+'"\g<2>">\g<2></a>'),('\n\n','<p>')),q(s)),0,re.MULTILINE),\
-lambda m,n:{'get':'<h1>%s%sWyPyPlus>WyPyPlus</a>:%s%s%s&amp;q=f>%s</a>:%s%s%s&amp;q=e>✎</a></h1><p>%s'%(\
+lambda m,n:{'get':'<h1>%s%sWyPyPlus>WyPyPlus</a>:%s%s%s&amp;q=f>%s</a>:%s%s%s&amp;q=e>✎</a></h1><form><input type="text" \
+placeholder="Search.." name="p"><input type="hidden" name="q" value="f"><button type="submit">Search</button></form><p>%s'%(\
 h,w,h,w,n,n,h,w,n,fs(re.sub(pre, lambda m: '\n'.join([i if not i.startswith('#') else ' '+i
 for i in m.group(0).splitlines()]), load(n))) or n),'edit':'<form name="e" action=%s%s method=POST><h1>%s <in'\
 '%s=hidden name=p value=%s><in%s=submit></h1>Opened at: %s AutoSave at: %s<textarea name=t id=ta cols=80 rows=24'\
-'>%s'%(w,n,fs(n),i,n,i,dt.now().strftime("%m/%d/%Y %H:%M"),(dt.now()+td(minutes=30)).strftime("%H:%M"),q(load(n)))+t,'find':('<h1>Links: %s</h1>'%fs(n))+fs(
-'{{\n* %s\n}}'%'\n* '.join([d for d in os.listdir('w/') if n == "All" or load(d).count(n)]))
+'>%s'%(w,n,fs(n),i,n,i,dt.now().strftime("%m/%d/%Y %H:%M"),(dt.now()+td(minutes=30)).strftime("%H:%M"),q(load(n)))+t,'find':('<h1>Links: %s</h1>'%fs(n))+fs('{{\n* %s\n}}'%'\n* '.join([d for d in os.listdir('w/') if n == "All" or load(d).count(n)]))
 }.get(m),lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or ('t' in f or (os.remove('w/'+y) and False))\
 and open('w/'+y,'w').write(f['t'][0])`+`sys.stdout.write("Content-type: text/html; charset=utf-8\r\n\r\n"\
 "<head><link rel='stylesheet' href='../sakura.css'><script>var wait=setTimeout('document.e.submit();',1.8e6);function count() {var text=document.getElementById('ta').value;var num=text.length==0?0:1;for(var i=0;i<text.length;i++){if (text[i]==' '){num+=1;}};alert(num)}</script>\
