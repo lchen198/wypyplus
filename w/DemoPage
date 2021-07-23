@@ -18,11 +18,7 @@ Raw URL link:   http://www.google.com
 
 Markdown link: [google homepage](http://google.com)
 
-Reference to a date and month
-
-Jan01
-
-Jan2021
+Reference to a date or a month: Jan1 Jan2021
 
 ## Images
 
