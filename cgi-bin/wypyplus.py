@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 pre='(?:^|\n)```((?:.|\n)+?)\n```';link='\[([^]]*)]\(\s*((?:http[s]?://)?[^)]+)\s*\)';import sys,re,os,cgi;
 from datetime import timedelta as td,datetime as dt;q,x,h,w=cgi.escape,os.path.exists,'<a href=','wypyplus.py?p='
-load,t=lambda n:(x('w/'+n) and open('w/'+n).read()) or '','</textarea></form><button onclick="count()">Count Words</button>'
-f,i=cgi.FormContent(),'put type';y=f.get('p',[''])[0];y=('WyPyPlus',y)[y.isalpha()]
+load,t=lambda n:(x('w/'+n) and open('w/'+n).read()) or '','</textarea>'
+f,i=cgi.FormContent(),'put type';y=f.get('p',[''])[0];y=('WyPyPlus',y)[y.isalnum()]
 fs,do,main=lambda s:re.sub('^ #', '#',reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),(\
-'(^|[^=/\-_A-Za-z0-9?])(([A-Z][a-z]+){2,})',lambda m:(m.group(1)+'%s'+h+w+m.group(2)+\
+'(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]+){1,})',lambda m:(m.group(1)+'%s'+h+w+m.group(2)+\
 '%s>%s</a>')%((m.group(2),'&amp;q=e','?'),('','',m.group(2)))[x('w/'+m.group(2))]),\
 ('^\{\{$','\n<ul>'),('^\* ','<li>'),('^}}$','</ul>'),('^---$','<hr>'),(pre,'<pre>\g<1></pre>'),
 ('^# (.*)$','<h1>\g<1></h1>'),('^## (.*)$', '<h2>\g<1></h2>'),('^### (.*)$','<h3>\g<1></h3>'),('\*\*(.*)\*\*','<b>\g<1></b>'),
@@ -19,6 +19,6 @@ for i in m.group(0).splitlines()]), load(n))) or n),'edit':'<form name="e" actio
 '>%s'%(w,n,fs(n),i,n,i,dt.now().strftime("%m/%d/%Y %H:%M"),(dt.now()+td(minutes=30)).strftime("%H:%M"),q(load(n)))+t,'find':('<h1>Links: %s</h1>'%fs(n))+fs('{{\n* %s\n}}'%'\n* '.join(sorted([d for d in os.listdir('w/') if n == "All" or load(d).count(n)])))
 }.get(m),lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or ('t' in f or (os.remove('w/'+y) and False))\
 and open('w/'+y,'w').write(f['t'][0])`+`sys.stdout.write("Content-type: text/html; charset=utf-8\r\n\r\n"\
-"<head><link rel='stylesheet' href='../sakura.css'><script>var wait=setTimeout('document.e.submit();',1.8e6);function count() {var text=document.getElementById('ta').value;var num=text.length==0?0:1;for(var i=0;i<text.length;i++){if (text[i]==' '){num+=1;}};alert(num)}</script>\
-</head><title>%s</title>"%y+do({'e':'edit','f':'find'}.get(f.get('q',[None])[0],'get'),y))`;(__name__=="__main__") and main()
+"<head><link rel='stylesheet' href='../sakura.css'></script></head><title>%s</title>"%y+do({'e':'edit','f':'find'}.get(f.get('q',[None])[0],'get'),y))`;
+(__name__=="__main__") and main()
 
