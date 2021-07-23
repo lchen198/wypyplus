@@ -16,7 +16,7 @@ The Built-in Calendar
 * Only 23 lines of Python code with no external dependency other than the standard library.
 * Runs on Mac, Linux and Windows.
 * A built-in calendar and daily journal.
-* A GetThingsDone template to help you setup your GTD system quickly.
+* A built-in GetThingsDone template to help you set up GTD quickly.
 * A tempalte system that automatically inserts pre-defined content into new wiki pages.
 * Full-text search.
 * A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
