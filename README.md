@@ -7,7 +7,7 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 </p>
 A minimal editor that does not get in the way.
 <p align="center">
-<img src="editor.png" width="80%">
+<img src="editor.png">
 </p>
 
 ## New Features:
