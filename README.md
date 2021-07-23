@@ -10,6 +10,8 @@ A minimal editor that does not get in the way.
 <img src="editor.png">
 </p>
 
+<p align="center"><img src="calendar.png"></p>
+
 ## New Features:
 * Only 23 lines of Python code with no external dependency other than the standard library.
 * Runs on Mac, Linux and Windows.
@@ -21,7 +23,7 @@ A minimal editor that does not get in the way.
 * A [top-level index](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show every page in the wiki.
 * When you start editing a page, WyPyPlus will automatically save and close it after 30 minutes.
 * Full-text search.
-* A calendar.
+* A built-in calendar.
 
 ## Text Formatting
 * WikiNames are replaced with internal links.
