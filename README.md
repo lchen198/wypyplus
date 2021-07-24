@@ -24,7 +24,7 @@ The Built-in Calendar
 * Only 23 lines of Python code with no external dependency other than the standard library.
 * Runs on Mac, Linux and Windows.
 * Support basic wiki syntax. [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage)
-* No database. Your files are in the /w folder.
+* Your files are in the /w folder.
 
 ### To make your life easier
 * An example calendar and daily journal.
@@ -41,17 +41,14 @@ The Built-in Calendar
 <img src="example2.png">
 </p>
 
-**Benefits** 
+**Other Benefits** 
 * Fast!!
-* Support just enough wiki syntaxes to be useful. (See [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage))
 * Takes less than a minute to set up and get going.
-* Runs anywhere that has Python and a browser.
 * Works perfectly offline.
 * No config file to mess with.
 * No authentication. It's a personal wiki and you should run it on your own machine. 
 * No database. Wiki pages are just text files.
 * Low maintenance. Just backup the entire folder. 
-* Extendable.
 
 **Design Tradeoffs**
 
@@ -99,13 +96,13 @@ The UI should be fairly self-explanatory.
 * Click the ? mark after a CamelCased word to create a new page.
 * Click the Submit button to save a page. If you save an empty page, WyPyPlus will delete it from disk.
 
-### How to create tags
-There's no difference between Tags and WikiWords. When you create a new page, there will be a link on the top of the screen to show all pages that reference it. 
+### How to create tags?
+Tags are just wiki pages. When you create a new page, there will be a link on the top of the screen to show all pages that reference it. 
 
 For example, you can create a page called ToDo, and put the word ToDo to other pages and see references here:
 http://127.0.0.1:8000/cgi-bin/wypyplus?p=ToDo&q=f
 
-### How to define and use a template
+### How to define and use a template?
 You can create a template just like any other wiki page. A template name must start with "Tpl" and follow by three characters. WyPyPlus will automatically insert its content to a new wiki page when the first three characters of the page matches the template
 
 For example, If you create a template page called TplJan, a new page called Jan23 will load the content from the template. 
