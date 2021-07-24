@@ -107,7 +107,7 @@ You can create a template just like any other wiki page. A template name must st
 
 For example, If you create a template page called TplJan, a new page called Jan23 will load the content from the template. 
 
-# Source Code
+# I want XYZ but WyPyPlus doesn't support. 
 
 The original wypy code is highly compressed. However, variable names are carefully picked so that the code is still somewhat readable. 
 
