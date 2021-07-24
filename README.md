@@ -1,6 +1,13 @@
 # WyPyPlus: A personal wiki in 23 lines of code
 
-WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of code. It is an extension of [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer during a [ShortestWikiContest](http://wiki.c2.com/?ShortestWikiContest). The original project implements a wiki in just 11 lines of Python code, which is an amazing achievement. However, wypy wiki doesn't have many features I consider as essential.
+WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of code based on [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer in 2004 during a [ShortestWikiContest](http://wiki.c2.com/?ShortestWikiContest).
+
+
+WyPyPlus is a journey to discover the essence of personal wiki and get rid of everything else. It tries to keep a minimal set of features and pack them in the tiniest space possible.
+
+It tries to be an old typewriter with the magic of linking information. There’s nothing between you and your content. You don’t need to worry about configuration, backup, user authentication, subscription fee, system update and so on. It is just you and your content. At the end of the day, don't you want a Wiki that just works and is free?
+
+Other software projects always tell you that they are easy to set up and easy to use. WyPyPlus tells you that it is easy for you to leave. Your content are text files stored under the /w directory. You can move to other places if you need more than what WyPyPlus offers.
 
 <p align="center">
 <img src="example.png"> 
@@ -12,21 +19,42 @@ A minimal editor that does not get in the way.
 The Built-in Calendar 
 <p align="center"><img src="calendar.png"></p>
 
-## New Features:
+### The key feature of WyPyPluse is the lack of features. You will be amazed by how much you can accomplised with a simple tool.
+
 * Only 23 lines of Python code with no external dependency other than the standard library.
 * Runs on Mac, Linux and Windows.
-* A built-in calendar and daily journal.
-* A built-in GetThingsDone template to help you set up GTD quickly.
-* A tempalte system that automatically inserts pre-defined content into new wiki pages.
+* Support basic wiki syntax. [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage)
+* Your files are in the /w folder.
+
+### To make your life easier
+* An example calendar and daily journal.
+* An example GetThingsDone guide to help you set up GTD quickly.
+* A template system to insert pre-defined content.
 * Full-text search.
 * A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
-* Wiki pages save to plain text files under the "w" directory
 * Delete a wiki page from disk by saving an empty content.
-* Support common markdown syntax such as headline style and links [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage).
 * Each WikiPage has a reverse index. You can use this feature to group pages by tags.
-* A [top-level index](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show every page in the wiki.
+* An [index page](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show all your files in sorted order.
 * AutoSave after 30 minutes of editing.
 
+<p align="center">
+<img src="example2.png">
+</p>
+
+**Other Benefits** 
+* Fast!!
+* Takes less than a minute to set up and get going.
+* Works perfectly offline.
+* No config file to mess with.
+* No authentication. It's a personal wiki and you should run it on your own machine. 
+* No database. Wiki pages are just text files.
+* Low maintenance. Just backup the entire folder. 
+
+**Design Tradeoffs**
+
+* To keep things minimal, WyPyPlus only supports a subset of markdown syntaxes. 
+* To avoid depending on an external parser, WyPyPlus uses regular expresisons to match tags. It is not perfect, but farily useable. 
+* WyPyPlus has no config file. You can't mis-configure it. If you really need something, just edit the source code.
 
 ## Text Formatting
 * WikiNames are replaced with internal links.
@@ -41,40 +69,6 @@ The Built-in Calendar
 * "---" creates an \<hr\> element.
 * Markdown style [link](https://www.markdownguide.org/basic-syntax/#links) and [image tag](https://www.markdownguide.org/basic-syntax/#images-1).
 * All HTML is replaced with its quoted equivalent (i.e. is forbidden).
-
-<p align="center">
-<img src="example2.png">
-</p>
-
-## WyPyPlus vs Other Wiki Software
-
-WyPyPlus is the result of a deep meditation to find out the essence of personal wiki and get rid of everything else. It tries to keep the purest form of wiki packed in the tiniest space possible. 
-
-WyPyPlus helps you control your personal data by keeping data close to you. It doesn't upload your data to the cloud or a remote server.
-
-Comparing to other self-hosted Wiki, WyPyPlus is much easier to set up and maintain. You don't need to set up a Linux box and secure it. You don't need to mess with web front-end configurations and database. The more features a software has, the higher maintenance cost you will pay. Things add up pretty quickly. At the end of the day, don't you want a Wiki that just works?
-
-### The key feature of WyPyPluse is the lack of features.
-
-Wiki pages are just text files. If you don't want WyPyPlus, you can easily move to somewhere else that supports markdown.
-
-**Benefits** 
-* Fast!!
-* Support just enough wiki syntaxes to be useful. (See [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage))
-* Takes less than a minute to set up and get going.
-* Runs anywhere that has Python and a browser.
-* Works perfectly offline.
-* No config file to mess with.
-* No authentication. It's a personal wiki and you should run it on your own machine. 
-* No database. Wiki pages are just text files.
-* Low maintenance. Just backup the entire folder. 
-* Extendable.
-
-**Design Tradeoffs**
-
-* To keep things minimal, WyPyPlus only supports a subset of markdown syntaxes. 
-* To avoid depending on an external parser, WyPyPlus uses regular expresisons to match tags. It is not perfect, but farily useable. 
-* WyPyPlus has no config file. You can't mis-configure it. If you really need something, just edit the source code.
 
 ## Install and Use
 
@@ -102,18 +96,18 @@ The UI should be fairly self-explanatory.
 * Click the ? mark after a CamelCased word to create a new page.
 * Click the Submit button to save a page. If you save an empty page, WyPyPlus will delete it from disk.
 
-### How to create tags
-There's no difference between Tags and WikiWords. When you create a new page, there will be a link on the top of the screen to show all pages that reference it. 
+### How to create tags?
+Tags are just wiki pages. When you create a new page, there will be a link on the top of the screen to show all pages that reference it. 
 
 For example, you can create a page called ToDo, and put the word ToDo to other pages and see references here:
 http://127.0.0.1:8000/cgi-bin/wypyplus?p=ToDo&q=f
 
-### How to define and use a tempalte
-You can create a template just like any other wiki page. A tempalte name must start with "Tpl" and follow by three characters. WyPyPlus will automatically insert its content to a new wiki page when the first three characters of the page matche the tempalte.
+### How to define and use a template?
+You can create a template just like any other wiki page. A template name must start with "Tpl" and follow by three characters. WyPyPlus will automatically insert its content to a new wiki page when the first three characters of the page matches the template
 
-For example, If you create a template page called TplJan, a new page called Jan23 will load the content from template. 
+For example, If you create a template page called TplJan, a new page called Jan23 will load the content from the template. 
 
-# Source Code
+# I want XYZ but WyPyPlus doesn't support. 
 
 The original wypy code is highly compressed. However, variable names are carefully picked so that the code is still somewhat readable. 
 
