@@ -1,6 +1,13 @@
 # WyPyPlus: A personal wiki in 23 lines of code
 
-WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of code. It is an extension of [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer during a [ShortestWikiContest](http://wiki.c2.com/?ShortestWikiContest). The original project implements a wiki in just 11 lines of Python code, which is an amazing achievement. However, wypy wiki doesn't have many features I consider as essential.
+WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of code based on [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer in 2004 during a [ShortestWikiContest](http://wiki.c2.com/?ShortestWikiContest).
+
+
+WyPyPlus is a journey to discover the essence of personal wiki and get rid of everything else. It tries to keep a minimal set of features and pack them in the tiniest space possible.
+
+It tries to be an old typewriter with the magic of linking information. There’s nothing between you and your content. You don’t need to worry about configuration, backup, user authentication, subscription fee, system update and so on. It is just you and your content. At the end of the day, don't you want a Wiki that just works and is free?
+
+Other software projects always tell you that they are easy to set up and easy to use. WyPyPlus tells you that it is easy for you to leave. Your content are text files stored under the /w directory. You can move to other places if you need more than what WyPyPlus offers.
 
 <p align="center">
 <img src="example.png"> 
@@ -12,36 +19,27 @@ A minimal editor that does not get in the way.
 The Built-in Calendar 
 <p align="center"><img src="calendar.png"></p>
 
-## Key Features:
+### The key feature of WyPyPluse is the lack of features. You will be amazed by how much you can accomplised with a simple tool.
+
 * Only 23 lines of Python code with no external dependency other than the standard library.
 * Runs on Mac, Linux and Windows.
+* Support basic wiki syntax. [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage)
+* No database. Your files are in the /w folder.
+
+### To make your life easier
 * An example calendar and daily journal.
 * An example GetThingsDone guide to help you set up GTD quickly.
-* A template system that automatically inserts pre-defined content into new wiki pages.
+* A template system to insert pre-defined content.
 * Full-text search.
 * A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
-* Wiki pages save to plain text files under the "w" directory
 * Delete a wiki page from disk by saving an empty content.
-* Support common markdown syntax such as headline style and links [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage).
 * Each WikiPage has a reverse index. You can use this feature to group pages by tags.
-* A [top-level index](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show every page in the wiki.
+* A [page](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show all your files in sorted order.
 * AutoSave after 30 minutes of editing.
 
 <p align="center">
 <img src="example2.png">
 </p>
-
-## WyPyPlus vs Other Wiki Software
-
-WyPyPlus is the result of a deep meditation to find out the essence of personal wiki and get rid of everything else. It tries to keep the purest form of wiki packed in the tiniest space possible. 
-
-WyPyPlus helps you control your personal data by keeping data close to you. It doesn't upload your data to the cloud or a remote server.
-
-Comparing to other self-hosted Wiki, WyPyPlus is much easier to set up and maintain. You don't need to set up a Linux box and secure it. You don't need to mess with web front-end configurations and database. The more features a software has, the higher maintenance cost you will pay. Things add up pretty quickly. At the end of the day, don't you want a Wiki that just works?
-
-### The key feature of WyPyPluse is the lack of features. You will be amazed by how much you can accomplised just using the core feaures in WyPyPlus.
-
-Wiki pages are just text files. If you don't want WyPyPlus, you can easily move to somewhere else that supports markdown.
 
 **Benefits** 
 * Fast!!
