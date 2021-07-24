@@ -12,11 +12,11 @@ A minimal editor that does not get in the way.
 The Built-in Calendar 
 <p align="center"><img src="calendar.png"></p>
 
-## New Features:
+## Key Features:
 * Only 23 lines of Python code with no external dependency other than the standard library.
 * Runs on Mac, Linux and Windows.
-* A built-in calendar and daily journal.
-* A built-in GetThingsDone guide to help you set up GTD quickly.
+* An example calendar and daily journal.
+* An example GetThingsDone guide to help you set up GTD quickly.
 * A template system that automatically inserts pre-defined content into new wiki pages.
 * Full-text search.
 * A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
@@ -26,21 +26,6 @@ The Built-in Calendar
 * Each WikiPage has a reverse index. You can use this feature to group pages by tags.
 * A [top-level index](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show every page in the wiki.
 * AutoSave after 30 minutes of editing.
-
-
-## Text Formatting
-* WikiNames are replaced with internal links.
-* Markdown style ```**bold**```
-* "\n{{" starts an unordered list.
-* "\n* [text]" is a list item in an unordered list.
-* "\n}}" ends an unordered list.
-* "\n#" inserts H1
-* "\n##" inserts H2
-* "\n###" inserts H3
-* To format code or text into its own distinct block, use triple backticks: \`\`\`.
-* "---" creates an \<hr\> element.
-* Markdown style [link](https://www.markdownguide.org/basic-syntax/#links) and [image tag](https://www.markdownguide.org/basic-syntax/#images-1).
-* All HTML is replaced with its quoted equivalent (i.e. is forbidden).
 
 <p align="center">
 <img src="example2.png">
@@ -54,7 +39,7 @@ WyPyPlus helps you control your personal data by keeping data close to you. It d
 
 Comparing to other self-hosted Wiki, WyPyPlus is much easier to set up and maintain. You don't need to set up a Linux box and secure it. You don't need to mess with web front-end configurations and database. The more features a software has, the higher maintenance cost you will pay. Things add up pretty quickly. At the end of the day, don't you want a Wiki that just works?
 
-### The key feature of WyPyPluse is the lack of features.
+### The key feature of WyPyPluse is the lack of features. You will be amazed by how much you can accomplised just using the core feaures in WyPyPlus.
 
 Wiki pages are just text files. If you don't want WyPyPlus, you can easily move to somewhere else that supports markdown.
 
@@ -75,6 +60,20 @@ Wiki pages are just text files. If you don't want WyPyPlus, you can easily move 
 * To keep things minimal, WyPyPlus only supports a subset of markdown syntaxes. 
 * To avoid depending on an external parser, WyPyPlus uses regular expresisons to match tags. It is not perfect, but farily useable. 
 * WyPyPlus has no config file. You can't mis-configure it. If you really need something, just edit the source code.
+
+## Text Formatting
+* WikiNames are replaced with internal links.
+* Markdown style ```**bold**```
+* "\n{{" starts an unordered list.
+* "\n* [text]" is a list item in an unordered list.
+* "\n}}" ends an unordered list.
+* "\n#" inserts H1
+* "\n##" inserts H2
+* "\n###" inserts H3
+* To format code or text into its own distinct block, use triple backticks: \`\`\`.
+* "---" creates an \<hr\> element.
+* Markdown style [link](https://www.markdownguide.org/basic-syntax/#links) and [image tag](https://www.markdownguide.org/basic-syntax/#images-1).
+* All HTML is replaced with its quoted equivalent (i.e. is forbidden).
 
 ## Install and Use
 
