@@ -107,11 +107,16 @@ You can create a template just like any other wiki page. A template name must st
 
 For example, If you create a template page called TplJan, a new page called Jan23 will load the content from the template. 
 
-# I want XYZ but WyPyPlus doesn't support. 
+# I want XYZ....
 
 The original wypy code is highly compressed. However, variable names are carefully picked so that the code is still somewhat readable. 
 
 For example, if you don't like the CSS, just replace ```<head><link rel='stylesheet' href='..\sakura.css' type='text/css'></head> ```with whatever you like.
+
+ If you need support for LATEX math, add the following script to include [MathJax](https://www.mathjax.org):
+```
+ <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+```
 
 To support new syntax, you can add a tuple of (regex_pattern, replace_pattern). The following example extracts content after ## and enclose it with an h2 headline. 
 ```
