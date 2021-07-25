@@ -5,7 +5,7 @@ from datetime import timedelta as td,datetime as dt;q,x,h,w=cgi.escape,os.path.e
 load,t=lambda n:(x('w/'+n) and open('w/'+n).read()) or (x('w/'+'Tpl'+n[:3]) and open('w/'+'Tpl'+n[:3]).read()) or '','</textarea>'
 f,i=cgi.FormContent(),'put type';y=f.get('p',[''])[0];y=('WyPyPlus',y)[y.isalnum()]
 fs,do,main=lambda s:re.sub('^ #', '#',reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),
-('^@INCLUDE=(\w+)$',lambda m: x('w/'+m.group(1)) and '\n'.join(open('w/'+m.group(1)).readlines()) or ''),('(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]*){1,})',
+('^@INCLUDE=(\w+)$',lambda m: x('w/'+m.group(1)) and open('w/'+m.group(1)).read() or ''),('(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]*){1,})',
 lambda m:(m.group(1)+'%s'+h+w+m.group(2)+'%s>%s</a>')%((m.group(2),'&amp;q=e','?'),('','',m.group(2)))[x('w/'+m.group(2))]),
 ('^\{\{$','\n<ul>'),('^\*(.*)$','<li>\g<1></li>'),('^}}$','</ul>'),('^---$','<hr>'),(pre,'<pre>\g<1></pre>'),
 ('^# (.*)$','<h1>\g<1></h1>'),('^## (.*)$', '<h2>\g<1></h2>'),('^### (.*)$','<h3>\g<1></h3>'),
