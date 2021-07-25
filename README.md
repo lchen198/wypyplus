@@ -72,7 +72,7 @@ The Built-in Calendar
 
 ## Install and Use
 
-* You need Python 2 to run this application. Mac and Linux already have Python 2. For Windows users, please install Python 2.7.
+* You need Python 2 to run this application. Mac and most Linux distro already have Python 2. For Windows users, please install [Python 2.7](https://www.python.org/download/releases/2.7/).
 
 * Download WyPyPlus and extract it to a folder (E.g wypy_wiki).
 ```
