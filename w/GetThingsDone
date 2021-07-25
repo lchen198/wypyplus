@@ -11,7 +11,7 @@ WyPyPlus comes with a built-in calendar: Calendar2021. You can create pages for 
 
 # Create Pages and Tags
 
-Click the ? marks at the end of each word to create page.
+Click the ? marks at the end of each word to create them.
 
 InBox
 
@@ -27,16 +27,18 @@ SomeDay
 
 TrashBin
 
-Similarly, you can create tag pages and add them anywhere in other wiki pages. Later, you can find all the references by using the reverse index.
+You can create tag pages and add them anywhere in other wiki pages. Later, you can find all the references by using the reverse index.
 
 Here are a few example tags:
 AtHome, AtOffice, HaveDone, ToDay, ThisWeek, ThisMonth, May04
 
 # Add a Shortcut Menu.
-Jumping between pages could be a hassle. For easy access, you can put a group of links on the top of the pages that you often use.
 
-Here's an example:
-GetThingsDone | InBox | NextAction | WaitingFor
+Jumping between pages could be a hassle. For easy access, you can put a group of links in a menu and include it in other files. 
+
+Create a GtdMenu page and copy the following links: GetThingsDone | InBox | NextAction | WaitingFor
+
+Now you can put @INCLUDE=GtdMenu on pages that you want to have this menu. 
 
 # Workflow
 
@@ -52,7 +54,7 @@ The GTD workflow consists of five stages: capture, clarify, organize, reflect, a
 
 Once all the material is captured in the InBox, each item is clarified and organized by asking and answering questions about each item in turn as shown in the black boxes in the logic tree diagram. 
 
-Take action on each item in the InBox. 
+An item in the InBox could be:
 * in the TrashBin if not needed.
 * on the SomeDay list.
 * in MyReference.
@@ -62,4 +64,4 @@ Take action on each item in the InBox.
 * on the Calendar2021.
 * Empty one's InBox daily or at least weekly. Don't use one's inbox as a "to do" list. Don't put clarified items back into the inbox. Emptying one's inbox doesn't mean finishing everything. It just means applying the "capture, clarify, organize" steps to all one's "stuff".
 
-Next, reflection (termed planning in the first edition) occurs. Multi-step projects identified above are assigned a desired outcome and a single NextAction". Finally, a task from one's task list is worked on unless the calendar dictates otherwise. One selects which task to work on next by considering where one is (i.e., the "context", such as at home, at work, out shopping, by the phone, at one's computer, with a particular person), time available, energy available, and priority.
+Next, reflection (termed planning in the first edition) occurs. Multi-step projects identified above are assigned a desired outcome and a single "next action". Finally, a task from one's task list is worked on unless the calendar dictates otherwise. One selects which task to work on next by considering where one is (i.e., the "context", such as at home, at work, out shopping, by the phone, at one's computer, with a particular person), time available, energy available, and priority.

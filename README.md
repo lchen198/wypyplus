@@ -37,6 +37,7 @@ The Built-in Calendar
 * An [index page](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show all your files in sorted order.
 * AutoSave after 30 minutes of editing.
 * Display [AsciiMath](http://asciimath.org) notations.
+* Use @INCLUDE=WikiPage to include content from another page. 
 
 <p align="center">
 <img src="example2.png">
@@ -69,6 +70,7 @@ The Built-in Calendar
 * To format code or text into its own distinct block, use triple backticks: \`\`\`.
 * "---" creates an \<hr\> element.
 * Markdown style [link](https://www.markdownguide.org/basic-syntax/#links) and [image tag](https://www.markdownguide.org/basic-syntax/#images-1).
+* "\n@INCLUDE=WikiPage" to include the content from another page. 
 * All HTML is replaced with its quoted equivalent (i.e. is forbidden).
 
 ## Install and Use
