@@ -108,13 +108,13 @@ You can create a template just like any other wiki page. A template name must st
 
 For example, If you create a template page called TplJan, a new page called Jan23 will load the content from the template. 
 
-# I want XYZ....
+# How do I customize WyPyPlus?
 
 The original wypy code is highly compressed. However, variable names are carefully picked so that the code is still somewhat readable. 
 
-For example, if you don't like the CSS, just replace ```<head><link rel='stylesheet' href='..\sakura.css' type='text/css'></head> ```with whatever you like.
+For example, if you don't like the CSS, just replace ```<head><link rel='stylesheet' href='..\sakura.css' type='text/css'></head> ```with whatever you like. You can find a lot more themes in [this site](https://dohliam.github.io/dropin-minimal-css).
 
- If you need support for LATEX math, add the following script to include [MathJax](https://www.mathjax.org):
+ WyPyPlus supports AsciiMath notation. If you want to write LaTeX, include the following instead.
 ```
  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 ```
