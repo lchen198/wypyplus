@@ -36,6 +36,7 @@ The Built-in Calendar
 * Each WikiPage has a reverse index. You can use this feature to group pages by tags.
 * An [index page](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show all your files in sorted order.
 * AutoSave after 30 minutes of editing.
+* Display [AsciiMath](http://asciimath.org) notations.
 
 <p align="center">
 <img src="example2.png">

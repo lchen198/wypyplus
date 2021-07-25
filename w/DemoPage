@@ -8,6 +8,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 This is a **Bold** text!
 
+## Ascii Math
+
+`
+x=(-b +- sqrt(b^2 – 4ac))/(2a)
+`
+
 ## Links
 
 List all files in this wiki: [All](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f)

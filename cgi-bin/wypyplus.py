@@ -18,6 +18,6 @@ fs(re.sub(pre, lambda m: '\n'.join([i if not i.startswith('#') else ' '+i for i 
 'find':('<h1>Links: %s</h1>'%fs(n))+fs('{{\n* %s\n}}'%'\n* '.join(sorted([d for d in os.listdir('w/') if n == "All" or load(d).count(n)])))
 }.get(m),lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or ('t' in f or (os.remove('w/'+y) and False))\
 and open('w/'+y,'w').write(f['t'][0])`+`sys.stdout.write("Content-type: text/html; charset=utf-8\r\n\r\n"\
-"<head><meta content='width=device-width, initial-scale=1' name='viewport'><link rel='stylesheet' href='../sakura.css'>\
-</script></head><title>%s</title>"%y+do({'e':'edit','f':'find'}.get(f.get('q',[None])[0],'get'),y))`;
+'<head><meta content="width=device-width, initial-scale=1" name="viewport"><link rel="stylesheet" href="../sakura.css"></script>\
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script></head><title>%s</title>'%y+do({'e':'edit','f':'find'}.get(f.get('q',[None])[0],'get'),y))`;
 (__name__=="__main__") and main()
