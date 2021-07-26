@@ -37,7 +37,7 @@ The Built-in Calendar
 * An [index page](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show all your files in sorted order.
 * AutoSave after 30 minutes of editing.
 * Use @INCLUDE=WikiPage to include content from another page.
-* (Optional) Synatx highlight with [highlight.js](https://highlightjs.org).
+* (Optional) Syntax highlight with [highlight.js](https://highlightjs.org).
 * (Optional) Display [AsciiMath](http://asciimath.org) or LaTaX notations.
 
 
@@ -57,7 +57,7 @@ The Built-in Calendar
 **Design Tradeoffs**
 
 * To keep things minimal, WyPyPlus only supports a subset of markdown syntaxes. 
-* To avoid depending on an external parser, WyPyPlus uses regular expresisons to match tags. It is not perfect, but farily useable. 
+* To avoid depending on an external parser, WyPyPlus uses regular expression to match tags. It is not perfect, but fairly useable. 
 * WyPyPlus has no config file. You can't mis-configure it. If you really need something, just edit the source code.
 
 ## Text Formatting
