@@ -1,6 +1,3 @@
-This is a simple template for setting up GetThingsDone (GTD) in WyPyPlus.
-
-
 # What is GTD
 Getting Things Done (GTD) is actually two things: A productivity method, and a best-selling book by author and productivity consultant David Allen. 
 
@@ -34,11 +31,23 @@ AtHome, AtOffice, HaveDone, ToDay, ThisWeek, ThisMonth, May04
 
 # Add a Shortcut Menu.
 
-Jumping between pages could be a hassle. For easy access, you can put a group of links in a menu and include it in other files. 
+Jumping between pages could be a hassle. For easy access, you can put a group of links in a file and include it in other files. 
 
-Create a GtdMenu page and copy the following links: GetThingsDone | InBox | NextAction | WaitingFor
+Create a GtdMenu page and copy the following links:
+```
+InBox | NextAction | MyProject | WaitingFor | [Today]{wypyplus.py?p=Today} 
+```
+Now you can put @INCLUDE=GtdMenu on other pages. Note that **Today** is special page name maps to the wiki page of the day.  
 
-Now you can put @INCLUDE=GtdMenu on pages that you want to have this menu. 
+# Add a Template Page
+
+
+You can use template to put pre-defined text to new wiki pages. A template starts with "Tpl" and follows by three characters. It will match a page if the page starts with the same three characters. For example, if you create a page called TplJul with the following content:
+
+* My Priority
+* My Accomplishments
+
+When you create a new page Jul04, WyPyPlus will use the template.
 
 # Workflow
 
@@ -52,16 +61,4 @@ The GTD workflow consists of five stages: capture, clarify, organize, reflect, a
 
 ![WikiFlow](https://upload.wikimedia.org/wikipedia/commons/1/1b/GTDcanonical.png)
 
-Once all the material is captured in the InBox, each item is clarified and organized by asking and answering questions about each item in turn as shown in the black boxes in the logic tree diagram. 
-
-An item in the InBox could be:
-* in the TrashBin if not needed.
-* on the SomeDay list.
-* in MyReference.
-* add tasks to MyProject if it takes more than two minutes. 
-* delegated to someone else and, if one wants a reminder to follow up, added to a WaitingFor list.
-* on NextAction list if there is only one step to complete it.
-* on the Calendar2021.
-* Empty one's InBox daily or at least weekly. Don't use one's inbox as a "to do" list. Don't put clarified items back into the inbox. Emptying one's inbox doesn't mean finishing everything. It just means applying the "capture, clarify, organize" steps to all one's "stuff".
-
-Next, reflection (termed planning in the first edition) occurs. Multi-step projects identified above are assigned a desired outcome and a single "next action". Finally, a task from one's task list is worked on unless the calendar dictates otherwise. One selects which task to work on next by considering where one is (i.e., the "context", such as at home, at work, out shopping, by the phone, at one's computer, with a particular person), time available, energy available, and priority.
+Happy GTD.
