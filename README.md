@@ -21,7 +21,7 @@ The Built-in Calendar
 
 ### The key feature of WyPyPluse is the lack of features. You will be amazed by how much you can do with a simple tool.
 
-* Only 23 lines of Python code with no external dependency other than the standard library.
+* Only 23 lines of Python code with no external dependency other than the standard library. (2.6KB Python + 3.9KB CSS)
 * Runs on Mac, Linux and Windows.
 * Support basic wiki syntax. [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage)
 * Your files are in the /w folder.
