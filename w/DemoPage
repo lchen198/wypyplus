@@ -4,6 +4,17 @@
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
 
+WyPyPlus generates headline anchor links by default. If you don't like it, replace the headline function
+
+```
+hl=lambda m,n:'<h%d id=%s><a href=#%s>%s</a></h%d>'%(n,hs(m),hs(m),m.group(1),n)
+```
+with
+```
+hl=lambda m,n:'<h%d id=%s>%s</h%d>'%(n,hs(m),m.group(1),n)
+```
+
+
 ## Bold
 
 This is a **Bold** text!
