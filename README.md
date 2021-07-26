@@ -19,7 +19,7 @@ A minimal editor that does not get in the way.
 The Built-in Calendar 
 <p align="center"><img src="calendar.png"></p>
 
-### The key feature of WyPyPluse is the lack of features. You will be amazed by how much you can accomplised with a simple tool.
+### The key feature of WyPyPluse is the lack of features. You will be amazed by how much you can do with a simple tool.
 
 * Only 23 lines of Python code with no external dependency other than the standard library.
 * Runs on Mac, Linux and Windows.
