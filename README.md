@@ -37,7 +37,7 @@ The Built-in Calendar
 * An [index page](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show all your files in sorted order.
 * AutoSave after 30 minutes of editing.
 * Use @INCLUDE=WikiPage to include content from another page.
-* (Optional> Synatx highlight with [highlight.js](https://highlightjs.org).
+* (Optional) Synatx highlight with [highlight.js](https://highlightjs.org).
 * (Optional) Display [AsciiMath](http://asciimath.org) or LaTaX notations.
 
 
