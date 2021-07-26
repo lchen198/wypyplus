@@ -10,6 +10,11 @@ This is a **Bold** text!
 
 ## Ascii Math
 
+Insert the following line to the <head> section at the end of wypyplus.py to show AsciiMath.
+```
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+```
+
 `
 x=(-b +- sqrt(b^2 – 4ac))/(2a)
 `
