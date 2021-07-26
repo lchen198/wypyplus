@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 pre='(?:^|\n)```((?:.|\n)+?)\n```';pre_h='<pre><code>((?:.|\n)+?)</code></pre>';link='\[([^]]*)]\(\s*((?:http[s]?://)?[^)]+)\s*\)';
-hs=lambda m:hex(hash(m.group(1)))[-5:];hl=lambda m,n:'<h%d id=%s><a href=#%s>%s</a></h%d>'%(n,hs(m),hs(m),m.group(1),n);hl1=lambda m:hl(m, 1);hl2=lambda m:hl(m, 2);hl3=lambda m:hl(m,3) 
+hs=lambda m:hex(hash(m.group(1)))[-5:];hl=lambda m,n:'<h%d id=%s>%s<a href=#%s> ¶</a></h%d>'%(n,hs(m),m.group(1),hs(m),n);hl1=lambda m:hl(m, 1);hl2=lambda m:hl(m, 2);hl3=lambda m:hl(m,3) 
 import sys,re,os,cgi;from datetime import timedelta as td,datetime as dt;q,x,h,w=cgi.escape,os.path.exists,'<a href=','wypyplus.py?p='
 load,t=lambda n:(x('w/'+n) and open('w/'+n).read()) or (x('w/'+'Tpl'+n[:3]) and open('w/'+'Tpl'+n[:3]).read()) or '','</textarea>'
 f,i=cgi.FormContent(),'put type';y=f.get('p',[''])[0];y=dt.now().strftime("%b%d") if y=='Today' else ('WyPyPlus',y)[y.isalnum()]

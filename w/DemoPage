@@ -7,11 +7,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 WyPyPlus generates headline anchor links by default. If you don't like it, replace the headline function
 
 ```
-hl=lambda m,n:'<h%d id=%s><a href=#%s>%s</a></h%d>'%(n,hs(m),hs(m),m.group(1),n)
+hl=lambda m,n:'<h%d id=%s>%s<a href=#%s> ¶</a></h%d>'%(n,hs(m),m.group(1),hs(m),n);
 ```
 with
 ```
-hl=lambda m,n:'<h%d id=%s>%s</h%d>'%(n,hs(m),m.group(1),n)
+hl=lambda m,n:'<h%d>%s</h%d>'%(n,m.group(1),n)
 ```
 
 
