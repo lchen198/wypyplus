@@ -8,7 +8,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 This is a **Bold** text!
 
-## Ascii Math
+## (Optional) Ascii Math with [MathJax](http://mathjax.org)
 
 Insert the following line to the <head> section at the end of wypyplus.py to show AsciiMath.
 ```
@@ -18,6 +18,14 @@ Insert the following line to the <head> section at the end of wypyplus.py to sho
 `
 x=(-b +- sqrt(b^2 – 4ac))/(2a)
 `
+
+## (Optional) Synatx Highlight with [highlight.js](https://highlightjs.org)
+
+Insert the following line to the <head> section at the end of wypyplus.py to support synatx highligh for over 150 languages.
+```
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css">\
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script><script>hljs.highlightAll();</script>
+```
 
 ## Links
 

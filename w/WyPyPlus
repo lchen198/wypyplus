@@ -21,8 +21,10 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 * Each WikiPage has a reverse index. You can use this feature to group pages by tags.
 * An [index page](http://127.0.0.1:8000/cgi-bin/wypyplus.py?p=All&q=f) to show all your files in sorted order.
 * AutoSave after 30 minutes of editing.
-* Display [AsciiMath](http://asciimath.org) notations.
 * Use @INCLUDE=WikiPage to include content from another page. 
+* (Optional> Synatx highlight with highlight.js.
+* (Optional) Display [AsciiMath](http://asciimath.org) notations.
+
 
 ## Text Formatting
 * WikiNames are replaced with internal links.

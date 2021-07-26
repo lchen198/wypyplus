@@ -1,13 +1,13 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-pre='(?:^|\n)```((?:.|\n)+?)\n```';pre_h='<pre>((?:.|\n)+?)</pre>';link='\[([^]]*)]\(\s*((?:http[s]?://)?[^)]+)\s*\)'
+pre='(?:^|\n)```((?:.|\n)+?)\n```';pre_h='<pre><code>((?:.|\n)+?)</code></pre>';link='\[([^]]*)]\(\s*((?:http[s]?://)?[^)]+)\s*\)'
 import sys,re,os,cgi;from datetime import timedelta as td,datetime as dt;q,x,h,w=cgi.escape,os.path.exists,'<a href=','wypyplus.py?p='
 load,t=lambda n:(x('w/'+n) and open('w/'+n).read()) or (x('w/'+'Tpl'+n[:3]) and open('w/'+'Tpl'+n[:3]).read()) or '','</textarea>'
 f,i=cgi.FormContent(),'put type';y=f.get('p',[''])[0];y=('WyPyPlus',y)[y.isalnum()]
-fs,do,main=lambda s:re.sub(pre_h,lambda m: '<pre>'+'\n'.join([l[1:] for l in m.group(1).splitlines()])+ '</pre>' ,reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),
+fs,do,main=lambda s:re.sub(pre_h,lambda m: '<pre><code>'+'\n'.join([l[1:] for l in m.group(1).splitlines()])+ '</code></pre>' ,reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),
 ('^@INCLUDE=(\w+)$',lambda m: x('w/'+m.group(1)) and open('w/'+m.group(1)).read() or ''),('(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]*){1,})',
 lambda m:(m.group(1)+'%s'+h+w+m.group(2)+'%s>%s</a>')%((m.group(2),'&amp;q=e','?'),('','',m.group(2)))[x('w/'+m.group(2))]),
-('^\{\{$','\n<ul>'),('^\*(.*)$','<li>\g<1></li>'),('^}}$','</ul>'),('^---$','<hr>'),(pre,'<pre>\g<1></pre>'),
+('^\{\{$','\n<ul>'),('^\*(.*)$','<li>\g<1></li>'),('^}}$','</ul>'),('^---$','<hr>'),(pre,'<pre><code>\g<1></code></pre>'),
 ('^# (.*)$','<h1>\g<1></h1>'),('^## (.*)$', '<h2>\g<1></h2>'),('^### (.*)$','<h3>\g<1></h3>'),
 ('\*\*(.*)\*\*','<b>\g<1></b>'),('\!'+link,'<img src="\g<2>" alt="\g<1>">'),('(^|[^!])'+link,"\g<1>"+h+'"\g<3>">\g<2></a>'),
 ('(^|[^"])(http[s]?:[^<>"\s]+)',"\g<1>"+h+'"\g<2>">\g<2></a>'),('\n\n','\n<p>')),q(s)),0,re.MULTILINE),\
@@ -19,5 +19,5 @@ fs(re.sub(pre, lambda m: '\n```'+'\n '.join(m.group(1).splitlines())+ '\n```', l
 'find':('<h1>Links: %s</h1>'%fs(n))+fs('{{\n* %s\n}}'%'\n* '.join(sorted([d for d in os.listdir('w/') if n == "All" or load(d).count(n)])))
 }.get(m),lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or ('t' in f or (os.remove('w/'+y) and False))\
 and open('w/'+y,'w').write(f['t'][0])`+`sys.stdout.write("Content-type: text/html; charset=utf-8\r\n\r\n"\
-'<head><meta content="width=device-width, initial-scale=1" name="viewport"><link rel="stylesheet" href="../sakura.css"></script>\
+'<head><meta content="width=device-width, initial-scale=1" name="viewport"><link rel="stylesheet" href="../sakura.css">\
 </head><title>%s</title>'%y+do({'e':'edit','f':'find'}.get(f.get('q',[None])[0],'get'),y))`;(__name__=="__main__") and main()
