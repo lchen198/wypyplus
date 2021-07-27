@@ -69,11 +69,13 @@ do=lambda m,n:{
 main=lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or\
   not edit or('t' in f or (os.remove('w/'+y) and False)) and open('w/'+y,'w').write(f['t'][0])\
   `+`\
-  sys.stdout.write(
+  sys.stdout.write( # Write the head section and title
       'Content-type: text/html; charset=utf-8\r\n\r\n<head><meta content="width=device-width, initial-scale=1" name="viewport">\
 <link rel="stylesheet" href="../sakura.css"></head><title>%s</title>'%y+\
-do(({'e':'edit','f':'find'} if edit else {'f':'find'}).get(
-    f.get('q',[None])[0],'get'),y)
-      )`;
+do(
+    # if edit is empty, only allow the "find" action. If q=e, call "edit'. if q=f, call "find"
+    ({'e':'edit','f':'find'} if edit else {'f':'find'}).get(
+        f.get('q',[None])[0],'get'),y)
+    )`;
 # Start main
 (__name__=="__main__") and main()
