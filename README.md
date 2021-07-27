@@ -39,6 +39,7 @@ The Built-in Calendar
 * Use @INCLUDE=WikiPage to include content from another page.
 * (Optional) Syntax highlight with [highlight.js](https://highlightjs.org).
 * (Optional) Display [AsciiMath](http://asciimath.org) or LaTaX notations.
+* (Optional) Display headline anchor links.
 
 
 <p align="center">
