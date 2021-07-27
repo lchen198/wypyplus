@@ -41,6 +41,7 @@ The Built-in Calendar
 * (Optional) Display [AsciiMath](http://asciimath.org) or LaTaX notations.
 * (Optional) Display headline anchor links.
 * (Optional) Read-only mode.
+* (Optional) Automatically include the "GlobalMenu" page if it exists. 
 
 
 <p align="center">
