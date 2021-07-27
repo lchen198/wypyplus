@@ -16,7 +16,7 @@ name="p"><input type="hidden" name="q" value="f"><button type="submit">Search</b
 fs(re.sub(pre, lambda m: '\n```'+'\n '.join(m.group(1).splitlines())+ '\n```', load(n))) or n),\
 'edit':'<form name="e" action=%s%s method=POST><h1>%s <in %s=hidden name=p value=%s><in%s=submit></h1>Opened at: %s AutoSave at: %s<textarea name=t id=ta rows=24>%s'\
 %(w,n,fs(n),i,n,i,dt.now().strftime("%m/%d/%Y %H:%M"),(dt.now()+td(minutes=30)).strftime("%H:%M"),q(load(n)))+t,\
-'find':('<h1>Links: %s</h1>'%fs(n))+fs('{{\n* %s\n}}'%'\n* '.join(sorted([d for d in os.listdir('w/') if n == "All" or load(d).count(n)])))
+'find':('<h1>Links: %s</h1>'%fs(n))+fs('{{\n* %s\n}}'%'\n* '.join(sorted([d for d in os.listdir('w/') if n == "All" or load(d).count(n) or n in d])))
 }.get(m),lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or ('t' in f or (os.remove('w/'+y) and False))\
 and open('w/'+y,'w').write(f['t'][0])`+`sys.stdout.write("Content-type: text/html; charset=utf-8\r\n\r\n"\
 '<head><meta content="width=device-width, initial-scale=1" name="viewport"><link rel="stylesheet" href="../sakura.css">\
