@@ -120,7 +120,7 @@ For example, If you create a template page called TplJan, a new page called Jan2
 # How do I customize WyPyPlus?
 
 A fully commented source code is available here:
-[wypyplus_with_comment.py](https://github.com/lchen198/wypyplus/blob/main/cgi-bin/wypyplus_with_comment.py]
+[wypyplus_with_comment.py](https://github.com/lchen198/wypyplus/blob/main/cgi-bin/wypyplus_with_comment.py)
 
 You can easily modify the souce code.  If you don't like the CSS, just replace ```<head><link rel='stylesheet' href='..\sakura.css' type='text/css'></head> ```with whatever you like. You can find a lot more themes in [this site](https://dohliam.github.io/dropin-minimal-css).
 
