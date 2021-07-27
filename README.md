@@ -41,6 +41,7 @@ The Built-in Calendar
 * (Optional) Display [AsciiMath](http://asciimath.org) or LaTaX notations.
 * (Optional) Display headline anchor links.
 * (Optional) Read-only mode.
+* Fully commented [source code](https://github.com/lchen198/wypyplus/blob/main/cgi-bin/wypyplus_with_comment.py).
 
 
 <p align="center">
