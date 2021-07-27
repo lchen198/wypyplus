@@ -119,11 +119,12 @@ For example, If you create a template page called TplJan, a new page called Jan2
 
 # How do I customize WyPyPlus?
 
-The original wypy code is highly compressed. However, variable names are carefully picked so that the code is still somewhat readable. 
+A fully commented source code is available here:
+[wypyplus_with_comment.py](https://github.com/lchen198/wypyplus/blob/main/cgi-bin/wypyplus_with_comment.py]
 
-For example, if you don't like the CSS, just replace ```<head><link rel='stylesheet' href='..\sakura.css' type='text/css'></head> ```with whatever you like. You can find a lot more themes in [this site](https://dohliam.github.io/dropin-minimal-css).
+You can easily modify the souce code.  If you don't like the CSS, just replace ```<head><link rel='stylesheet' href='..\sakura.css' type='text/css'></head> ```with whatever you like. You can find a lot more themes in [this site](https://dohliam.github.io/dropin-minimal-css).
 
- WyPyPlus supports AsciiMath notation. If you want to write LaTeX, include the following instead.
+If you want to add support for AsciiMath or LaTeX, include the following:
 ```
  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 ```
@@ -132,48 +133,3 @@ To support new syntax, you can add a tuple of (regex_pattern, replace_pattern). 
 ```
 ('^## (.*)$', '<h2>\g<1></h2>')
 ```
-Here's the entire source code and my comments. 
-
-```Python
-#!/usr/bin/python
-# -*- coding: utf-8 -*-  Need this line to support the "edit" button unicode.
-
-# Create shorter names for commonly used functions and variables.
-link='\[([^]]*)]\(\s*((?:http[s]?://)?[^)]+)\s*\)';import sys,re,os,cgi;from datetime import timedelta as td;
-from datetime import datetime as dt;q,x,h,w=cgi.escape,os.path.exists,'<a href=','wypyplus.py?p='
-load,t=lambda n:(x('w/'+n) and open('w/'+n).read()) or '','</textarea></form>'
-f,i=cgi.FormContent(),'put type';y=f.get('p',[''])[0];y=('WyPyPlus',y)[y.isalpha()]
-
-# Define a list of (regular expressions, replace patterns). Apply them one by one to convert wiki tags.
-# Do cgi.escape on the final content.
-fs,do,main=lambda s:reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),(\
-# Find WikiWords and replace with html links.
-'(^|[^=/\-_A-Za-z0-9?])(([A-Z][a-z]+){2,})',lambda m:(m.group(1)+'%s'+h+w+m.group(2)+\
-'%s>%s</a>')%((m.group(2),'&amp;q=e','?'),('','',m.group(2)))[x('w/'+m.group(2))]),\
-# Other wiki tags sunch as headline and links. Note that a regular expression can match multiple lines.
-('^\{\{$','\n<ul>'),('^\* ','<li>'),('^}}$','</ul>'),('^---$','<hr>'),('```((?:.|\n)+?)```','<pre>\g<1></pre>'),
-('^# (.*)$','<h1>\g<1></h1>'),('^## (.*)$', '<h2>\g<1></h2>'),
-('^### (.*)$', '<h3>\g<1></h3>'),('\*\*(.*)\*\*','<b>\g<1></b>'),
-('\!'+link,'<img src="\g<2>" alt="\g<1>">'),('(^|[^!])'+link,"\g<1>"+h+'"\g<3>">\g<2></a>'),
-('(^|[^"])(http[s]?:[^<>"\s]+)',"\g<1>"+h+'"\g<2>">\g<2></a>'),('\n\n','<p>')),q(s)),\
-
-# Generate <HomePage>:<CurrentPage>:<Edit Icon>.
-lambda m,n:{'get':'<h1>%s%sWyPyPlus>WyPyPlus</a>:%s%s%s&amp;q=f>%s</a>:%s%s%s&amp;q=e>✎</a></h1><p>%s'%(\
-
-# Add a submit button and compute the time for auto save. 
-h,w,h,w,n,n,h,w,n,fs(load(n)) or n),'edit':'<form name="e" action=%s%s method=POST><h1>%s <in'\
-'%s=hidden name=p value=%s><in%s=submit></h1>Will auto save at %s<textarea name=t cols=80 rows=24'\
-'>%s'%(w,n,fs(n),i,n,i,(dt.now()+td(minutes=30)).strftime("%H:%M"),q(load(n)))+t,'find':('<h1>Links: %s</h1>'%fs(n))+fs(
-
-# Generate a reverse index of a WikiPage. Note tha the "All" page would match every file in the wiki
-'{{\n* %s\n}}'%'\n* '.join([d for d in os.listdir('w/') if n == "All" or load(d).count(n)]))
-
-# This part handles a POST request. If the content is empty, delete the file from disk. Otherwise, write the content to a file under the /w folder.
-}.get(m),lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or ('t' in f or (os.remove('w/'+y) and False))\
-and open('w/'+y,'w').write(f['t'][0])`+`sys.stdout.write("Content-type: text/html; charset=utf-8\r\n\r\n"\
-
-# Insert a CSS link and set a timer to save the content in 30 mins (1.8e6 milliseconds) 
-"<head><link rel='stylesheet' href='../sakura.css'><script>var wait=setTimeout('document.e.submit();',1.8e6);</script>\
-</head><title>%s</title>"%y+do({'e':'edit','f':'find'}.get(f.get('q',[None])[0],'get'),y))`;(__name__=="__main__") and main()
-```
-
