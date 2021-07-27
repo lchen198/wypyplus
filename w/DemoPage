@@ -17,7 +17,7 @@ hl=lambda m,n:'<h%d id=%s>%s<a href=#%s> ¶</a></h%d>'%(n,hs(m),m.group(1),hs(m)
 
 This is a **Bold** text!
 
-## (Optional) Ascii Math with [MathJax](http://mathjax.org)
+##  Ascii Math with [Math Jax](http://mathjax.org) (Optional)
 
 Insert the following line to the <head> section at the end of wypyplus.py to show AsciiMath.
 ```
@@ -28,7 +28,7 @@ Insert the following line to the <head> section at the end of wypyplus.py to sho
 x=(-b +- sqrt(b^2 – 4ac))/(2a)
 `
 
-## (Optional) Synatx Highlight with [highlight.js](https://highlightjs.org)
+## Synatx Highlight with [highlight.js](https://highlightjs.org) (Optional) 
 
 Insert the following line to the <head> section at the end of wypyplus.py to support synatx highligh for over 150 languages.
 ```

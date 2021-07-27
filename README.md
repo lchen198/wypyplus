@@ -40,6 +40,7 @@ The Built-in Calendar
 * (Optional) Syntax highlight with [highlight.js](https://highlightjs.org).
 * (Optional) Display [AsciiMath](http://asciimath.org) or LaTaX notations.
 * (Optional) Display headline anchor links.
+* (Optional) Read-only mode.
 
 
 <p align="center">
@@ -96,11 +97,14 @@ Open this url in your browser. It takes a few moments to start.
 http://127.0.0.1:8000/cgi-bin/wypyplus.py
 ```
 
-Since the wypyplus file is just a cgi script, you can also use any web server to host it. I don't recommend this since you are likely to spend more time to config the cgi server.
+### How to use the read-only mode
 
-The UI should be fairly self-explanatory. 
-* Click the ? mark after a CamelCased word to create a new page.
-* Click the Submit button to save a page. If you save an empty page, WyPyPlus will delete it from disk.
+The edit variable holds the icon of the edit button. You can change it
+to whatever you like. If you set it to an empty string, WyPyPlus will
+not show the edit button and disable the edit request handler.
+```
+edit='✎'
+```
 
 ### How to create tags?
 Tags are just wiki pages. When you create a new page, there will be a link on the top of the screen to show all pages that reference it. 
