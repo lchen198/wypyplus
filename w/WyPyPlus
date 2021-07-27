@@ -6,10 +6,10 @@ WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of c
 
 ### You will be amazed by how much you can do with a simple tool
 
-* Only 23 lines of Python code with no external dependency other than the standard library.
-* Runs on Mac, Linux and Windows.
-* Support basic wiki syntax. [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage)
-* Your files are in the /w folder.
+* Only 23 lines of Python code.
+* Run on Mac, Linux and Windows.
+* Support the basic wiki syntax. [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage)
+* Save plain text files under the /w folder.
 
 ### To make your life easier
 * An example calendar and daily journal.
