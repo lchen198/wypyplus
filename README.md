@@ -128,10 +128,15 @@ For example, if you don't like the CSS, just replace ```<head><link rel='stylesh
  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 ```
 
-To support new syntax, you can add a tuple of (regex_pattern, replace_pattern). The following example extracts content after ## and enclose it with an h2 headline. 
+To support new syntax, you can add a tuple of (regex_pattern, replace_pattern). The following example extracts content after ## and enclose it with an h2 headline: 
 ```
 ('^## (.*)$', '<h2>\g<1></h2>')
 ```
+Another example to change color for certain text:
+```
+('TODO','<b style="color:red;">\g<0></b>'),('DONE','<b style="color:green;">\g<0></b>'),
+```
+
 Here's the entire source code and my comments. 
 
 ```Python
