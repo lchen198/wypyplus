@@ -101,6 +101,10 @@ http://127.0.0.1:8000/cgi-bin/wypyplus.py
 
 ### How to use the read-only mode
 
+If you use Linux or Mac, you can use the [gen_site.sh](https://github.com/lchen198/wypyplus/blob/main/gen_static.sh) script to package the site automatically.
+
+**Otherwise, you can do it manually with the following steps:**
+
 You can modify the **edit** variable in wypyplus.py. It holds the icon of the edit button. If you set it to an empty string, WyPyPlus will run in read-only mode.
 
 In read-only mode, WyPyPlus
@@ -126,7 +130,7 @@ After that, you can create an index.html with the following content to redirect 
 ```
 <meta http-equiv="Refresh" content="0; url='cgi-bin/wypyplus.py.html'" />
 ```
-If you use Linux or Mac, you can use the [gen_site.sh](https://github.com/lchen198/wypyplus/blob/main/gen_static.sh) script, which does everything you.
+
 
 
 ### How to create tags
