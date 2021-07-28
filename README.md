@@ -101,7 +101,7 @@ http://127.0.0.1:8000/cgi-bin/wypyplus.py
 
 ### How to use the read-only mode
 
-If you use Linux or Mac, you can use the [gen_site.sh](https://github.com/lchen198/wypyplus/blob/main/gen_static.sh) script to package the site automatically.
+If you use Linux or Mac, you can use the [gen_site.sh](https://github.com/lchen198/wypyplus/blob/main/gen_static.sh) script to pack the site automatically.
 
 **Otherwise, you can do it manually with the following steps:**
 
