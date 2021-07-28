@@ -29,7 +29,7 @@ i='put type'
 # Get requested page name. Convert 'Today' to Month+Day.
 y=f.get('p',[''])[0];y=dt.now().strftime("%b%d") if y=='Today' else ('WyPyPlus',y)[y.isalnum()]
 
-# Handle wiki syntax. Remove the inserted space at the beginning of each line inside <pre></pre>. 
+# Convert wiki tags to html. Remove the inserted space at the beginning of each line inside <pre></pre>. 
 fs=lambda s:re.sub(pre_h,lambda m:'<pre><code>'+'\n'.join([l[1:] for l in m.group(1).splitlines()])+'</code></pre>',
 reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s), (('\r',''),
 ('^@INCLUDE=(\w+)$',lambda m: x('w/'+m.group(1)) and open('w/'+m.group(1)).read() or ''), # Inline files
