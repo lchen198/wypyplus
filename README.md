@@ -1,6 +1,6 @@
-# 🍦WyPyPlus: A personal wiki in 23 lines of code
+# 🍦WyPyPlus: A personal wiki in 42 lines of code
 
-🍦WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of code based on [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer in 2004 during a [ShortestWikiContest](http://wiki.c2.com/?ShortestWikiContest).
+🍦WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 42 lines of code based on [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer in 2004 during a [ShortestWikiContest](http://wiki.c2.com/?ShortestWikiContest).
 
 WyPyPlus is a journey to discover the essence of personal wiki and get rid of everything else. It tries to keep a minimal set of features and pack them in the tiniest space possible.
 
@@ -22,7 +22,7 @@ The Built-in Calendar
 
 ### You will be amazed by how much you can do with a simple tool.
 
-* Only 23 lines of Python code with no external dependency other than the standard library. (2.6KB Python + 3.9KB CSS)
+* Only 42 lines of Python code with no external dependency other than the standard library. (2.6KB Python + 3.9KB CSS)
 * Runs on Mac, Linux and Windows.
 * Support basic wiki syntax. [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage)
 * Your files are in the /w folder.
