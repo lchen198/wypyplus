@@ -105,7 +105,7 @@ If you use Linux or Mac, you can use the [gen_site.sh](https://github.com/lchen1
 
 **Otherwise, you can do it manually with the following steps:**
 
-You can modify the **edit** variable in wypyplus.py. It holds the icon of the edit button. If you set it to an empty string, WyPyPlus will run in read-only mode.
+You need to modify the **edit** variable in wypyplus.py. It holds the icon of the edit button. Set it to an empty string and WyPyPlus will run in read-only mode.
 
 In read-only mode, WyPyPlus
 
