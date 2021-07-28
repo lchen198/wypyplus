@@ -98,7 +98,7 @@ Open this url in your browser. It takes a few moments to start.
 http://127.0.0.1:8000/cgi-bin/wypyplus.py
 ```
 
-### how-to-use-the-read-only-mode
+### How to use the read-only mode
 
 You can modify the **edit** variable in wypyplus.py. It holds the icon of the edit button. If you set it to an empty string, WyPyPlus will run in read-only mode.
 
