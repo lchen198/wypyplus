@@ -40,8 +40,8 @@ The Built-in Calendar
 * (Optional) Syntax highlight with [highlight.js](https://highlightjs.org).
 * (Optional) Display [AsciiMath](http://asciimath.org) or LaTaX notations.
 * (Optional) Display headline anchor links.
-* (Optional) Read-only mode.
-* (Optional) Automatically include the "GlobalMenu" page if it exists. 
+* (Optional) Read-only mode. You can use it to [generate a static site](How-to-use-the-read-only-mode). 
+* (Optional) Automatically include the "GlobalMenu" page if it exists.
 * Fully commented [source code](https://github.com/lchen198/wypyplus/blob/main/cgi-bin/wypyplus_with_comment.py).
 
 <p align="center">
@@ -98,14 +98,34 @@ Open this url in your browser. It takes a few moments to start.
 http://127.0.0.1:8000/cgi-bin/wypyplus.py
 ```
 
-### How to use the read-only mode
+### how-to-use-the-read-only-mode
 
-The edit variable holds the icon of the edit button. You can change it
-to whatever you like. If you set it to an empty string, WyPyPlus will
-not show the edit button and disable the edit request handler.
+You can modify the **edit** variable in wypyplus.py. It holds the icon of the edit button. If you set it to an empty string, WyPyPlus will run in read-only mode.
+
+In read-only mode, WyPyPlus
+
+* Will not generate the edit link.
+* Will not generate links for WikiWords when they don't exist.
+* Will not handle the POST method, which means that your data is read-only.
+* Will hide the search bar.
+
+If you want to go a step further, you can generate a static site using wget. The following command dumps the entire site as html pages.
 ```
-edit='✎'
+wget \
+     --recursive \
+     --page-requisites \
+     --html-extension \
+     --convert-linksl\
+     --no-parent \
+         http://127.0.0.1:8000/cgi-bin/wypyplus.py
 ```
+
+After that, you can create an index.html with the following content to redirect the index page to cgi-bin/wypyplus.py.html.
+
+```
+<meta http-equiv="Refresh" content="0; url='cgi-bin/wypyplus.py.html'" />
+```
+
 
 ### How to create tags?
 Tags are just wiki pages. When you create a new page, there will be a link on the top of the screen to show all pages that reference it. 
