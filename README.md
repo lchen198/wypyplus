@@ -29,7 +29,7 @@ The Built-in Calendar
 ### To make your life easier
 * An example calendar and daily journal.
 * An example GetThingsDone guide to help you set up GTD quickly.
-* A template system to insert pre-defined content.
+* A [template](#how-to-define-and-use-a-template) system to insert pre-defined content.
 * Full-text search.
 * A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
 * Delete a wiki page from disk by saving an empty content.
@@ -127,13 +127,13 @@ After that, you can create an index.html with the following content to redirect 
 ```
 
 
-### How to create tags?
+### How to create tags
 Tags are just wiki pages. When you create a new page, there will be a link on the top of the screen to show all pages that reference it. 
 
 For example, you can create a page called ToDo, and put the word ToDo to other pages and see references here:
 http://127.0.0.1:8000/cgi-bin/wypyplus?p=ToDo&q=f
 
-### How to define and use a template?
+### How to define and use a template
 You can create a template just like any other wiki page. A template name must start with "Tpl" and follow by three characters. WyPyPlus will automatically insert its content to a new wiki page when the first three characters of the page matches the template
 
 For example, If you create a template page called TplJan, a new page called Jan23 will load the content from the template. 
