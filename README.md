@@ -126,6 +126,7 @@ After that, you can create an index.html with the following content to redirect 
 ```
 <meta http-equiv="Refresh" content="0; url='cgi-bin/wypyplus.py.html'" />
 ```
+If you use Linux or Mac, you can use the [gen_site.sh](https://github.com/lchen198/wypyplus/blob/main/gen_static.sh) script, which does everything you.
 
 
 ### How to create tags
