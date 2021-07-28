@@ -8,7 +8,7 @@ It tries to be an old typewriter with the magic of linking information. There’
 
 Other software projects always tell you that they are easy to set up and easy to use. WyPyPlus tells you that it is easy for you to leave. Your content are text files stored under the /w directory. You can move to other places if you need more than what WyPyPlus offers.
 
-Visit a **static site** [Demo](https://ctrl-c.club/~lchen/cgi-bin/wypyplus.py%3Fp=WyPyPlus.html). WyPyPlus has a read-only mode. When combined with [wget](https://www.gnu.org/software/wget/), you can create a static site.
+Try it out in this **static site** [Demo](https://ctrl-c.club/~lchen/cgi-bin/wypyplus.py%3Fp=WyPyPlus.html). WyPyPlus has a read-only mode. When combined with [wget](https://www.gnu.org/software/wget/), it becomes a static site generator. 
 
 <p align="center">
 <img src="example.png"> 
