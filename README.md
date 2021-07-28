@@ -2,12 +2,13 @@
 
 WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 23 lines of code based on [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer in 2004 during a [ShortestWikiContest](http://wiki.c2.com/?ShortestWikiContest).
 
-
 WyPyPlus is a journey to discover the essence of personal wiki and get rid of everything else. It tries to keep a minimal set of features and pack them in the tiniest space possible.
 
 It tries to be an old typewriter with the magic of linking information. There’s nothing between you and your content. You don’t need to worry about configuration, backup, user authentication, subscription fee, system update and so on. It is just you and your content. At the end of the day, don't you want a Wiki that just works and is free?
 
 Other software projects always tell you that they are easy to set up and easy to use. WyPyPlus tells you that it is easy for you to leave. Your content are text files stored under the /w directory. You can move to other places if you need more than what WyPyPlus offers.
+
+Visit a static site [Demo](https://ctrl-c.club/~lchen/cgi-bin/wypyplus.py%3Fp=WyPyPlus.html). WyPyPlus has a read-only mode. When combined with [wget](https://www.gnu.org/software/wget/), you can create static sites using WyPyPlus.
 
 <p align="center">
 <img src="example.png"> 
