@@ -144,7 +144,7 @@ You can create a template just like any other wiki page. A template name must st
 
 For example, If you create a template page called TplJan, a new page called Jan23 will load the content from the template. 
 
-# How do I customize WyPyPlus?
+# How to customize WyPyPlus
 
 A fully commented source code is available here:
 [wypyplus_with_comment.py](https://github.com/lchen198/wypyplus/blob/main/cgi-bin/wypyplus_with_comment.py)
@@ -156,7 +156,7 @@ If you want to add support for AsciiMath or LaTeX, include the following:
  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 ```
 
-To support new syntax, you can add a tuple of (regex_pattern, replace_pattern). The following example extracts content after ## and enclose it with an h2 headline: 
+To support a new syntax, you can add a tuple of (regex_pattern, replace_pattern). The following example extracts content after ## and enclose it with an h2 headline: 
 ```
 ('^## (.*)$', '<h2>\g<1></h2>')
 ```
