@@ -79,7 +79,7 @@ The Built-in Calendar
 * "\n@INCLUDE=WikiPage" to include the content from another page. 
 * All HTML is replaced with its quoted equivalent (i.e. is forbidden).
 
-## Install and Use
+## Install and Run in 2 Minutes.
 
 * You need Python 2 to run this application. Mac and most Linux distro already have Python 2. For Windows users, please install [Python 2.7](https://www.python.org/download/releases/2.7/).
 
