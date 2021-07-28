@@ -40,7 +40,7 @@ The Built-in Calendar
 * (Optional) Syntax highlight with [highlight.js](https://highlightjs.org).
 * (Optional) Display [AsciiMath](http://asciimath.org) or LaTaX notations.
 * (Optional) Display headline anchor links.
-* (Optional) Read-only mode. You can use it to [generate a static site](how-to-use-the-read-only-mode). 
+* (Optional) Read-only mode. You can use it to [generate a static site](#how-to-use-the-read-only-mode). 
 * (Optional) Automatically include the "GlobalMenu" page if it exists.
 * Fully commented [source code](https://github.com/lchen198/wypyplus/blob/main/cgi-bin/wypyplus_with_comment.py).
 
