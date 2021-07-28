@@ -1,0 +1,19 @@
+TopicOne | TopicTwo
+
+### Optionally
+
+* Include a video
+https://www.youtube.com/watch?v=0v5lKOQka9c
+
+* Support Ascii Math notation with
+```
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+```
+
+* Include a code snippet with [syntax highlight](https://highlightjs.org) 
+
+```
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css">\
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script><script>hljs.highlightAll();</script>
+```
+
