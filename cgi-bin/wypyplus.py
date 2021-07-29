@@ -14,7 +14,7 @@ f,i=cgi.FormContent(),'put type';y=f.get('p',[''])[0];y=dt.now().strftime("%b%d"
 se='<form><input type="text"placeholder="Search.. "name="p"><input type="hidden" name="q" value="f"><button type="submit">Search</button></form>'
 fs=lambda s:re.sub(pre_h,remove_leading_space,reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),
 ('^@INCLUDE=(\w+)$',lambda m: x('w/'+m.group(1)) and open('w/'+m.group(1)).read() or ''),
-('@(\w+)',lambda m: h+w+m.group(1)+'&amp;q=f>'+m.group(0)+'</a>'),
+('(^|[^=/\-_A-Za-z0-9?])@(\w+)',lambda m: h+w+m.group(2)+'&amp;q=f>@'+m.group(2)+'</a>'),
 ('(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]*){1,})',
  lambda m:(m.group(1)+'%s%s')%((m.group(2),h+w+m.group(2)+'&amp;q=e>?</a>' if edit else ''),('',h+w+m.group(2)+'>%s</a>'%m.group(2)))[x('w/'+m.group(2))]),
 ('^\{\{$','\n<ul>'),('^\*(.*)$','<li>\g<1></li>'),('^}}$','</ul>'),('^---$','<hr>'),
