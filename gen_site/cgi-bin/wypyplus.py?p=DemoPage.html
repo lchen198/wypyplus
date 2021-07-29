@@ -1,0 +1,53 @@
+<head><meta content="width=device-width, initial-scale=1" name="viewport"><link rel="stylesheet" href="../sakura.css">        </head><title>DemoPage</title><h1><a href="wypyplus.py%3Fp=WyPyPlus.html">WyPyPlus</a>:<a href="wypyplus.py%3Fp=DemoPage&amp;q=f.html">DemoPage</a></h1><p><h1>Header 1</h1>
+<h2>Header 2</h2>
+<h3>Header 3</h3>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+<p><a href="wypyplus.py%3Fp=WyPyPlus.html">WyPyPlus</a> can generate headline anchor links. If you want to turn on this feature, replace the headline function:<pre><code>
+hl=lambda m,n:'&lt;h%d&gt;%s&lt;/h%d&gt;'%(n,m.group(1),n)</code></pre>
+with<pre><code>
+hl=lambda m,n:'&lt;h%d id=%s&gt;%s&lt;a href=#%s&gt; ¶&lt;/a&gt;&lt;/h%d&gt;'%(n,hs(m),m.group(1),hs(m),n);</code></pre>
+<p><h2>Bold</h2>
+<p>This is a <b>Bold</b> text!
+<p><h2> Ascii Math with <a href="http://mathjax.org">Math Jax</a> (Optional)</h2>
+<p>Insert the following line to the &lt;head&gt; section at the end of wypyplus.py to show AsciiMath.<pre><code>
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"&gt;&lt;/script&gt;</code></pre>
+<p>`
+x=(-b +- sqrt(b^2 – 4ac))/(2a)
+`
+<p><h2>Synatx Highlight with <a href="https://highlightjs.org">highlight.js</a> (Optional) </h2>
+<p>Insert the following line to the &lt;head&gt; section at the end of wypyplus.py to support synatx highligh for over 150 languages.<pre><code>
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css"&gt;\
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"&gt;&lt;/script&gt;&lt;script&gt;hljs.highlightAll();&lt;/script&gt;</code></pre>
+<p><h2>Links</h2>
+<p>List all files in this wiki: <a href="wypyplus.py%3Fp=All&amp;q=f.html">All</a>
+<p>Wiki link: <a href="wypyplus.py%3Fp=DemoPage.html">DemoPage</a>
+<p>Raw URL link:   <a href=http://www.google.com>http://www.google.com</a>
+<p>Markdown link: <a href="http://google.com">google homepage</a>
+<p>Reference to a date or a month: Jan1 Jan2021
+<p><h2>Template</h2>
+<p>A template is a page with a special name: Tpl[three characters]. A page starts with the same three characters will use the template.
+<p>For example, when you create TplJan, Any page starts with "Jan" such as Jan21 will include the template. 
+<p><h2>Images</h2>
+<p>YouTube Video:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0v5lKOQka9c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p>External image:
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Emacs-logo.svg" alt="test image">
+<p>Local image:
+<p><img src="../example.png" alt="local image">
+<p><h2>Quote</h2>
+<p><pre><code>
+# Python Code
+def hello():
+  print("hello world")</code></pre>
+<p><h2>list</h2>
+<p>
+<ul>
+<li> Item A</li>
+<p><ul>
+<li> Item A1</li>
+<li> Item A2</li>
+</ul>
+<li> Item B</li>
+</ul>
+<p><h2>Page Break</h2>
+<hr>
