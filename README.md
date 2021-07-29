@@ -12,7 +12,7 @@ Other software projects always tell you that they are easy to set up and easy to
 
 * A personal Wiki
 * A GetThingsDone system
-* A static site generator [Demo](https://ctrl-c.club/~lchen/cgi-bin/wypyplus.py%3Fp=WyPyPlus.html)
+* A static site generator [(Demo)](https://ctrl-c.club/~lchen/cgi-bin/wypyplus.py%3Fp=WyPyPlus.html)
 * A presentation tool that also [generates pdf](https://github.com/lchen198/wypyplus/blob/main/example_hardcopy.pdf)
 
 <p align="center">
