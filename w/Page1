@@ -1,0 +1,11 @@
+Page1 | Page2 | Page3
+
+###  Pick a name for your presentation
+* Modify the **home** variable in wypyplys.py to set a title for your presentation.
+* You should add an agenda to the home page.
+
+### Create content
+* Add more pages and content. If you want to generate a PDF, you should name your page in **numerical order**. E.g. Page1, Page2 
+* Add links on the top of the page for easy navigation.
+* Optionally, you can create a page template if want to share a menu across multiple pages.
+

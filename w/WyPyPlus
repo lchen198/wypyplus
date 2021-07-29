@@ -1,8 +1,14 @@
 # A personal wiki in 42 lines of code
 
-| [Github](https://github.com/lchen198/wypyplus) | DemoPage | GetThingsDone | Calendar2021 | [Presentation](wypyplus.py?p=TopicOne) |
+| [Github](https://github.com/lchen198/wypyplus) | DemoPage | GetThingsDone | Calendar2021 | HowToPresent |
 
 WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 42 lines of code. It is an extension of [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer. The original project implements a wiki in just 11 lines of Python code, which is an amazing achievement. However, wypy wiki doesn't have many features I consider as essential.
+
+You can use WyPyPlus as
+* A personal Wiki
+* A GetThingsDone system
+* A static site generator
+* A presentation tool
 
 ### You will be amazed by how much you can do with a simple tool
 

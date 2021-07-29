@@ -1,0 +1,19 @@
+Page1 | Page2 | Page3
+
+### Generate a PDF file
+
+1. Dump the entire presentation using the [gen_static.sh](https://github.com/lchen198/wypyplus/blob/main/gen_static.sh) script.
+
+
+2. Install [WkHtmlToPdf](https://wkhtmltopdf.org)
+
+WkHtmlToPdf is a cross-platform tool that converts html to pdf.
+
+3. Generate a PDF
+
+Use wkhtmltopdf to combine all pages to an output.pdf. You can adjust page orientation
+and size based on your need.
+```
+wkhtmltopdf -O Landscape --enable-local-file-access\
+  gen_site/cgi-bin/wypyplus.py?p=* output.pdf
+```
