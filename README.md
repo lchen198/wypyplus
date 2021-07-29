@@ -10,6 +10,13 @@ Other software projects always tell you that they are easy to set up and easy to
 
 Try it out in this **static site** [Demo](https://ctrl-c.club/~lchen/cgi-bin/wypyplus.py%3Fp=WyPyPlus.html). WyPyPlus has a read-only mode. When combined with [wget](https://www.gnu.org/software/wget/), it becomes a static site generator. 
 
+### You will be amazed by how much you can do with a simple tool. WyPyPlus is:
+
+* A personal Wiki
+* A GetThingsDone system
+* A static site generator [Demo](https://ctrl-c.club/~lchen/cgi-bin/wypyplus.py%3Fp=WyPyPlus.html)
+* A presentation tool that also [generates pdf](https://github.com/lchen198/wypyplus/blob/main/example_hardcopy.pdf)
+
 <p align="center">
 <img src="example.png"> 
 </p>
@@ -20,16 +27,16 @@ A minimal editor that does not get in the way.
 The Built-in Calendar 
 <p align="center"><img src="calendar.png"></p>
 
-### You will be amazed by how much you can do with a simple tool.
-
-* Only 42 lines of Python code with no external dependency other than the standard library. (2.6KB Python + 3.9KB CSS)
+# Core Features
+* Only 42 lines of Python code with no external dependency other than the standard library.
 * Runs on Mac, Linux and Windows.
-* Support basic wiki syntax. [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage)
-* Your files are in the /w folder.
+* Supports basic wiki syntax. [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage)
+* Stores wiki pages as plain text files. 
 
-### To make your life easier
+### To make your life easier, WyPyPlus ships with
 * An example calendar and daily journal.
 * An example GetThingsDone guide to help you set up GTD quickly.
+* A static site generator script.
 * A [template](#how-to-define-and-use-a-template) system to insert pre-defined content.
 * Full-text search.
 * A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
