@@ -32,9 +32,9 @@ do=lambda m,n:{
     '</h1>%s<p>%s'%(se if edit else '',fs(load_g()+re.sub(pre, insert_leading_space, load_tpl(n))) or n),
     'edit':'<form name="e" action=%s%s method=POST><h1>%s <in%s=hidden name=p value=%s></h1>Opened at: %s AutoSave at: %s<textarea name=t id=ta rows=24>%s%s<in%s=submit>'%(
         w,n,fs(n),i,n, dt.now().strftime("%m/%d/%Y %H:%M"), (dt.now()+td(minutes=30)).strftime("%H:%M"), q(load_tpl(n)),t,i),
-    'find':('<h1>Links: %s</h1>'%fs(n))+fs('{{\n* %s\n}}'%'\n* '.join(
-        sorted([d for d in os.listdir('w/') if n == "All" or load(d).count(n) or n in d])))
-}.get(m)
+    'find':('<h1>Links: %s</h1>'%fs(n))+fs('\n---\n'.join(
+        sorted(filter(lambda x: not x.endswith(':\n\n'),[d if n == "All" or n in d else d+':\n\n'+'\n\n'.join(
+            [line for line in load(d).splitlines() if n in line]) for d in os.listdir('w/')]))))}.get(m)
 main=lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or not edit or ('t' in f or (os.remove('w/'+y) and False))\
     and open('w/'+y,'w').write(f['t'][0])`+`sys.stdout.write("Content-type: text/html; charset=utf-8\r\n\r\n"\
         '<head><meta content="width=device-width, initial-scale=1" name="viewport"><link rel="stylesheet" href="../sakura.css">\
