@@ -35,8 +35,8 @@ WyPyPlus is a journey to discover the essence of personal wiki and get rid of ev
 * Supports basic wiki syntax. [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage)
 * Stores wiki pages as plain text files. 
 * Works perfectly offline.
-* No config files to mess with.
-* No database to backup up.
+* No config files.
+* No database.
 
 # Design Tradeoffs
 
