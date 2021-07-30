@@ -84,9 +84,13 @@ ln(1000) = RPN( 2.718281 1000 log)
 
 3.1415926 2 / sin = RPN( 3.1415926 2 / sin )
 
+abs(-10) = RPN(-10 fabs) 
+
+Print the entire stack on error: RPN(2 3 abc)
+
 You can easily add more functions to the built-in RPN by modify this line:
 ```
-op={'+':op.add,'-':op.sub,'*':op.mul,'/':op.div,'^':pow};rev_op={'log':math.log}
+unary=['sqrt','abs','sin','cos','tan'];norm={'+':op.add,'-':op.sub,'*':op.mul,'/':op.div,'^':pow};rev={'log':math.log}
 ```
 
 
