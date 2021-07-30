@@ -95,10 +95,8 @@ After that, you can create an index.html with the following content to redirect 
 
 
 ### How to create tags
-There's no difference between Tags and WikiWords. When you create a new page, there will be a link on the top of the screen to show all pages that reference it. 
-
-For example, you can create a page called ToDo, and put the word ToDo to other pages and see references here:
-http://127.0.0.1:8000/cgi-bin/wypyplus?p=ToDo&q=f
+You can create a tag by putting @ before a single word. Some examples are @HOME, @TODO, and @DONE. When you click a tag, WyPyPlus will find pages and 
+content that match the tag. A speciall @All tag will match every page in the wiki. 
 
 ### How to define and use a template
 You can create a template just like any other wiki page. A template name must start with "Tpl" and follow by three characters. WyPyPlus will automatically insert its content to a new wiki page when the first three characters of the page matches the template
