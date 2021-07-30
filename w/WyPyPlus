@@ -27,7 +27,8 @@ You can use WyPyPlus as
 * Each WikiPage has a reverse index. You can use this feature to group pages by tags.
 * An [index page](wypyplus.py?p=All&q=f) to show all your files in sorted order.
 * AutoSave after 30 minutes of editing.
-* Use @INCLUDE=WikiPage to include content from another page. 
+* Use INCLUDE(WikiPage) to include content from another page.
+* A built-in RPN calculator that supports +, -, *, / and sqrt.
 * (Optional) Syntax highlight with [highlight.js](https://highlightjs.org).
 * (Optional) Display [Ascii Math](http://asciimath.org) or LaTaX notations.
 * (Optional) Read-only mode.
@@ -46,7 +47,7 @@ You can use WyPyPlus as
 * To format code or text into its own distinct block, use triple back-ticks.
 * "---" creates an <hr> element.
 * Markdown style [link](https://www.markdownguide.org/basic-syntax/#links) and [image tag](https://www.markdownguide.org/basic-syntax/#images-1)
-* Use @INCLUDE=WikiPage at the begging of the line to include another file.
+* Use INCLUDE(WikiPage) at the begging of the line to include another file.
 * All HTML is replaced with its quoted equivalent (i.e. is forbidden).
 
 ## Install and Use

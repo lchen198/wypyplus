@@ -37,7 +37,7 @@ Create a GtdMenu page and copy the following links:
 ```
 InBox | NextAction | MyProject | WaitingFor | [Today]{wypyplus.py?p=Today} 
 ```
-Now you can put @INCLUDE=GtdMenu on other pages. Note that **Today** is special page name maps to the wiki page of the day.  
+Now you can put INCLUDE(GtdMenu) on other pages. Note that **Today** is special page name maps to the wiki page of the day.  
 
 # Add a Template Page
 

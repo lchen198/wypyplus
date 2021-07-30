@@ -1,19 +1,19 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-import sys,re,os,cgi;from datetime import timedelta as td,datetime as dt;
-home='WyPyPlus';edit='✎';t='</textarea>'
+import sys,re,os,cgi,math;from datetime import timedelta as td,datetime as dt;import operator as op
+home='WyPyPlus';edit='✎';t='</textarea>';ops=lambda t,s: math.sqrt(s.pop()) if t == 'sqrt' else {'+':op.add,'-':op.sub,'*':op.mul,'/':op.div}[t](s.pop(-2),s.pop())
 pre='(?:^|\n)```((?:.|\n)+?)\n```';pre_h='<pre><code>((?:.|\n)+?)</code></pre>'
 remove_leading_space=lambda m:'<pre><code>'+'\n'.join([l[1:] for l in m.group(1).splitlines()])+'</code></pre>'
 insert_leading_space=lambda m: '\n```'+'\n '.join(m.group(1).splitlines())+ '\n```'
 link='\[([^]]*)]\(\s*((?:http[s]?://)?[^)]+)\s*\)';yt="https://www.youtube.com/watch?v="
-hs=lambda m:hex(hash(m.group(1)))[-5:]
+def rpn(v):s=[];[s.append(float(t)) if set(t).issubset(set("0123456789.")) else s.append(ops(t,s)) for t in v.group(1).split()];return str(s[0])
 hl=lambda m,n:'<h%d>%s</h%d>'%(n,m.group(1),n);hl1=lambda m:hl(m, 1);hl2=lambda m:hl(m, 2);hl3=lambda m:hl(m,3)
 q,x,h,w=cgi.escape,os.path.exists,'<a href=','wypyplus.py?p='
 load=lambda n:(x('w/'+n) and open('w/'+n).read()) or '';load_tpl=lambda n: load(n) or load('Tpl'+n[:3]) or '';load_g=lambda:load('GlobalMenu')
 f,i=cgi.FormContent(),'put type';y=f.get('p',[''])[0];y=dt.now().strftime("%b%d") if y=='Today' else (home,y)[y.isalnum()]
 se='<form><input type="text"placeholder="Search.. "name="p"><input type="hidden" name="q" value="f"><button type="submit">Search</button></form>'
-fs=lambda s:re.sub(pre_h,remove_leading_space,reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),
-('^@INCLUDE=(\w+)$',lambda m: x('w/'+m.group(1)) and open('w/'+m.group(1)).read() or ''),
+fs=lambda s:re.sub(pre_h,remove_leading_space,reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),('RPN\((.*?)\)', rpn),
+('^INCLUDE\((\w+)\)$',lambda m: x('w/'+m.group(1)) and open('w/'+m.group(1)).read() or ''),
 ('(^|[^=/\-_A-Za-z0-9?])@(\w+)',lambda m: h+w+m.group(2)+'&amp;q=f>@'+m.group(2)+'</a>'),
 ('(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]*){1,})',
  lambda m:(m.group(1)+'%s%s')%((m.group(2),h+w+m.group(2)+'&amp;q=e>?</a>' if edit else ''),('',h+w+m.group(2)+'>%s</a>'%m.group(2)))[x('w/'+m.group(2))]),

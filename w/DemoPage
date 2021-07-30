@@ -72,6 +72,12 @@ def hello():
 ## Page Break
 ---
 
+## RPN Calculator
+
+The built-in RPN calculator supports +, -, *, / and sqrt.
+
+3 3 * 4 4 * + sqrt  = RPN(3 3 * 4 4 * + sqrt)
+
 ##  Ascii Math with [Math Jax](http://mathjax.org) (Optional)
 
 Insert the following line to the <head> section at the end of wypyplus.py to show AsciiMath.

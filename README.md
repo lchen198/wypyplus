@@ -11,7 +11,9 @@ WyPyPlus is a journey to discover the essence of personal wiki and get rid of ev
 *  WyPyPlus supports auto-link on WikiWords and common markdown syntaxes. It also creates a reverse index for every page and supports full-text search.
 
 ### An Outliner Focusing on Content Creation
-*  You can break down a big topic to small pages and focus on one thing at a time. With the @INCLUDE=PageName syntax, you can move content around in the outline and merge everything together when you finish. This is inspired by the hot-list feature in [GrandView](https://welcometosherwood.wordpress.com/2009/10/10/grandview/), which I considered as one of the best outliner of all time.
+*  You can break down a big topic to small pages and focus on one
+   thing at a time. Using the INCLUDE(WikiName) syntax, you can move
+   content around easily and merge everything together automatically. This is inspired by the hot-list feature in [GrandView](https://welcometosherwood.wordpress.com/2009/10/10/grandview/), which I considered as one of the best outliner of all time.
 
 ### A [GetThingsDone](https://en.wikipedia.org/wiki/Getting_Things_Done) System
 * WyPyPlus comes with a calendar and detailed instructions on setting up a complete GTD system. It also supports page templates, contextual tags and a global menu. 
