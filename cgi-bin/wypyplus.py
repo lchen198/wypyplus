@@ -1,11 +1,12 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 import sys,re,os,cgi,math;from datetime import timedelta as td,datetime as dt;import operator as op
-home='WyPyPlus';edit='✎';t='</textarea>';ops=lambda t,s: math.sqrt(s.pop()) if t == 'sqrt' else {'+':op.add,'-':op.sub,'*':op.mul,'/':op.div}[t](s.pop(-2),s.pop())
+home='WyPyPlus';edit='✎';t='</textarea>';op={'+':op.add,'-':op.sub,'*':op.mul,'/':op.div,'^':pow};rev_op={'log':math.log}
 pre='(?:^|\n)```((?:.|\n)+?)\n```';pre_h='<pre><code>((?:.|\n)+?)</code></pre>'
 remove_leading_space=lambda m:'<pre><code>'+'\n'.join([l[1:] for l in m.group(1).splitlines()])+'</code></pre>'
 insert_leading_space=lambda m: '\n```'+'\n '.join(m.group(1).splitlines())+ '\n```'
 link='\[([^]]*)]\(\s*((?:http[s]?://)?[^)]+)\s*\)';yt="https://www.youtube.com/watch?v="
+ops=lambda t,s: getattr(math,t)(s.pop()) if t in ['sqrt','abs','sin','cos','tan'] else op[t](s.pop(-2),s.pop()) if t in op else rev_op[t](s.pop(),s.pop()) 
 def rpn(v):s=[];[s.append(float(t)) if set(t).issubset(set("0123456789.")) else s.append(ops(t,s)) for t in v.group(1).split()];return str(s[0])
 hl=lambda m,n:'<h%d>%s</h%d>'%(n,m.group(1),n);hl1=lambda m:hl(m, 1);hl2=lambda m:hl(m, 2);hl3=lambda m:hl(m,3)
 q,x,h,w=cgi.escape,os.path.exists,'<a href=','wypyplus.py?p='
@@ -26,8 +27,7 @@ frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media
  gyroscope; picture-in-picture" allowfullscreen></iframe>' % m.group(2)[len(yt):]) if m.group(2).startswith(yt)
  else (m.group(1)+h+m.group(2)+">"+m.group(2)+"</a>")),
 ('\n\n','\n<p>')),q(s)),0,re.MULTILINE)
-do=lambda m,n:{
-    'get':'<h1>%s%s%s>%s</a>'%(h,w,home,home) +
+do=lambda m,n:{'get':'<h1>%s%s%s>%s</a>'%(h,w,home,home) +
     ((':%s%s%s&amp;q=f>%s</a>%s%s%s&amp;q=e>%s</a>'%(h,w,n,n,h,w,n,edit)) if edit else '') +
     '</h1>%s<p>%s'%(se if edit else '',fs(load_g()+re.sub(pre, insert_leading_space, load_tpl(n))) or n),
     'edit':'<form name="e" action=%s%s method=POST><h1>%s <in%s=hidden name=p value=%s></h1>Opened at: %s AutoSave at: %s<textarea name=t id=ta rows=24>%s%s<in%s=submit>'%(

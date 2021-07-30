@@ -72,11 +72,25 @@ def hello():
 ## Page Break
 ---
 
-## RPN Calculator
+## The RPN Calculator
 
-The built-in RPN calculator supports +, -, *, / and sqrt.
+The built-in RPN calculator supports +, -, *, /, ^ and common functions such as log, sqrt, abs, sin, cos, and tan.
 
-3 3 * 4 4 * + sqrt  = RPN(3 3 * 4 4 * + sqrt)
+3 2 ^ 4 2 ^ + sqrt  = RPN(3 2 ^ 4 2 ^ + sqrt)
+
+log10(1000)= RPN(1000 10 log)
+
+ln(1000) = RPN( 2.718281 1000 log)
+
+3.1415926 2 / sin = RPN( 3.1415926 2 / sin )
+
+You can easily add more functions to the built-in RPN by modify this line:
+```
+op={'+':op.add,'-':op.sub,'*':op.mul,'/':op.div,'^':pow};rev_op={'log':math.log}
+```
+
+
+
 
 ##  Ascii Math with [Math Jax](http://mathjax.org) (Optional)
 
