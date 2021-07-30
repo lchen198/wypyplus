@@ -20,7 +20,7 @@ WyPyPlus is a journey to discover the essence of personal wiki and get rid of ev
 *  When you run WyPyPlus in read-only mode, you can dump the entire site using wget. Visit the [(Demo)](https://ctrl-c.club/~lchen/cgi-bin/wypyplus.py%3Fp=WyPyPlus.html) site to see for yourself.
  
 ### A Presentation Tool:
-* You can use WyPyPlus to create presentations and produce [PDFs](https://github.com/lchen198/wypyplus/blob/main/example_hardcopy.pdf)!
+* You can use WyPyPlus to create presentations. It even produces [PDFs](https://github.com/lchen198/wypyplus/blob/main/example_hardcopy.pdf)!
 
 ## Some Screenshots
 ![](example.png)
