@@ -69,6 +69,28 @@ def hello():
 * Item B
 }}
 
+## Table
+
+WyPyPlus supports [media wiki style table](https://www.mediawiki.org/wiki/Help:Tables).
+{|
+|Orange
+|Apple
+|-
+|Bread
+|Pie
+|-
+|Butter
+|Ice cream 
+|}
+
+{|
+|  Orange || Apple || more
+|-
+|   Bread || Pie || more
+|-
+|   Butter || Ice cream || and more
+|}
+
 ## Page Break
 ---
 
@@ -76,17 +98,21 @@ def hello():
 
 The built-in RPN calculator supports +, -, *, /, ^ and common functions such as log, sqrt, abs, sin, cos, and tan.
 
-3 2 ^ 4 2 ^ + sqrt  = RPN(3 2 ^ 4 2 ^ + sqrt)
-
-log10(1000)= RPN(1000 10 log)
-
-ln(1000) = RPN( 2.718281 1000 log)
-
-3.1415926 2 / sin = RPN( 3.1415926 2 / sin )
-
-abs(-10) = RPN(-10 fabs) 
-
-Print the entire stack on error: RPN(2 3 abc)
+{|
+| ** Example** || **Results**
+|-
+| 3 2 ^ 4 2 ^ + sqrt  || RPN(3 2 ^ 4 2 ^ + sqrt)
+|-
+| log10(1000) || RPN(1000 10 log)
+|-
+| ln(1000) || RPN( 2.718281 1000 log)
+|-
+| 3.1415926 2 / sin || RPN( 3.1415926 2 / sin )
+|-
+| abs(-10) || RPN(-10 fabs) 
+|-
+| Print the entire stack on error || RPN(2 3 abc)
+|}
 
 You can easily add more functions to the built-in RPN by modify this line:
 ```
