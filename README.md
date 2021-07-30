@@ -14,7 +14,7 @@ WyPyPlus is a journey to discover the essence of personal wiki and get rid of ev
 *  WyPyPlus allows you to break down a large topic to small pages. You can focus on one thing at a time. After you finish, you can merge everything together using the @INCLUDE=PageName syntax. This is inspired by the hot-list feature in [GrandView](https://welcometosherwood.wordpress.com/2009/10/10/grandview/), which I considered as one of the best outliner of all time.
 
 ### A [GetThingsDone](https://en.wikipedia.org/wiki/Getting_Things_Done) System
-* WyPyPlus comes with a calendar and detailed instructions on setting up a complete GTD system. It also supports page templates and contextual tags. 
+* WyPyPlus comes with a calendar and detailed instructions on setting up a complete GTD system. It also supports page templates, contextual tags and a global menu. 
 
 ### A Static Site Generator:
 *  When you run WyPyPlus in read-only mode, you can dump the entire site using wget. Visit the [(Demo)](https://ctrl-c.club/~lchen/cgi-bin/wypyplus.py%3Fp=WyPyPlus.html) site to see for yourself.
