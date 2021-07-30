@@ -17,25 +17,6 @@ hl=lambda m,n:'<h%d id=%s>%s<a href=#%s> ¶</a></h%d>'%(n,hs(m),m.group(1),hs(m)
 
 This is a **Bold** text!
 
-##  Ascii Math with [Math Jax](http://mathjax.org) (Optional)
-
-Insert the following line to the <head> section at the end of wypyplus.py to show AsciiMath.
-```
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
-```
-
-`
-x=(-b +- sqrt(b^2 – 4ac))/(2a)
-`
-
-## Synatx Highlight with [highlight.js](https://highlightjs.org) (Optional) 
-
-Insert the following line to the <head> section at the end of wypyplus.py to support synatx highligh for over 150 languages.
-```
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css">\
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script><script>hljs.highlightAll();</script>
-```
-
 ## Links
 
 YouTube Video:
@@ -90,3 +71,22 @@ def hello():
 
 ## Page Break
 ---
+
+##  Ascii Math with [Math Jax](http://mathjax.org) (Optional)
+
+Insert the following line to the <head> section at the end of wypyplus.py to show AsciiMath.
+```
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+```
+
+`
+x=(-b +- sqrt(b^2 – 4ac))/(2a)
+`
+
+## Synatx Highlight with [highlight.js](https://highlightjs.org) (Optional) 
+
+Insert the following line to the <head> section at the end of wypyplus.py to support synatx highligh for over 150 languages.
+```
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css">\
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script><script>hljs.highlightAll();</script>
+```
