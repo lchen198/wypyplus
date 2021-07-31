@@ -39,4 +39,4 @@ do=lambda m,n:{'get':lambda:'<h1>%s%s%s>%s</a>'%(h,w,home,home) + ((':%s%s%s&amp
 main=lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or not edit or ('t' in f or (os.remove('w/'+y) and False))\
     and open('w/'+y,'w').write(f['t'][0])`+`sys.stdout.write("Content-type: text/html; charset=utf-8\r\n\r\n"\
         '<head><meta content="width=device-width, initial-scale=1" name="viewport"></script><link rel="stylesheet" href="../sakura.css">\
-        <script type="text/javascript" src="../ASCIIMathML.js"></script></head><title>%s</title>'%y+do(({'e':'edit','f':'find'} if edit else {'f':'find'}).get(f.get('q',[None])[0],'get'),y))`(__name__=="__main__") and main()
+        <script type="text/javascript" src="../ASCIIMathML.js"></script></head><title>%s</title>'%y+do(({'e':'edit','f':'find'} if edit else {'f':'find'}).get(f.get('q',[None])[0],'get'),y))`;(__name__=="__main__") and main()
