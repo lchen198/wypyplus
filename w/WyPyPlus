@@ -1,3 +1,9 @@
+{|
+|          ||Mon    ||Tue    ||Wed    ||Thu    ||Fri    || Total
+|-
+|Work || 0www    ||     || 0       ||  2      ||   12  ||  =$1 $2 + $3 + $4 + $5 +
+|}
+
 # A personal wiki in 42 lines of code
 
 | [Github](https://github.com/lchen198/wypyplus) | DemoPage | GetThingsDone | Calendar2021 | HowToPresent |

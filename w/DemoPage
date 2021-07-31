@@ -1,3 +1,4 @@
+
 # Header 1
 ## Header 2
 ### Header 3
@@ -103,34 +104,41 @@ The built-in RPN calculator supports +, -, *, /, ^ and common functions such as 
 |-
 | 3 2 ^ 4 2 ^ + sqrt  || RPN(3 2 ^ 4 2 ^ + sqrt)
 |-
-| log10(1000) || RPN(1000 10 log)
+| 1000 10 log || RPN(1000 10 log)
 |-
-| ln(1000) || RPN( 2.718281 1000 log)
+| e 1000 log || RPN( 2.718281 1000 log)
 |-
 | 3.1415926 2 / sin || RPN( 3.1415926 2 / sin )
 |-
-| abs(-10) || RPN(-10 fabs) 
+| -10 fabs || RPN(-10 fabs) 
 |-
 | Print the entire stack on error || RPN(2 3 abc)
 |}
+
+### Use RPN in a table
+
+You can create a simple spreadsheet by embedding RPN expressions in a table. A RPN expression in the table must start with '='.  You can reference other cells on the same row by $X notation where X is the column index starting from 0.
+{|
+| **A** || **B** || `A^2 + B^2`|| `sqrt(A^2 + B^2)`
+|-
+| .5  || 4 ||=$0 2 ^ $1 2 ^ + ||= $2 sqrt
+|-
+| 6  || 8 ||=$0 2 ^ $1 2 ^ + ||= $2 sqrt 
+|-
+| 9  || 12 ||=$0 2 ^ $1 2 ^ + 
+| =$2 sqrt
+|}
+
 
 You can easily add more functions to the built-in RPN by modify this line:
 ```
 unary=['sqrt','abs','sin','cos','tan'];norm={'+':op.add,'-':op.sub,'*':op.mul,'/':op.div,'^':pow};rev={'log':math.log}
 ```
 
-
-
-
-##  Ascii Math with [Math Jax](http://mathjax.org) (Optional)
-
-Insert the following line to the <head> section at the end of wypyplus.py to show AsciiMath.
-```
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
-```
+##  Math Notation with [Ascii Math](http://asciimath.org)
 
 `
-x=(-b +- sqrt(b^2 – 4ac))/(2a)
+sum_(i=1)^n i^3=((n(n+1))/2)^2
 `
 
 ## Synatx Highlight with [highlight.js](https://highlightjs.org) (Optional) 
