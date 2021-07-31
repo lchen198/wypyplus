@@ -22,13 +22,23 @@ WyPyPlus is a journey to discover the essence of personal wiki and get rid of ev
 *  When you run WyPyPlus in read-only mode, you can dump the entire site using wget. Visit the [(Demo)](https://ctrl-c.club/~lchen/cgi-bin/wypyplus.py%3Fp=WyPyPlus.html) site to see for yourself.
  
 ### A Presentation Tool:
-* You can use WyPyPlus to create presentations. It even produces [PDFs](https://github.com/lchen198/wypyplus/blob/main/example_hardcopy.pdf)!
+* You can use WyPyPlus to create presentations. It even produces
+[PDFs](https://github.com/lchen198/wypyplus/blob/main/example_hardcopy.pdf)!
+
+### A Simple Spreadsheet and a RPN calculator:
+* WyPyPlus has a built-in
+[RPN calculator](https://github.com/lchen198/wypyplus/blob/main/cgi-bin/rpn.py). You
+can put **RPN(expression)** anywhere on the page.
+
+In addition, you can use RPN in a table and reference rows and columes! 
+![](screenshots/rpn.png)
 
 ## Some Screenshots
-![](example.png)
-![](editor.png)
-![](calendar.png)
-![](example2.png)
+![](screenshots/example.png)
+![](screenshots/editor.png)
+![](screenshots/calendar.png)
+![](screenshots/example2.png)
+
 
 # Core Features
 * Takes less than a minute to set up.
