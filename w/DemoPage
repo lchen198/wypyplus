@@ -1,4 +1,3 @@
-
 # Header 1
 ## Header 2
 ### Header 3
@@ -130,7 +129,7 @@ You can create a simple spreadsheet by embedding RPN expressions in a table. A R
 |}
 
 
-You can easily add more functions to the built-in RPN by modify this line:
+You can easily add more functions to the built-in RPN by updating this line.
 ```
 unary=['sqrt','abs','sin','cos','tan'];norm={'+':op.add,'-':op.sub,'*':op.mul,'/':op.div,'^':pow};rev={'log':math.log}
 ```

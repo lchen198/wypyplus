@@ -15,14 +15,14 @@ insert_leading_space=lambda m: '\n```'+'\n '.join(m.group(1).splitlines())+ '\n`
 q,x,h,w=cgi.escape,os.path.exists,'<a href=','wypyplus.py?p=';link='\[([^]]*)]\(\s*((?:http[s]?://)?[^)]+)\s*\)';yt="https://www.youtube.com/watch?v="
 hl=lambda m,n:'<h%d>%s</h%d>'%(n,m.group(1),n);hl1=lambda m:hl(m, 1);hl2=lambda m:hl(m, 2);hl3=lambda m:hl(m,3)
 load=lambda n:(x('w/'+n) and open('w/'+n).read()) or '';load_tpl=lambda n: load(n) or load('Tpl'+n[:3]) or '';load_g=lambda:load('GlobalMenu')
+def load_rec(f):return [load_rec(l[8:l.find(')')]) if l.startswith('INCLUDE(') else l for l in load(f).splitlines()]
 f,i=cgi.FormContent(),'put type';y=f.get('p',[''])[0];y=dt.now().strftime("%b%d") if y=='Today' else (home,y)[y.isalnum()]
 se='<form><input type="text"placeholder="Search.. "name="p"><input type="hidden" name="q" value="f"><button type="submit">Search</button></form>'
 fs=lambda s:re.sub(pre_h,remove_leading_space,reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),
-('^INCLUDE\((\w+)\)$',lambda m: x('w/'+m.group(1)) and open('w/'+m.group(1)).read() or ''),
+('^INCLUDE\((\w+)\)$',lambda m: '\n'.join((lambda l: sum(map(flatten,l),[]) if isinstance(l,list) else [l])(load_rec(m.group(1))))),
 ('(\{\|\n)(.*[^\}]+)(\|\})',lambda m:'<table>'+'\n'.join([rpn_row(line) for line in re.split('\|-',m.group(2))])+'</table>'),
 ('RPN\((.*?)\)', lambda m: rpn(m.group(1))),('(^|[^=/\-_A-Za-z0-9?])@(\w+)',lambda m: h+w+m.group(2)+'&amp;q=f>@'+m.group(2)+'</a>'),
-('(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]*){1,})',
- lambda m:(m.group(1)+'%s%s')%((m.group(2),h+w+m.group(2)+'&amp;q=e>?</a>' if edit else ''),('',h+w+m.group(2)+'>%s</a>'%m.group(2)))[x('w/'+m.group(2))]),
+('(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]*){1,})',lambda m:(m.group(1)+'%s%s')%((m.group(2),h+w+m.group(2)+'&amp;q=e>?</a>' if edit else ''),('',h+w+m.group(2)+'>%s</a>'%m.group(2)))[x('w/'+m.group(2))]),
 ('^\{\{$','\n<ul>'),('^\*(.*)$','<li>\g<1></li>'),('^}}$','</ul>'),('^---$','<hr>'),
 (pre,'<pre><code>\g<1></code></pre>'),('^# (.*)$',hl1),('^## (.*)$', hl2),('^### (.*)$',hl3),('\*\*([^\*]+)\*\*','<b>\g<1></b>'),
 ('\!'+link,'<img src="\g<2>" alt="\g<1>">'),('(^|[^!])'+link,"\g<1>"+h+'"\g<3>">\g<2></a>'),('(^|[^"])(http[s]?:[^<>"\s]+)',

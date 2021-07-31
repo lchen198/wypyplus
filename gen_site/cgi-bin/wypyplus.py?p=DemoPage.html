@@ -1,0 +1,78 @@
+<head><meta content="width=device-width, initial-scale=1" name="viewport"></script><link rel="stylesheet" href="../sakura.css">        <script type="text/javascript" src="../ASCIIMathML.js"></script></head><title>DemoPage</title><h1><a href="wypyplus.py%3Fp=WyPyPlus.html">WyPyPlus</a></h1><p>
+<h1>Header 1</h1>
+<h2>Header 2</h2>
+<h3>Header 3</h3>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+<p><a href="wypyplus.py%3Fp=WyPyPlus.html">WyPyPlus</a> can generate headline anchor links. If you want to turn on this feature, replace the headline function:<pre><code>
+hl=lambda m,n:'&lt;h%d&gt;%s&lt;/h%d&gt;'%(n,m.group(1),n)</code></pre>
+with<pre><code>
+hl=lambda m,n:'&lt;h%d id=%s&gt;%s&lt;a href=#%s&gt; ¶&lt;/a&gt;&lt;/h%d&gt;'%(n,hs(m),m.group(1),hs(m),n);</code></pre>
+<p><h2>Bold</h2>
+<p>This is a <b>Bold</b> text!
+<p><h2>Links</h2>
+<p>YouTube Video:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0v5lKOQka9c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p>List everything in this wiki:<a href="wypyplus.py%3Fp=All&amp;q=f.html">@All</a>
+<p>Wiki link: <a href="wypyplus.py%3Fp=DemoPage.html">DemoPage</a>
+<p>Raw URL link:   <a href=http://www.google.com>http://www.google.com</a>
+<p>Markdown link: <a href="http://google.com">google homepage</a>
+<p>Reference to a date or a month: Jan1 Jan2021
+<p><h2>Template</h2>
+<p>A template is a page with a special name: Tpl[three characters]. A page starts with the same three characters will use the template.
+<p>For example, when you create TplJan, Any page starts with "Jan" such as Jan21 will include the template. 
+<p><h2>Images</h2>
+<p>External image:
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Emacs-logo.svg" alt="test image">
+<p>Local image:
+<p><img src="../example.png" alt="local image">
+<p><h2>Quote</h2>
+<p><pre><code>
+# Python Code
+def hello():
+  print("hello world")</code></pre>
+<p><h2>list</h2>
+<p>
+<ul>
+<li> Item A</li>
+<p><ul>
+<li> Item A1</li>
+<li> Item A2</li>
+</ul>
+<li> Item B</li>
+</ul>
+<p><h2>Table</h2>
+<p><a href="wypyplus.py%3Fp=WyPyPlus.html">WyPyPlus</a> supports <a href="https://www.mediawiki.org/wiki/Help:Tables">media wiki style table</a>.
+<table><tr><td>Orange</td><td>Apple</td></tr>
+<tr><td>Bread</td><td>Pie</td></tr>
+<tr><td>Butter</td><td>Ice cream</td></tr></table>
+<p><table><tr><td>Orange</td><td>Apple</td><td>more</td></tr>
+<tr><td>Bread</td><td>Pie</td><td>more</td></tr>
+<tr><td>Butter</td><td>Ice cream</td><td>and more</td></tr></table>
+<p><h2>Page Break</h2>
+<hr>
+<p><h2>The RPN Calculator</h2>
+<p>The built-in RPN calculator supports +, -, *, /, ^ and common functions such as log, sqrt, abs, sin, cos, and tan.
+<p><table><tr><td><b> Example</b></td><td><b>Results</b></td></tr>
+<tr><td>3 2 ^ 4 2 ^ + sqrt</td><td>5.0</td></tr>
+<tr><td>1000 10 log</td><td>0.333333333333</td></tr>
+<tr><td>e 1000 log</td><td>6.90775738428</td></tr>
+<tr><td>3.1415926 2 / sin</td><td>1.0</td></tr>
+<tr><td>-10 fabs</td><td>10.0</td></tr>
+<tr><td>Print the entire stack on error</td><td>[2.0, 3.0, 'err']</td></tr></table>
+<p><h3>Use RPN in a table</h3>
+<p>You can create a simple spreadsheet by embedding RPN expressions in a table. A RPN expression in the table must start with '='.  You can reference other cells on the same row by $X notation where X is the column index starting from 0.
+<table><tr><td><b>A</b></td><td><b>B</b></td><td>`A^2 + B^2`</td><td>`sqrt(A^2 + B^2)`</td></tr>
+<tr><td>.5</td><td>4</td><td>16.25</td><td>4.03112887415</td></tr>
+<tr><td>6</td><td>8</td><td>100.0</td><td>10.0</td></tr>
+<tr><td>9</td><td>12</td><td>225.0</td><td>15.0</td></tr></table>
+<p>
+You can easily add more functions to the built-in RPN by modify this line:<pre><code>
+unary=['sqrt','abs','sin','cos','tan'];norm={'+':op.add,'-':op.sub,'*':op.mul,'/':op.div,'^':pow};rev={'log':math.log}</code></pre>
+<p><h2> Math Notation with <a href="http://asciimath.org">Ascii Math</a></h2>
+<p>`
+sum_(i=1)^n i^3=((n(n+1))/2)^2
+`
+<p><h2>Synatx Highlight with <a href="https://highlightjs.org">highlight.js</a> (Optional) </h2>
+<p>Insert the following line to the &lt;head&gt; section at the end of wypyplus.py to support synatx highligh for over 150 languages.<pre><code>
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css"&gt;\
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"&gt;&lt;/script&gt;&lt;script&gt;hljs.highlightAll();&lt;/script&gt;</code></pre>

@@ -9,6 +9,7 @@ You can use WyPyPlus as
 * A GetThingsDone system
 * A static site generator
 * A presentation tool
+* A spreadsheet that supports [RPN](https://en.wikipedia.org/wiki/Reverse_Polish_notation) notation.
 
 ### You will be amazed by how much you can do with a simple tool
 
@@ -27,10 +28,10 @@ You can use WyPyPlus as
 * Each WikiPage has a reverse index. You can use this feature to group pages by tags.
 * An [index page](wypyplus.py?p=All&q=f) to show all your files in sorted order.
 * AutoSave after 30 minutes of editing.
-* Use INCLUDE(WikiPage) to include content from another page.
-* A built-in RPN calculator that supports +, -, *, / and sqrt.
+* Use INCLUDE(WikiPage) syntax to include content from another page (recursively)
+* A powerful built-in RPN calculator that works with data in tables.
+* Display [Ascii Math](http://asciimath.org) or LaTaX notations.
 * (Optional) Syntax highlight with [highlight.js](https://highlightjs.org).
-* (Optional) Display [Ascii Math](http://asciimath.org) or LaTaX notations.
 * (Optional) Read-only mode.
 * (Optional) Include a GlobalMenu in every wiki page.
 
