@@ -16,9 +16,8 @@ y=f.get('p',[''])[0];y=dt.now().strftime("%b%d") if y=='Today' else (home,y)[y.i
 se='<form><input type="text"placeholder="Search.. "name="p"><input type="hidden" name="q" value="f"><button type="submit">Search</button></form>'
 fs=lambda s:re.sub(pre_h,remove_leading_space,reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),
 ('^INCLUDE\((\w+)\)$',lambda m: '\n'.join((lambda l: sum(map(flatten,l),[]) if isinstance(l,list) else [l])(load_rec(m.group(1))))),
-('(\{\|\n)(.*[^\}]+)(\|\})',rpn.rpn_table),
 ('RPN\((.*?)\)', lambda m: rpn.rpn(m.group(1))),('(^|[^=/\-_A-Za-z0-9?])@(\w\w+)',lambda m: h+w+m.group(2)+'&amp;q=f>@'+m.group(2)+'</a>'),
-('(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]*){1,})',
+('(\{\|\n)(.*[^\}]+)(\|\})',rpn.rpn_table),('(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]*){1,})',
      lambda m:(m.group(1)+'%s%s')%((m.group(2),h+w+m.group(2)+'&amp;q=e>?</a>' if edit else ''),
                                        ('',h+w+m.group(2)+'>%s</a>'%m.group(2)))[x('w/'+m.group(2))]),
 ('^\{\{$','\n<ul>'),('^\*(.*)$','<li>\g<1></li>'),('^}}$','</ul>'),('^---$','<hr>'),
@@ -39,4 +38,5 @@ main=lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or not edit or ('t' in f 
     and open('w/'+y,'w').write(f['t'][0])`+`sys.stdout.write("Content-type: text/html; charset=utf-8\r\n\r\n"\
         '<head><meta content="width=device-width, initial-scale=1" name="viewport"></script><link rel="stylesheet" href="../sakura.css">\
         <link rel="stylesheet" href="../nav.css"><script type="text/javascript" src="../ASCIIMathML.js"></script></head><title>%s</title>'%y+
-do(({'e':'edit','f':'find'} if edit else {'f':'find'}).get(f.get('q',[None])[0],'get'),y))`;(__name__=="__main__") and main()
+do(({'e':'edit','f':'find'} if edit else {'f':'find'}).get(f.get('q',[None])[0],'get'),y))`;
+(__name__=="__main__") and main()
