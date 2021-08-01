@@ -69,6 +69,10 @@ def hello():
 * Item B
 }}
 
+## Page Break
+
+---
+
 ## Table
 
 WyPyPlus supports [media wiki style table](https://www.mediawiki.org/wiki/Help:Tables).
@@ -91,19 +95,31 @@ WyPyPlus supports [media wiki style table](https://www.mediawiki.org/wiki/Help:T
 |   Butter || Ice cream || and more
 |}
 
-## Page Break
-
----
-
 ## The RPN Calculator
 
 The built-in RPN calculator supports 
 * Basic math operations: +, -, *, and / 
-* Stack operation: dup, over, swap, drop, and rot
+* Stack operations: dup, over, swap, drop, and rot
 * Other functions: ^(pow), log, sqrt, abs, sin, cos, and tan
+* Print operations: . cr
+
+### Basic Math
+{|
+| 1 1 + || RPN(1 1 +) 
+|-
+| 1 1 - || RPN(1 1 -)
+|-
+| 2 2 * || RPN(2 2 *)
+|-
+| 10 5 / || RPN(10 5 /)
+|-
+| 2 3 ^ || RPN(2 3 ^)
+|-
+| 5 10  randint || RPN(5 10 randint ) 
+|} 
 
 ### User Defined Functions
-A user can define function with the following syntax and use it anywhere on the page. Remember to remove the space between RPN and the first '('.
+A user can define new functions with the following syntax:
 
 RPN (: <fun name> <fun content> ;)
 
@@ -115,9 +131,10 @@ RPN(: squire dup * ;)
 RPN (: pythagoras squire swap squire + sqrt;)
 RPN(: pythagoras squire swap squire + sqrt;)
 
+
+
+### Built-in and User Defined Functions
 {|
-| ** Example** || **Results**
-|-
 | 3 squire  || RPN(3 squire)
 |-
 | 3 4 pythagoras  || RPN(3 4 pythagoras)
@@ -132,6 +149,21 @@ RPN(: pythagoras squire swap squire + sqrt;)
 |-
 | Print the entire stack on error || RPN(2 3 abc)
 |}
+
+### Stack & Print Operations
+{|
+| 1 dup || RPN(1 dup)
+|-
+| 2 1 swap || RPN(2 1 swap)
+|-
+| 10 5 drop  || RPN(10 5 drop)
+|-
+| 1 2 3 rot || RPN(1 2 3 rot)
+|-
+| 100 . || RPN(100 .)
+|-
+| "hello" . cr cr " world" . || RPN("hello" . cr cr " world" .)
+|} 
 
 ### Use RPN in a Table
 
