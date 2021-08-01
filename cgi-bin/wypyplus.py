@@ -27,7 +27,7 @@ fs=lambda s:re.sub(pre_h,remove_leading_space,reduce(lambda s,r:re.sub('(?m)'+r[
  clipboard-write; encrypted-media;gyroscope; picture-in-picture" allowfullscreen></iframe>' % m.group(2)[len(yt):]) if m.group(2).startswith(yt)
  else (m.group(1)+h+m.group(2)+">"+m.group(2)+"</a>")),('\n\n','\n<p>')),q(s)),0,re.MULTILINE)
 do=lambda m,n:{'get':lambda:'<div class="navbar"><h1>%s%s%s>%s</a>'%(h,w,home,home) + ((':%s%s%s&amp;q=f>%s</a>%s%s%s&amp;q=e>%s</a>'%(h,w,n,n,h,w,n,edit)) if edit else '') +
-      '</h1>%s</div><div class="main"><p>%s'%(se if edit else '',fs(load_g()+re.sub(pre, insert_leading_space, load_tpl(n))) or n),
+      '</h1></div><div class="main">%s<p>%s'%(se if edit else '',fs(load_g()+re.sub(pre, insert_leading_space, load_tpl(n))) or n),
     'edit':lambda:'<form name="e" action=%s%s method=POST><h1>%s <in%s=hidden name=p value=%s></h1>\
 Opened at: %s AutoSave at: %s<textarea name=t id=ta rows=24>%s%s<in%s=submit>'%(
         w,n,fs(n),i,n, dt.now().strftime("%m/%d/%Y %H:%M"), (dt.now()+td(minutes=30)).strftime("%H:%M"), q(load_tpl(n)),t,i),
