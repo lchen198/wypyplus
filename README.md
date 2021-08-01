@@ -28,7 +28,7 @@ WyPyPlus is a journey to discover the essence of personal wiki and get rid of ev
 ### A Simple Spreadsheet and a RPN calculator:
 * WyPyPlus has a built-in RPN calculator that suports
   * Basic math operations: +, -, *, and / 
-  * Stack operation: dup, over, swap, drop, and rot
+  * Stack operations: dup, over, swap, drop, and rot
   * Other functions: ^, log, sqrt, abs, sin, cos, and tan
 * You can define new functions using ```RPN(: <name> <content> ;)```
 ```
