@@ -116,6 +116,8 @@ The built-in RPN calculator supports
 | 2 3 ^ || RPN(2 3 ^)
 |-
 | 5 10  randint || RPN(5 10 randint ) 
+|-
+| Print error message: || RPN(2 3 abcde)
 |} 
 
 ### User Defined Functions
@@ -147,7 +149,7 @@ RPN(: pythagoras squire swap squire + sqrt;)
 |-
 | -10 fabs || RPN(-10 fabs) 
 |-
-| Print the entire stack on error || RPN(2 3 abc)
+| "hello" 0 3 slice || RPN("hello" 0 3 slice)
 |}
 
 ### Stack & Print Operations
