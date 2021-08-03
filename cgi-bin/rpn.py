@@ -1,33 +1,44 @@
 import operator as op;import math,re, random
-unary_op=lambda t,s: t(s.pop())
-two_op=lambda t,s: t(s.pop(-2),s.pop())
-unary={'sqrt':math.sqrt, 'fabs':math.fabs, 'sin':math.sin, 'cos':math.cos,'tan':math.tan,
-           'sum':sum, 'avg': lambda v: sum(v)/len(v), 'int':int, 'float':float, 'str': str}
+CELL_NUM, CELL_STR, CELL_FUN = 0, 1, 2
+ERROR, OK, DEFER = 0, 1, 2
 def swap(s, out) : a=s.pop(); b=s.pop(); s.append(a); s.append(b)
 def rot(s, out) :a=s.pop(); b=s.pop(); c=s.pop(); s.append(b), s.append(a), s.append(c)
 def slice(s, out): end=int(s.pop());start=int(s.pop());data=s.pop(); s.append(data[start:end])
-misc_fn={
+def avg(s, out): v=s.pop(); return sum(v)/len(v)
+functions={
+    # Stack
     'dup': lambda s,out: s.append(s[-1]),
     'swap': swap,
     'drop': lambda s, out:s.pop(),
     'over': lambda s, out: s.append(s[-2]),
     'rot': rot,
+    # String
     '.' : lambda s, out: out.append(str(s.pop())),
     'cr' : lambda s, out: out.append('\n'),
-    'log': lambda s, out: math.log(s.pop(),s.pop()),
     'slice': slice,
-    'format': lambda s, out: str.format(s.pop(), s.pop())
+    'format': lambda s, out: str.format(s.pop(), s.pop()),
+    # Math
+    '+': lambda s, out: op.add(s.pop(-2),s.pop()),
+    '-': lambda s, out: op.sub(s.pop(-2),s.pop()),
+    '*': lambda s, out: op.mul(s.pop(-2),s.pop()),
+    '/': lambda s, out: op.div(s.pop(-2),s.pop()),
+    '^': lambda s, out: pow(s.pop(-2),s.pop()),
+    'log': lambda s, out: math.log(s.pop(),s.pop()),
+    'randint': lambda s, out: random.randint(s.pop(-2),s.pop()),
+    'sqrt':lambda s,out:math.sqrt(s.pop()),
+    'fabs':lambda s,out:math.fabs(s.pop()),
+    'sin':lambda s,out:math.sin(s.pop()),
+    'cos':lambda s,out:math.cos(s.pop()),
+    'tan':lambda s,out:math.tan(s.pop()),
+    'sum':lambda s,out:sum(s.pop()),
+    'avg': avg,
+    'int':lambda s,out:int(s.pop()),
+    'float':lambda s,out:float(s.pop()),
+    'str': lambda s,out:str(s.pop()),
     }
-
-two={'+':op.add,'-':op.sub,'*':op.mul,'/':op.div,'^':pow, 'randint':random.randint}
-ops=lambda t,s: unary_op(unary[t],s) if t in unary \
-  else two_op(two[t],s) if t in two \
-  else 'undefined function:' + t
 user_ops = {}
 tables = {}
 log=open('./log','w')
-CELL_NUM, CELL_STR, CELL_FUN, CELL_CONTINUE = 0, 1, 2, 4
-ERROR, OK, DEFER = 0, 1, 2
 
 def has_defer_ref(ref):
     if type(ref) == list:
@@ -141,7 +152,6 @@ def rpn_str(v, row=0, col=0,table=[]):
     else:
         return ''
 
-
 def rpn(words,s,output, row=0, col=0,table=[]):
     global user_ops, log
     log.write('rpn_start:'+str(s)+str(words)+str(row)+str(col)+'\n')
@@ -168,12 +178,12 @@ def rpn(words,s,output, row=0, col=0,table=[]):
                 words = [ref_data[1]] + words
             else:
                 s.append(ref_data[1])
-        elif word in misc_fn:
-            rval = misc_fn[word](s,output)
+        elif word in functions:
+            rval = functions[word](s,output)
             if rval:
                 s.append(rval)
         else:
-            s.append(ops(word,s))
+            return 'Invalid word:'+word, ERROR
     if output:
         return ''.join([str(o) for o in output]), OK
     else:
