@@ -5,7 +5,7 @@ unary={'sqrt':math.sqrt, 'fabs':math.fabs, 'sin':math.sin, 'cos':math.cos,'tan':
            'sum':sum, 'avg': lambda v: sum(v)/len(v), 'int':int, 'float':float, 'str': str}
 def swap(s, out) : a=s.pop(); b=s.pop(); s.append(a); s.append(b)
 def rot(s, out) :a=s.pop(); b=s.pop(); c=s.pop(); s.append(b), s.append(a), s.append(c)
-def slice(s, out): end=int(s.pop());start=int(s.pop());data=s.pop(); s.append(data[start:end]) 
+def slice(s, out): end=int(s.pop());start=int(s.pop());data=s.pop(); s.append(data[start:end])
 misc_fn={
     'dup': lambda s,out: s.append(s[-1]),
     'swap': swap,
@@ -24,6 +24,7 @@ ops=lambda t,s: unary_op(unary[t],s) if t in unary \
   else two_op(two[t],s) if t in two \
   else 'undefined function:' + t
 user_ops = {}
+tables = {}
 log=open('./log','w')
 CELL_NUM, CELL_STR, CELL_FUN, CELL_CONTINUE = 0, 1, 2, 4
 ERROR, OK, DEFER = 0, 1, 2
@@ -40,7 +41,20 @@ def has_defer_ref(ref):
     return False
 
 def ref(t, row, col, table):
-    crt_row = table[row]
+    global tables, log
+    log.write('ref:' + t + '\n')
+    if '!' in t:
+        t, remote = t.split('!')
+        log.write('remote' + remote+ str(tables)+ '\n')
+        if remote in tables:
+            ref_table= tables[remote]
+            
+        else:
+            return 'invalid reference (%s, @%s, $%s)' % (t, row, col), ERROR
+    else:
+        ref_table = table
+    crt_row = ref_table[row]
+    
     rval = None
     if t.startswith('$'):
         rg = re.match('\$(\d+)\.\.\$(\d+)',t)
@@ -55,16 +69,16 @@ def ref(t, row, col, table):
         row_col=re.match('\@(\d+)\$(\d+)',t)
         if rg:
             start, end = int(rg.group(1)), int(rg.group(2))
-            rval = [r[col] for i,r in enumerate(table) if start <= i <= end]
+            rval = [r[col] for i,r in enumerate(ref_table) if start <= i <= end]
         elif row_col:
             t_row, t_col = int(row_col.group(1)), int(row_col.group(2))
-            log.write('ref r c'+ str(t_row) + " " + str(t_col)+'\n')
-            if t_row < len(table) and t_col < len(table[t_row]):
-                    rval = table[t_row][t_col]
+            if t_row < len(ref_table) and t_col < len(ref_table[t_row]):
+                    rval = ref_table[t_row][t_col]
         else:
             target_row = int(t[1:])
-            if (target_row < len(table)):
+            if (target_row < len(ref_table)):
                 rval = table[target_row][col]
+    log.write('ref rval:'+ str(rval) +'\n')
     if not rval:
         return 'invalid reference (%s, @%s, $%s)' % (t, row, col), ERROR
     if has_defer_ref(rval):
@@ -113,17 +127,6 @@ def tokenize(v):
               t = []
               state = SP
     return toks
-
-# def convert(v):
-#     try:
-#         value = int(v)
-#         return CELL_NUM, value
-#     except:
-#         try:
-#             value = float(v)
-#             return CELL_NUM, value
-#         except:
-#             return CELL_STR, v
     
 def rpn_str(v, row=0, col=0,table=[]):
     global user_ops
@@ -141,11 +144,11 @@ def rpn_str(v, row=0, col=0,table=[]):
 
 def rpn(words,s,output, row=0, col=0,table=[]):
     global user_ops, log
-    log.write('rpn:'+str(s)+str(words)+str(row)+str(col)+'\n')
+    log.write('rpn_start:'+str(s)+str(words)+str(row)+str(col)+'\n')
     while words:
         word = words[0]
         words = words[1:]
-        log.write('rpn:'+str(word)+str(s)+str(words)+str(row)+str(col)+'\n')
+        log.write('rpn_loop:'+str(word)+str(s)+str(words)+'\n')
         if type(word) == int or type(word) == float:
             s.append(word)
         elif word.startswith('"') or word.startswith("'"):
@@ -161,6 +164,8 @@ def rpn(words,s,output, row=0, col=0,table=[]):
                 return ref_data, ERROR
             if type(ref_data) == list:
                 s.append([cell[1] for cell in ref_data])
+            elif ref_data[0] == CELL_STR and (ref_data[1][0] in ['@','$']):
+                words = [ref_data[1]] + words
             else:
                 s.append(ref_data[1])
         elif word in misc_fn:
@@ -176,11 +181,13 @@ def rpn(words,s,output, row=0, col=0,table=[]):
         return s[0] if len(s)==1 else str(s), OK
 
 def rpn_table(m):
+    global tables
     table_env=[]
     table = []
     max_iter = 3
     table_status = OK
-    log.write(m.group(2))
+    table_name = m.group(1)
+    log.write(m.group(1))
 
     for row_i, row in enumerate(re.split('\|-',m.group(2))):
         table_env.append([])
@@ -196,39 +203,43 @@ def rpn_table(m):
             else:
                 try:
                     value = float(v)
-                    row_env.append((CELL_STR, value))
+                    row_env.append((CELL_NUM, value))
                     continue
                 except:
                     pass
                 value = v
                 row_env.append((CELL_STR, value))
 
-    try:
-        for cur_iter in range(max_iter):
-            row_status = []
-            for row_i, row in enumerate(table_env):
-                for col_i, cell in enumerate(row):
-                    cell_type, cell_val = cell
-                    log.write('cell (%d %d) %d %s\n' %(row_i, col_i, cell_type, str(cell_val)))
-                    if cell_type == CELL_FUN:
-                        cell_rval, status = cell_val(row_i, col_i,table_env)
-                        log.write('fun %s %s\n' %(status, cell_rval))
-                        row_status.append(status)
-                        if status == DEFER:
-                            table_env[row_i][col_i] = (CELL_FUN, cell_rval)
-                        else:
-                            if type(cell_rval) == str:
-                                table_env[row_i][col_i] = (CELL_STR, cell_rval)
-                            else:
-                                table_env[row_i][col_i] = (CELL_NUM, cell_rval)
-                        if status == ERROR:
-                            table_env[row_i][col_i] = (CELL_STR, cell_rval)
+
+    for cur_iter in range(max_iter):
+        row_status = []
+        for row_i, row in enumerate(table_env):
+            for col_i, cell in enumerate(row):
+                cell_type, cell_val = cell
+                log.write('cell (%d %d) %d %s\n' %(row_i, col_i, cell_type, str(cell_val)))
+                if cell_type == CELL_FUN:
+                    cell_rval, status = cell_val(row_i, col_i,table_env)
+                    log.write('fun %s %s\n' %(status, cell_rval))
+                    row_status.append(status)
+                    if status == DEFER:
+                        table_env[row_i][col_i] = (CELL_FUN, cell_rval)
                     else:
-                        pass
-            if any([s == DEFER for s in row_status]):
-                continue
-    except:
-        pass
+                        if type(cell_rval) == str:
+                            table_env[row_i][col_i] = (CELL_STR, cell_rval)
+                        else:
+                            table_env[row_i][col_i] = (CELL_NUM, cell_rval)
+                    if status == ERROR:
+                        table_env[row_i][col_i] = (CELL_STR, cell_rval)
+                elif cell_type == CELL_STR and cell_val and cell_val[0] in ['@', '$']:
+                    rval, status = ref(cell_val, row_i, col_i, table_env)
+                    if type(rval[1]) != list and status != DEFER:
+                        table_env[row_i][col_i] = (rval[0], rval[1])
+                else:
+                    pass
+        if any([s == DEFER for s in row_status]):
+            continue
+    if table_name:
+        tables[table_name]=table_env
     for row_env in table_env:
         table.append('<tr><td>'+'</td><td>'.join([str(v) for cell_type,v in row_env])+'</td></tr>')
     return '<table>'+'\n'.join(table)+'</table>'
