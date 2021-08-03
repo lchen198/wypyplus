@@ -190,6 +190,37 @@ You can use range functions: **sum** and **avg**
 | Total || =@1..@3 sum  || =@1..@3 sum   || =@1..@3 sum  || =@1..@3 sum || =@1..@3 sum 
 |}
 
+RPN(: two_dice $1 @12$1 /  ;)
+
+### Probabilities for the two dice
+{|
+| Total	|| Number of combinations || Probability
+|-
+| 2	|| 1	||=two_dice
+|-
+| 3	|| 2	||=two_dice
+|-
+| 4	|| 3	||=two_dice
+|-
+| 5	|| 4	||=two_dice
+|-
+| 6	|| 5	||=two_dice
+|-
+| 7	|| 6	||=two_dice
+|-
+| 8	|| 5	||=two_dice
+|-
+| 9	|| 4	||=two_dice
+|-
+| 10	|| 3	||=two_dice
+|-
+| 11	|| 2	||=two_dice
+|-
+| 12	|| 1	||=two_dice
+|-
+| Total ||=@1..@11 sum ||=@1..@11 sum 
+|}
+
 You can add more functions to the built-in RPN by modifying the rpn.py file.
 
 ##  Math Notation with [Ascii Math](http://asciimath.org)

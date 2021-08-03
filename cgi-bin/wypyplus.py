@@ -17,7 +17,7 @@ y=f.get('p',[''])[0];y=dt.now().strftime("%b%d") if y=='Today' else (home,y)[y.i
 se='<form><input type="text"placeholder="Search.. "name="p"><input type="hidden" name="q" value="f"><button type="submit">Search</button></form>'
 fs=lambda s:re.sub(pre_h,remove_leading_space,reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),
 ('^INCLUDE\((\w+)\)$',lambda m: '\n'.join(flatten(load_rec(m.group(1))))), ('\{\{NAME\}\}', y),
-('RPN\((.*?)\)', lambda m: rpn.rpn(m.group(1))),('(^|[^=/\-_A-Za-z0-9?])@(\w\w+)',lambda m: h+w+m.group(2)+'&amp;q=f>@'+m.group(2)+'</a>'),
+('RPN\((.*?)\)', lambda m: rpn.rpn_str(m.group(1))),('(^|[^=/\-_A-Za-z0-9?])@([A-Z]\w+)',lambda m: h+w+m.group(2)+'&amp;q=f>@'+m.group(2)+'</a>'),
 ('(\{\|\n)(.*[^\}]+)(\|\})',rpn.rpn_table),('(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]*){1,})',
      lambda m:(m.group(1)+'%s%s')%((m.group(2),h+w+m.group(2)+'&amp;q=e>?</a>' if edit else ''),('',h+w+m.group(2)+'>%s</a>'%m.group(2)))[x('w/'+m.group(2))]),
 ('^\{\{$','\n<ul>'),('^\*(.*)$','<li>\g<1></li>'),('^}}$','</ul>'),('^---$','<hr>'),
