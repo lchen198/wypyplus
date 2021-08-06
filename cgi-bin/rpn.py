@@ -1,6 +1,9 @@
 import operator as op
 import math, re, random
 from collections import namedtuple
+import HTMLParser
+
+DEBUG = False
 
 # Cell types
 CELL_NUM, CELL_STR, CELL_FUN = 0, 1, 2
@@ -24,32 +27,13 @@ class Fn():
     def __call__(self, vm):
         return self.fn(vm)
 
+class CtrlFn(Fn):
+    def __call__(self, code, words, c_stack):
+        return self.fn(code, words, c_stack)
 
 class StackFn(Fn):
     def __call__(self, vm):
         self.fn(vm.s, vm.output)
-
-
-# Compile-time functions
-def colon(code, words, c_stack):
-    if c_stack: return ': in ctrl stack', ERROR
-    if words:
-        label = words[0]
-        del words[0]
-        c_stack.append(("COLON", label))
-
-
-def semi(code, words, c_stack):
-    if not c_stack: fatal("No : for ; to match")
-    tag, label = c_stack.pop()
-    if tag != "COLON": fatal(": not balanced with ;")
-    user_ops[label.val] = code[:]  # Save word definition in rDict
-    while code:
-        code.pop()
-
-
-compile_fn = {':': colon, ';': semi}
-
 
 # Run-time functions
 def swap(s, out):
@@ -58,13 +42,11 @@ def swap(s, out):
     s.append(a)
     s.append(b)
 
-
 def rot(s, out):
     a = s.pop()
     b = s.pop()
     c = s.pop()
     s.append(b), s.append(a), s.append(c)
-
 
 def slice(s, out):
     end = int(s.pop())
@@ -72,11 +54,19 @@ def slice(s, out):
     data = s.pop()
     s.append(data[start:end])
 
-
 def avg(s, out):
     v = s.pop()
     s.append(sum(v) / len(v))
 
+def jmp(vm): return vm.code[vm.pc]
+
+def jnz(vm): return (vm.code[vm.pc],vm.pc+1)[vm.s.pop()]
+
+def jz(vm): return (vm.pc+1, vm.code[vm.pc])[vm.s.pop()==0]
+
+def gt(s, out): b=s.pop(); a=s.pop(); s.append(int(a>b))
+def lt(s, out): b=s.pop(); a=s.pop(); s.append(int(a<b))
+def eq(s, out): b=s.pop(); a=s.pop(); s.append(int(a==b))
 
 runtime_fn = {
     # Stack
@@ -90,6 +80,10 @@ runtime_fn = {
     'cr': lambda s, out: out.append('\n'),
     'slice': slice,
     'format': lambda s, out: s.append(str.format(s.pop(), s.pop())),
+    # Compare
+    '>' : gt,
+    '<' : lt,
+    '=' : eq,
     # Math
     '+': lambda s, out: s.append(op.add(s.pop(-2), s.pop())),
     '-': lambda s, out: s.append(op.sub(s.pop(-2), s.pop())),
@@ -109,6 +103,49 @@ runtime_fn = {
     'float': lambda s, out: s.append(float(s.pop())),
     'str': lambda s, out: s.append(str(s.pop())),
 }
+
+# Compile-time functions
+def colon(code, words, c_stack):
+    if c_stack: return ': in ctrl stack', ERROR
+    if words:
+        label = words[0]
+        del words[0]
+        c_stack.append(("COLON", label))
+    return 'Failed to get word.', ERROR
+
+def semi(code, words, c_stack):
+    if not c_stack: fatal("No : for ; to match")
+    tag, label = c_stack.pop()
+    if tag != "COLON": fatal(": not balanced with ;")
+    user_ops[label.val] = code[:]  # Save word definition in rDict
+    while code:
+        code.pop()
+        
+def cIf(code, words, c_stack):
+    code.append(Fn('jz',jz))
+    c_stack.append(("IF", len(code)))
+    code.append(0) # A placeholder for jump address
+
+def cElse(code, words, c_stack):
+    if not c_stack: return 'Failed to find matching IF', ERROR
+    tag,slot = c_stack.pop()
+    if tag != "IF": return 'Failed to find matching IF', ERROR
+    code.append(Fn('jmp',jmp))
+    c_stack.append(("ELSE", len(code)))
+    code.append(0) # A placeholder for jump address
+    code[slot] = len(code)
+
+def cThen(code, words, c_stack):
+    if not c_stack: return 'Failed to find matchign IF or ELSE', ERROR
+    tag,slot = c_stack.pop()
+    if tag not in ("IF", "ELSE"):
+        return "THEN preceded by %s (not IF or ELSE)" % tag, ERROR
+    code[slot] = len(code)
+
+compile_fn = {':': CtrlFn(':', colon), ';': CtrlFn(';', semi), 'if': CtrlFn('if',cIf),
+                  'else': CtrlFn('else',cElse), 'then': CtrlFn('then', cThen)}
+
+
 # User defined words
 user_ops = {}
 
@@ -190,11 +227,13 @@ def tokenize2(text):
     >>> tokenize2('@10 $10 @1..@10 $1..$10 @10$10')
     ([Token(tag=3, val='@10', pos=0, end=3), Token(tag=3, val='$10', pos=4, end=7), Token(tag=3, val='@1..@10', pos=8, end=15), Token(tag=3, val='$1..$10', pos=16, end=23), Token(tag=3, val='@10$10', pos=24, end=30)], 1)
     """
+
+    text = HTMLParser.HTMLParser().unescape(text)
     rules = {
         "\"([^\"\\\\]|\\\\.)*\"": STR,
         "\'([^\'\\\\]|\\\\.)*\'": STR,
         r"[+-]?([0-9]*[.])?[0-9]+": NUM,
-        r'[\w\+\-\*\/\^\.\:\;]+': FUN,
+        r'[\w\+\-\*\/\^\.\:\;\=\>\<]+': FUN,
         r'[@|$][^ ]*': REF,
     }
     scanner_handler = lambda tag: lambda sc, val: Token(
@@ -228,10 +267,10 @@ def compile(words, row=0, col=0, table=[]):
         words = words[1:]
         if word.tag == NUM:
             code.append(
-                Fn('push_num', lambda vm, v=float(word.val): vm.s.append(v)))
+                Fn('push_num:'+word.val, lambda vm, v=float(word.val): vm.s.append(v)))
         elif word.tag == STR:
             code.append(
-                Fn('push_str',
+                Fn('push_str:'+word.val,
                    lambda vm, v=word.val.strip('"\''): vm.s.append(v)))
         elif word.tag == FUN:
             if word.val in compile_fn:
@@ -261,6 +300,7 @@ def compile(words, row=0, col=0, table=[]):
                            lambda vm, v=rval[1].strip('"\''): vm.s.append(v)))
         else:
             return 'Invalid type:' + str(word), ERROR
+        # print  ' '.join([str(c) for c in code])
     return code, OK
 
 
@@ -292,7 +332,7 @@ class VM():
             func = self.code[self.pc]
             self.pc += 1
             new_pc = func(self)
-            if new_pc != None: self.p = new_pc
+            if new_pc != None: self.pc = new_pc
 
 
 def rpn_table_vm(m):
@@ -358,14 +398,13 @@ def rpn_table_vm(m):
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-    p = "1 1 +"
-    words, rems = tokenize2(p)
+    p = '2 3 > if "yes" else "no" then'
+    words, status = tokenize2(p)
     pcode, status = compile(words)
-    print pcode
+    print ' '.join([str(p) for p in pcode])
     if status != OK:
         print status
     else:
-        print str(pcode)
         vm = VM(pcode)
         vm.execute()
         print vm.result()

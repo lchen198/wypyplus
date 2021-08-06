@@ -98,7 +98,9 @@ WyPyPlus supports [media wiki style table](https://www.mediawiki.org/wiki/Help:T
 ## The RPN Calculator
 
 The built-in RPN calculator supports 
-* Basic math operations: +, -, *, and / 
+* Basic math operations: +, -, *, and /
+* Control flow: if else then
+* Compare: > < =
 * Stack operations: dup, over, swap, drop, and rot
 * Other functions: ^(pow), log, sqrt, abs, sin, cos, and tan
 * Print operations: . cr
@@ -119,6 +121,13 @@ The built-in RPN calculator supports
 |-
 | Print error message: || RPN(2 3 abcde)
 |} 
+
+### Control Flow
+{|
+| 2 3 > if "yes" else "no" then || RPN(2 3 > if "yes" else "no" then) 
+|-
+| "a" "a" = if "yes" else "no" then || RPN("a" "a" = if "yes" else "no" then)
+|}
 
 ### User Defined Functions
 A user can define new functions with the following syntax:
