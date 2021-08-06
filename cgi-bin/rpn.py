@@ -369,6 +369,7 @@ def tokenize2(text):
         tag, val, sc.match.start(), sc.match.end())
     handlers = [(reg, scanner_handler(tag)) for (reg, tag) in rules.items()]
     handlers.append((r"\s+", None))
+    handlers.append((r'\\ .*\n',None))
     toks, remain = re.Scanner(handlers).scan(text)
     if remain:
         return remain, ERROR
@@ -536,7 +537,9 @@ if __name__ == "__main__":
     PRINT=True
     import doctest
     doctest.testmod()
-    p = 'today 1 timedelta1 +'
+    p = '''1 1 +  \ some comment
+2 2 + 
+'''
     words, status = tokenize2(p)
     print words
     pcode, status = compile(words)
