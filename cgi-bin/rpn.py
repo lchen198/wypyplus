@@ -1,44 +1,120 @@
-import operator as op;import math,re, random
+import operator as op
+import math, re, random
+from collections import namedtuple
+
+# Cell types
 CELL_NUM, CELL_STR, CELL_FUN = 0, 1, 2
+
+# Forth data types
+NUM, STR, FUN, REF = 0, 1, 2, 3
+
+# Return status
 ERROR, OK, DEFER = 0, 1, 2
-def swap(s, out) : a=s.pop(); b=s.pop(); s.append(a); s.append(b)
-def rot(s, out) :a=s.pop(); b=s.pop(); c=s.pop(); s.append(b), s.append(a), s.append(c)
-def slice(s, out): end=int(s.pop());start=int(s.pop());data=s.pop(); s.append(data[start:end])
-def avg(s, out): v=s.pop(); return sum(v)/len(v)
-functions={
+
+
+# Function wrapper to support printing.
+class Fn():
+    def __init__(self, name, fn):
+        self.name = name
+        self.fn = fn
+
+    def __str__(self):
+        return self.name
+
+    def __call__(self, vm):
+        return self.fn(vm)
+
+
+class StackFn(Fn):
+    def __call__(self, vm):
+        self.fn(vm.s, vm.output)
+
+
+# Compile-time functions
+def colon(code, words, c_stack):
+    if c_stack: return ': in ctrl stack', ERROR
+    if words:
+        label = words[0]
+        del words[0]
+        c_stack.append(("COLON", label))
+
+
+def semi(code, words, c_stack):
+    if not c_stack: fatal("No : for ; to match")
+    tag, label = c_stack.pop()
+    if tag != "COLON": fatal(": not balanced with ;")
+    user_ops[label.val] = code[:]  # Save word definition in rDict
+    while code:
+        code.pop()
+
+
+compile_fn = {':': colon, ';': semi}
+
+
+# Run-time functions
+def swap(s, out):
+    a = s.pop()
+    b = s.pop()
+    s.append(a)
+    s.append(b)
+
+
+def rot(s, out):
+    a = s.pop()
+    b = s.pop()
+    c = s.pop()
+    s.append(b), s.append(a), s.append(c)
+
+
+def slice(s, out):
+    end = int(s.pop())
+    start = int(s.pop())
+    data = s.pop()
+    s.append(data[start:end])
+
+
+def avg(s, out):
+    v = s.pop()
+    s.append(sum(v) / len(v))
+
+
+runtime_fn = {
     # Stack
-    'dup': lambda s,out: s.append(s[-1]),
+    'dup': lambda s, out: s.append(s[-1]),
     'swap': swap,
-    'drop': lambda s, out:s.pop(),
+    'drop': lambda s, out: s.pop(),
     'over': lambda s, out: s.append(s[-2]),
     'rot': rot,
     # String
-    '.' : lambda s, out: out.append(str(s.pop())),
-    'cr' : lambda s, out: out.append('\n'),
+    '.': lambda s, out: out.append(str(s.pop())),
+    'cr': lambda s, out: out.append('\n'),
     'slice': slice,
-    'format': lambda s, out: str.format(s.pop(), s.pop()),
+    'format': lambda s, out: s.append(str.format(s.pop(), s.pop())),
     # Math
-    '+': lambda s, out: op.add(s.pop(-2),s.pop()),
-    '-': lambda s, out: op.sub(s.pop(-2),s.pop()),
-    '*': lambda s, out: op.mul(s.pop(-2),s.pop()),
-    '/': lambda s, out: op.div(s.pop(-2),s.pop()),
-    '^': lambda s, out: pow(s.pop(-2),s.pop()),
-    'log': lambda s, out: math.log(s.pop(),s.pop()),
-    'randint': lambda s, out: random.randint(s.pop(-2),s.pop()),
-    'sqrt':lambda s,out:math.sqrt(s.pop()),
-    'fabs':lambda s,out:math.fabs(s.pop()),
-    'sin':lambda s,out:math.sin(s.pop()),
-    'cos':lambda s,out:math.cos(s.pop()),
-    'tan':lambda s,out:math.tan(s.pop()),
-    'sum':lambda s,out:sum(s.pop()),
+    '+': lambda s, out: s.append(op.add(s.pop(-2), s.pop())),
+    '-': lambda s, out: s.append(op.sub(s.pop(-2), s.pop())),
+    '*': lambda s, out: s.append(op.mul(s.pop(-2), s.pop())),
+    '/': lambda s, out: s.append(op.div(s.pop(-2), s.pop())),
+    '^': lambda s, out: s.append(pow(s.pop(-2), s.pop())),
+    'log': lambda s, out: s.append(math.log(s.pop(), s.pop())),
+    'randint': lambda s, out: s.append(random.randint(s.pop(-2), s.pop())),
+    'sqrt': lambda s, out: s.append(math.sqrt(s.pop())),
+    'fabs': lambda s, out: s.append(math.fabs(s.pop())),
+    'sin': lambda s, out: s.append(math.sin(s.pop())),
+    'cos': lambda s, out: s.append(math.cos(s.pop())),
+    'tan': lambda s, out: s.append(math.tan(s.pop())),
+    'sum': lambda s, out: s.append(sum(s.pop())),
     'avg': avg,
-    'int':lambda s,out:int(s.pop()),
-    'float':lambda s,out:float(s.pop()),
-    'str': lambda s,out:str(s.pop()),
-    }
+    'int': lambda s, out: s.append(int(s.pop())),
+    'float': lambda s, out: s.append(float(s.pop())),
+    'str': lambda s, out: s.append(str(s.pop())),
+}
+# User defined words
 user_ops = {}
+
+# Store named tables on the page
 tables = {}
-log=open('./log','w')
+
 
 def has_defer_ref(ref):
     if type(ref) == list:
@@ -51,45 +127,45 @@ def has_defer_ref(ref):
             return True
     return False
 
+
 def ref(t, row, col, table):
-    global tables, log
-    log.write('ref:' + t + '\n')
+    global tables
     if '!' in t:
         t, remote = t.split('!')
-        log.write('remote' + remote+ str(tables)+ '\n')
         if remote in tables:
-            ref_table= tables[remote]
-            
+            ref_table = tables[remote]
         else:
-            return 'invalid reference (%s, @%s, $%s)' % (t, row, col), ERROR
+            return 'Invalid reference (%s, @%s, $%s)' % (t, row, col), ERROR
     else:
         ref_table = table
+    if not ref_table:
+        return 'Invalid reference out of a table', ERROR
     crt_row = ref_table[row]
-    
     rval = None
     if t.startswith('$'):
-        rg = re.match('\$(\d+)\.\.\$(\d+)',t)
+        rg = re.match('\$(\d+)\.\.\$(\d+)', t)
         if rg:
             start, end = int(rg.group(1)), int(rg.group(2))
-            rval = [v for v in crt_row[start:end+1]]
+            rval = [v for v in crt_row[start:end + 1]]
         else:
             if int(t[1:]) < len(crt_row):
                 rval = crt_row[int(t[1:])]
     elif t.startswith('@'):
-        rg = re.match('\@(\d+)\.\.\@(\d+)',t)
-        row_col=re.match('\@(\d+)\$(\d+)',t)
+        rg = re.match('\@(\d+)\.\.\@(\d+)', t)
+        row_col = re.match('\@(\d+)\$(\d+)', t)
         if rg:
             start, end = int(rg.group(1)), int(rg.group(2))
-            rval = [r[col] for i,r in enumerate(ref_table) if start <= i <= end]
+            rval = [
+                r[col] for i, r in enumerate(ref_table) if start <= i <= end
+            ]
         elif row_col:
             t_row, t_col = int(row_col.group(1)), int(row_col.group(2))
             if t_row < len(ref_table) and t_col < len(ref_table[t_row]):
-                    rval = ref_table[t_row][t_col]
+                rval = ref_table[t_row][t_col]
         else:
             target_row = int(t[1:])
             if (target_row < len(ref_table)):
                 rval = table[target_row][col]
-    log.write('ref rval:'+ str(rval) +'\n')
     if not rval:
         return 'invalid reference (%s, @%s, $%s)' % (t, row, col), ERROR
     if has_defer_ref(rval):
@@ -97,119 +173,143 @@ def ref(t, row, col, table):
     else:
         return rval, OK
 
-def tokenize(v):
-    STR, NUM, FUN, SP = 1, 2, 3,4
-    state = SP
-    t = []
-    toks = []
-    for i, c in enumerate(v+' '):
-        if state == SP:
-            if c in ['"',"'"]:
-                state = STR
-            elif c == " ":
-                continue
-            elif c in set("0123456789") or (c in ['.', '-'] and i+1 < len(v) and v[i+1] in set("0123456789")):
-                state = NUM
-            else:
-                state = FUN
-        if state == NUM:
-            if c == ' ':
-                if t:
-                    try: num = float(''.join(t))
-                    except:
-                        num=''.join(t)
-                    toks.append(num)
-                    t = []
-                    state = SP
-            else:
-                t.append(c)
-        if state == FUN:
-            if c == ' ':
-                if t:
-                    toks.append(''.join(t))
-                    t = []
-                    state = SP
-            else:
-                t.append(c)              
-        if state == STR:
-          t.append(c)
-          if len(t) > 1 and c == t[0]:
-              toks.append(''.join(t))
-              t = []
-              state = SP
-    return toks
-    
-def rpn_str(v, row=0, col=0,table=[]):
-    global user_ops
-    if v.startswith(':'):
-        user_fn = v.strip(';').split()
-        user_ops[user_fn[1]] = user_fn[2:]
-        return ''
-    words=tokenize(v)
-    rval, status = rpn(words, [], [],row, col,table)
-    if status in [OK, ERROR]:
-        return str(rval)
-    else:
-        return ''
 
-def rpn(words,s,output, row=0, col=0,table=[]):
-    global user_ops, log
-    log.write('rpn_start:'+str(s)+str(words)+str(row)+str(col)+'\n')
+# basic token container
+Token = namedtuple("Token", ["tag", "val", "pos", "end"])
+
+
+def tokenize2(text):
+    """ Return tokens.
+
+    >>> tokenize2('hello world')
+    ([Token(tag=2, val='hello', pos=0, end=5), Token(tag=2, val='world', pos=6, end=11)], 1)
+    >>> tokenize2('+ - * / ^ . ')
+    ([Token(tag=2, val='+', pos=0, end=1), Token(tag=2, val='-', pos=2, end=3), Token(tag=2, val='*', pos=4, end=5), Token(tag=2, val='/', pos=6, end=7), Token(tag=2, val='^', pos=8, end=9), Token(tag=2, val='.', pos=10, end=11)], 1)
+    >>> tokenize2('"hello" 1.7 -15 0.8 inc + - ')
+    ([Token(tag=1, val='"hello"', pos=0, end=7), Token(tag=0, val='1.7', pos=8, end=11), Token(tag=0, val='-15', pos=12, end=15), Token(tag=0, val='0.8', pos=16, end=19), Token(tag=2, val='inc', pos=20, end=23), Token(tag=2, val='+', pos=24, end=25), Token(tag=2, val='-', pos=26, end=27)], 1)
+    >>> tokenize2('@10 $10 @1..@10 $1..$10 @10$10')
+    ([Token(tag=3, val='@10', pos=0, end=3), Token(tag=3, val='$10', pos=4, end=7), Token(tag=3, val='@1..@10', pos=8, end=15), Token(tag=3, val='$1..$10', pos=16, end=23), Token(tag=3, val='@10$10', pos=24, end=30)], 1)
+    """
+    rules = {
+        "\"([^\"\\\\]|\\\\.)*\"": STR,
+        "\'([^\'\\\\]|\\\\.)*\'": STR,
+        r"[+-]?([0-9]*[.])?[0-9]+": NUM,
+        r'[\w\+\-\*\/\^\.\:\;]+': FUN,
+        r'[@|$][^ ]*': REF,
+    }
+    scanner_handler = lambda tag: lambda sc, val: Token(
+        tag, val, sc.match.start(), sc.match.end())
+    handlers = [(reg, scanner_handler(tag)) for (reg, tag) in rules.items()]
+    handlers.append((r"\s+", None))
+    toks, remain = re.Scanner(handlers).scan(text)
+    if remain:
+        return remain, ERROR
+    return toks, OK
+
+
+def rpn_string(v):
+    words, status = tokenize2(v)
+    if status == ERROR:
+        return "Fail to tokenize:" + v
+    pcode, status = compile(words)
+    if status != OK:
+        return str(pcode)
+    else:
+        vm = VM(pcode)
+        vm.execute()
+        return str(vm.result()[1])
+
+
+def compile(words, row=0, col=0, table=[]):
+    code = []  # Compiled code
+    c_stack = []  # Contrl Stack
     while words:
         word = words[0]
         words = words[1:]
-        log.write('rpn_loop:'+str(word)+str(s)+str(words)+'\n')
-        if type(word) == int or type(word) == float:
-            s.append(word)
-        elif word.startswith('"') or word.startswith("'"):
-            s.append(word.strip('"\''))
-        elif word in user_ops:
-            words = user_ops[word] + words
-        elif word.startswith('$') or word.startswith('@'):
-            ref_data,status = ref(word,row,col,table)
-            if status == DEFER:
-                continuation = lambda r,c,t:rpn([word]+words[:],s[:],output[:],r,c,t)
-                return (continuation, DEFER)
-            if status == ERROR:
-                return ref_data, ERROR
-            if type(ref_data) == list:
-                s.append([cell[1] for cell in ref_data])
-            elif ref_data[0] == CELL_STR and (ref_data[1][0] in ['@','$']):
-                words = [ref_data[1]] + words
+        if word.tag == NUM:
+            code.append(
+                Fn('push_num', lambda vm, v=float(word.val): vm.s.append(v)))
+        elif word.tag == STR:
+            code.append(
+                Fn('push_str',
+                   lambda vm, v=word.val.strip('"\''): vm.s.append(v)))
+        elif word.tag == FUN:
+            if word.val in compile_fn:
+                compile_fn[word.val](code, words, c_stack)
+            elif word.val in user_ops:
+                code.extend(user_ops[word.val])
+            elif word.val in runtime_fn:
+                code.append(StackFn(word.val, runtime_fn[word.val]))
             else:
-                s.append(ref_data[1])
-        elif word in functions:
-            rval = functions[word](s,output)
-            if rval:
-                s.append(rval)
+                return 'Invalid function:' + str(word), ERROR
+        elif word.tag == REF:
+            rval, status = ref(word.val, row, col, table)
+            if status == DEFER or status == ERROR:
+                return '', status
+            else:
+                if type(rval) == list:
+                    lst = [r[1] for r in rval]
+                    code.append(
+                        Fn('push_list', lambda vm, v=lst: vm.s.append(v)))
+                elif rval[0] == CELL_NUM:
+                    code.append(
+                        Fn('push_num',
+                           lambda vm, v=float(rval[1]): vm.s.append(v)))
+                else:
+                    code.append(
+                        Fn('push_str',
+                           lambda vm, v=rval[1].strip('"\''): vm.s.append(v)))
         else:
-            return 'Invalid word:'+word, ERROR
-    if output:
-        return ''.join([str(o) for o in output]), OK
-    else:
-        log.write("rpn finish"+str(s) +'\n')
-        return s[0] if len(s)==1 else str(s), OK
+            return 'Invalid type:' + str(word), ERROR
+    return code, OK
 
-def rpn_table(m):
+
+class VM():
+    def __init__(self, code):
+        self.s = []
+        self.output = []
+        self.pc = 0
+        self.code = code
+
+    def __str__(self):
+        return 'vm s:%s pc:%d code:%s out:%s\n' % (str(
+            self.s), self.pc, self.code[self.pc], str(self.output))
+
+    def result(self):
+        if self.output:
+            return (CELL_STR, ''.join(self.output))
+        if len(self.s) > 1:
+            return (CELL_STR, str(self.s))
+        if self.s:
+            if type(self.s[0]) == int or type(self.s[0]) == float:
+                return (CELL_NUM, self.s[0])
+            else:
+                return (CELL_STR, self.s[0])
+        return (CELL_STR, '')
+
+    def execute(self):
+        while self.pc < len(self.code):
+            func = self.code[self.pc]
+            self.pc += 1
+            new_pc = func(self)
+            if new_pc != None: self.p = new_pc
+
+
+def rpn_table_vm(m):
     global tables
-    table_env=[]
+    table_env = []
     table = []
     max_iter = 3
     table_status = OK
     table_name = m.group(1)
-    log.write(m.group(1))
 
-    for row_i, row in enumerate(re.split('\|-',m.group(2))):
+    for row_i, row in enumerate(re.split('\|-', m.group(2))):
         table_env.append([])
         row_env = table_env[-1]
-        for col_i, v in enumerate(map(str.strip,re.split('\|{1,2}',row)[1:])):
-            log.write(str(col_i) + " "+str(v)+'\n')
+        for col_i, v in enumerate(map(str.strip,
+                                      re.split('\|{1,2}', row)[1:])):
             if v.startswith('='):
-                log.write(str(tokenize(v[1:]))+'\n')
-                def init(r,c,t,words=tokenize(v[1:])):
-                    return rpn(words,[],[], r,c,t)
-                
-                row_env.append((CELL_FUN, init))
+                row_env.append((CELL_FUN, v[1:]))
             else:
                 try:
                     value = float(v)
@@ -220,27 +320,25 @@ def rpn_table(m):
                 value = v
                 row_env.append((CELL_STR, value))
 
-
     for cur_iter in range(max_iter):
         row_status = []
         for row_i, row in enumerate(table_env):
             for col_i, cell in enumerate(row):
                 cell_type, cell_val = cell
-                log.write('cell (%d %d) %d %s\n' %(row_i, col_i, cell_type, str(cell_val)))
                 if cell_type == CELL_FUN:
-                    cell_rval, status = cell_val(row_i, col_i,table_env)
-                    log.write('fun %s %s\n' %(status, cell_rval))
-                    row_status.append(status)
+                    toks, status = tokenize2(cell_val)
+                    pcode, status = compile(toks, row_i, col_i, table_env)
                     if status == DEFER:
-                        table_env[row_i][col_i] = (CELL_FUN, cell_rval)
+                        continue
+                    elif status == ERROR:
+                        table_env[row_i][col_i] = (CELL_STR, "Fail to compile" + pcode)
                     else:
-                        if type(cell_rval) == str:
-                            table_env[row_i][col_i] = (CELL_STR, cell_rval)
-                        else:
-                            table_env[row_i][col_i] = (CELL_NUM, cell_rval)
-                    if status == ERROR:
-                        table_env[row_i][col_i] = (CELL_STR, cell_rval)
-                elif cell_type == CELL_STR and cell_val and cell_val[0] in ['@', '$']:
+                        vm = VM(pcode)
+                        vm.execute()
+                        table_env[row_i][col_i] = vm.result()
+                elif cell_type == CELL_STR and cell_val and cell_val[0] in [
+                        '@', '$'
+                ]:
                     rval, status = ref(cell_val, row_i, col_i, table_env)
                     if type(rval[1]) != list and status != DEFER:
                         table_env[row_i][col_i] = (rval[0], rval[1])
@@ -249,12 +347,25 @@ def rpn_table(m):
         if any([s == DEFER for s in row_status]):
             continue
     if table_name:
-        tables[table_name]=table_env
+        tables[table_name] = table_env
     for row_env in table_env:
-        table.append('<tr><td>'+'</td><td>'.join([str(v) for cell_type,v in row_env])+'</td></tr>')
-    return '<table>'+'\n'.join(table)+'</table>'
-            
-            
+        table.append('<tr><td>' +
+                     '</td><td>'.join([str(v) for cell_type, v in row_env]) +
+                     '</td></tr>')
+    return '<table>' + '\n'.join(table) + '</table>'
+
+
 if __name__ == "__main__":
     import doctest
-    doctest.testmod()        
+    doctest.testmod()
+    p = "1 1 +"
+    words, rems = tokenize2(p)
+    pcode, status = compile(words)
+    print pcode
+    if status != OK:
+        print status
+    else:
+        print str(pcode)
+        vm = VM(pcode)
+        vm.execute()
+        print vm.result()
