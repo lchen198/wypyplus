@@ -13,7 +13,7 @@ load_tpl=lambda n: load(n) or load('Tpl'+n[:3]) or '';load_g=lambda:load('Global
 flatten=lambda l: sum(map(flatten,l),[]) if isinstance(l,list) else [l]
 def load_rec(f):return [load_rec(l[8:l.find(')')]) if l.startswith('INCLUDE(') else l for l in load(f).splitlines()]
 f,i=cgi.FormContent(),'put type';
-y=f.get('p',[''])[0];y=dt.now().strftime("%b%d") if y=='Today' else (home,y)[y.isalnum()]
+y=f.get('p',[''])[0];y=dt.now().strftime("%b%d").replace('0', '') if y=='Today' else (home,y)[y.isalnum()]
 se='<form><input type="text"placeholder="Search.. "name="p"><input type="hidden" name="q" value="f"><button type="submit">Search</button></form>'
 fs=lambda s:re.sub(pre_h,remove_leading_space,reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),
 ('^INCLUDE\((\w+)\)$',lambda m: '\n'.join(flatten(load_rec(m.group(1))))), ('\{\{NAME\}\}', y),(forth,lambda m: rpn.rpn_string(m.group(1))),
