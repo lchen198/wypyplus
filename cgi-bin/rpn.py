@@ -2,20 +2,26 @@ import operator as op
 import math, re, random
 from collections import namedtuple
 import HTMLParser
-import types, sys
-from datetime import datetime
+import types, sys, inspect
+from datetime import datetime, timedelta, date
 
-DEBUG = True
-debug_log = open('./log','w') if DEBUG else None
+LOG = True
+PRINT = False
+debug_log = open('./log','w') if LOG else None
 def debug(msg):
-    if DEBUG:
+    if LOG or PRINT:
+        caller = inspect.stack()[1][3]
         if type(msg) == list:
             debug_log.write(' '.join([str(l) for l in msg])+'\n')
+            if PRINT:
+                print(caller+":"+' '.join([str(l) for l in msg]))
         else:
             debug_log.write(str(msg) + '\n')
+            if PRINT:
+                print(caller+":"+str(msg))
 
 # Cell types
-CELL_NUM, CELL_STR, CELL_FUN = 0, 1, 2
+CELL_NUM, CELL_STR, CELL_FUN, CELL_OBJ = 0, 1, 2, 3
 
 # Forth data types
 NUM, STR, FUN, REF = 0, 1, 2, 3
@@ -133,25 +139,43 @@ def get_parameter_count(func):
 
         return -1 if argspec.varargs else len(argspec.args)
 
+
+top_level_fn = {
+ 'timedelta': timedelta,
+ 'today' : date.today
+}
+
 def call_python(method):
-    def fun(s, out):
-        if s:
-            method 
+    def fun(s, out, method=method):
+        debug('method'+method)
+        m = re.match('^(\D+)(\d+)$', method)
+        n = 0
+        if m:
+            method,n = m.group(1),int(m.group(2))
+        if method in top_level_fn:
+            fn = top_level_fn[method]
+        else:
+            if not s:
+                out.append('Err: no object to call:'+method)
+                return
             obj = s.pop()
             if hasattr(obj, method):
                 fn = getattr(obj,method)
-                n = get_parameter_count(fn)
-                args = []
-                for i in range(n):
-                    args.append(s.pop())
-                try:
-                    s.append(fn(*args))
-                except Exception as e:
-                    out.append(str(e))
+                if not n:
+                    n = get_parameter_count(fn)
             else:
                 out.append(
                     'Err: Invalid python call %s %s stack:%s'%(
                         str(obj),str(method), str(s)))
+                return
+        args = []
+        for i in range(n):
+            args.append(s.pop())
+        debug([fn, args])
+        try:
+            s.append(fn(*args))
+        except Exception as e:
+            out.append(str(e))
     return fun
             
 def jmp(vm): return vm.code[vm.pc]
@@ -390,8 +414,8 @@ def compile(words, row=0, col=0, table=[]):
                         Fn('push_num',lambda vm, v=rval[1]: vm.s.append(v)))
                 else:
                     code.append(
-                        Fn('push_str',
-                           lambda vm, v=rval[1].strip('"\''): vm.s.append(v)))
+                        Fn('push',
+                           lambda vm, v=rval[1]: vm.s.append(v)))
         else:
             return 'Invalid type:' + str(word), ERROR
         # print  ' '.join([str(c) for c in code])
@@ -417,14 +441,17 @@ class VM():
         if self.s:
             if type(self.s[0]) == int or type(self.s[0]) == float:
                 return (CELL_NUM, self.s[0])
-            else:
+            elif type(self.s[0]) == str:
                 return (CELL_STR, self.s[0])
+            else:
+                return (CELL_OBJ, self.s[0])
         return (CELL_STR, '')
 
     def execute(self):
         while self.pc < len(self.code):
             #print ' '.join([str(v) for v in self.s])
             func = self.code[self.pc]
+            debug([func, self.s])
             self.pc += 1
             new_pc = func(self)
             if new_pc != None: self.pc = new_pc
@@ -506,9 +533,10 @@ def rpn_table_vm(m):
 
 
 if __name__ == "__main__":
+    PRINT=True
     import doctest
     doctest.testmod()
-    p = '@-1 1 +'
+    p = 'today 1 timedelta1 +'
     words, status = tokenize2(p)
     print words
     pcode, status = compile(words)
