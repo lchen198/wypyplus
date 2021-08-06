@@ -2,8 +2,17 @@ import operator as op
 import math, re, random
 from collections import namedtuple
 import HTMLParser
+import types, sys
+from datetime import datetime
 
 DEBUG = False
+debug_log = open('./log','w') if DEBUG else None
+def debug(msg):
+    if DEBUG:
+        if type(msg) == list:
+            debug_log.write(' '.join([str(l) for l in msg])+'\n')
+        else:
+            debug_log.write(str(msg) + '\n')
 
 # Cell types
 CELL_NUM, CELL_STR, CELL_FUN = 0, 1, 2
@@ -33,7 +42,10 @@ class CtrlFn(Fn):
 
 class StackFn(Fn):
     def __call__(self, vm):
-        self.fn(vm.s, vm.output)
+        try:
+            self.fn(vm.s, vm.output)
+        except Exception as e:
+            vm.output.append("Err: "+ self.name +" " +str(e))
 
 # Run-time functions
 def swap(s, out):
@@ -58,6 +70,90 @@ def avg(s, out):
     v = s.pop()
     s.append(sum(v) / len(v))
 
+def get_parameter_count(func):
+    """Count parameter of a function.
+
+    Supports Python functions (and built-in functions).
+    If a function takes *args, then -1 is returned
+
+    Example:
+        import os
+        arg = get_parameter_count(os.chdir)
+        print(arg)  # Output: 1
+
+    -- For C devs:
+    In CPython, some built-in functions defined in C provide
+    no metadata about their arguments. That's why we pass a
+    list with 999 None objects (randomly choosen) to it and
+    expect the underlying PyArg_ParseTuple fails with a
+    corresponding error message.
+    """
+
+    # If the function is a builtin function we use our
+    # approach. If it's an ordinary Python function we
+    # fallback by using the the built-in extraction
+    # functions (see else case), otherwise
+    if isinstance(func, types.BuiltinFunctionType):
+        try:
+            arg_test = 999
+            s = [None] * arg_test
+            func(*s)
+        except TypeError as e:
+            message = str(e)
+            found = re.match(
+                r"[\w]+\(\) takes ([0-9]{1,3}) positional argument[s]* but " +
+                str(arg_test) + " were given", message)
+            if found:
+                return int(found.group(1))
+
+            if "takes no arguments" in message:
+                return 0
+            elif "takes at most" in message:
+                found = re.match(
+                    r"[\w]+\(\) takes at most ([0-9]{1,3}).+", message)
+                if found:
+                    return int(found.group(1))
+            elif "takes exactly" in message:
+                # string can contain 'takes 1' or 'takes one',
+                # depending on the Python version
+                found = re.match(
+                    r"[\w]+\(\) takes exactly ([0-9]{1,3}|[\w]+).+", message)
+                if found:
+                    return 1 if found.group(1) == "one" \
+                            else int(found.group(1))
+        return -1  # *args
+    else:
+        try:
+            if (sys.version_info > (3, 0)):
+                argspec = inspect.getfullargspec(func)
+            else:
+                argspec = inspect.getargspec(func)
+        except:
+            raise TypeError("unable to determine parameter count")
+
+        return -1 if argspec.varargs else len(argspec.args)
+
+def call_python(method):
+    def fun(s, out):
+        if s:
+            method 
+            obj = s.pop()
+            if hasattr(obj, method):
+                fn = getattr(obj,method)
+                n = get_parameter_count(fn)
+                args = []
+                for i in range(n):
+                    args.append(s.pop())
+                try:
+                    s.append(fn(*args))
+                except Exception as e:
+                    out.append(str(e))
+            else:
+                out.append(
+                    'Err: Invalid python call %s %s stack:%s'%(
+                        str(obj),str(method), str(s)))
+    return fun
+            
 def jmp(vm): return vm.code[vm.pc]
 
 def jnz(vm): return (vm.code[vm.pc],vm.pc+1)[vm.s.pop()]
@@ -78,8 +174,9 @@ runtime_fn = {
     # String
     '.': lambda s, out: out.append(str(s.pop())),
     'cr': lambda s, out: out.append('\n'),
-    'slice': slice,
     'format': lambda s, out: s.append(str.format(s.pop(), s.pop())),
+    # List
+    'slice': slice,
     # Compare
     '>' : gt,
     '<' : lt,
@@ -102,6 +199,7 @@ runtime_fn = {
     'int': lambda s, out: s.append(int(s.pop())),
     'float': lambda s, out: s.append(float(s.pop())),
     'str': lambda s, out: s.append(str(s.pop())),
+    'strptime': lambda s, out: s.append(datetime.strptime(s.pop(), s.pop()))
 }
 
 # Compile-time functions
@@ -120,7 +218,7 @@ def semi(code, words, c_stack):
     user_ops[label.val] = code[:]  # Save word definition in rDict
     while code:
         code.pop()
-        
+
 def cIf(code, words, c_stack):
     code.append(Fn('jz',jz))
     c_stack.append(("IF", len(code)))
@@ -180,7 +278,7 @@ def ref(t, row, col, table):
     crt_row = ref_table[row]
     rval = None
     if t.startswith('$'):
-        rg = re.match('\$(\d+)\.\.\$(\d+)', t)
+        rg = re.match('\$(-?\d+)\.\.\$(-?\d+)', t)
         if rg:
             start, end = int(rg.group(1)), int(rg.group(2))
             rval = [v for v in crt_row[start:end + 1]]
@@ -188,10 +286,14 @@ def ref(t, row, col, table):
             if int(t[1:]) < len(crt_row):
                 rval = crt_row[int(t[1:])]
     elif t.startswith('@'):
-        rg = re.match('\@(\d+)\.\.\@(\d+)', t)
-        row_col = re.match('\@(\d+)\$(\d+)', t)
+        rg = re.match(r'\@(-?\d+)\.\.\@(-?\d+)', t)
+        row_col = re.match(r'\@(-?\d+)\$(-?\d+)', t)
+        debug([t, rg, row_col])
         if rg:
-            start, end = int(rg.group(1)), int(rg.group(2))
+            start = int(rg.group(1))
+            start = start if start >= 0 else len(ref_table) + start
+            end = int(rg.group(2))
+            end = end  if end >= 0 else len(ref_table) + end 
             rval = [
                 r[col] for i, r in enumerate(ref_table) if start <= i <= end
             ]
@@ -246,19 +348,6 @@ def tokenize2(text):
     return toks, OK
 
 
-def rpn_string(v):
-    words, status = tokenize2(v)
-    if status == ERROR:
-        return "Fail to tokenize:" + v
-    pcode, status = compile(words)
-    if status != OK:
-        return str(pcode)
-    else:
-        vm = VM(pcode)
-        vm.execute()
-        return str(vm.result()[1])
-
-
 def compile(words, row=0, col=0, table=[]):
     code = []  # Compiled code
     c_stack = []  # Contrl Stack
@@ -280,9 +369,10 @@ def compile(words, row=0, col=0, table=[]):
             elif word.val in runtime_fn:
                 code.append(StackFn(word.val, runtime_fn[word.val]))
             else:
-                return 'Invalid function:' + str(word), ERROR
+                code.append(StackFn("Py:"+word.val, call_python(word.val)))
         elif word.tag == REF:
             rval, status = ref(word.val, row, col, table)
+            debug([rval, status])
             if status == DEFER or status == ERROR:
                 return '', status
             else:
@@ -329,13 +419,28 @@ class VM():
 
     def execute(self):
         while self.pc < len(self.code):
+            #print ' '.join([str(v) for v in self.s])
             func = self.code[self.pc]
             self.pc += 1
             new_pc = func(self)
             if new_pc != None: self.pc = new_pc
 
 
+def rpn_string(v):
+    '''Evaluate a string.'''
+    words, status = tokenize2(v)
+    if status == ERROR:
+        return "Fail to tokenize:" + v
+    pcode, status = compile(words)
+    if status != OK:
+        return str(pcode)
+    else:
+        vm = VM(pcode)
+        vm.execute()
+        return str(vm.result()[1])
+
 def rpn_table_vm(m):
+    '''Evaluate a table.'''
     global tables
     table_env = []
     table = []
@@ -376,10 +481,11 @@ def rpn_table_vm(m):
                         vm = VM(pcode)
                         vm.execute()
                         table_env[row_i][col_i] = vm.result()
-                elif cell_type == CELL_STR and cell_val and cell_val[0] in [
+                elif cell_val and type(cell_val) == str and cell_val[0] in [
                         '@', '$'
                 ]:
                     rval, status = ref(cell_val, row_i, col_i, table_env)
+                    debug([rval,status])
                     if type(rval[1]) != list and status != DEFER:
                         table_env[row_i][col_i] = (rval[0], rval[1])
                 else:
@@ -398,8 +504,9 @@ def rpn_table_vm(m):
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-    p = '2 3 > if "yes" else "no" then'
+    p = '@1..@-2 '
     words, status = tokenize2(p)
+    print words
     pcode, status = compile(words)
     print ' '.join([str(p) for p in pcode])
     if status != OK:
