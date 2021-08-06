@@ -5,7 +5,7 @@ import HTMLParser
 import types, sys
 from datetime import datetime
 
-DEBUG = False
+DEBUG = True
 debug_log = open('./log','w') if DEBUG else None
 def debug(msg):
     if DEBUG:
@@ -281,19 +281,21 @@ def ref(t, row, col, table):
         rg = re.match('\$(-?\d+)\.\.\$(-?\d+)', t)
         if rg:
             start, end = int(rg.group(1)), int(rg.group(2))
+            start = start if start > 0 else col + start
+            end = end if end > 0 else col + end
             rval = [v for v in crt_row[start:end + 1]]
         else:
             if int(t[1:]) < len(crt_row):
                 rval = crt_row[int(t[1:])]
     elif t.startswith('@'):
         rg = re.match(r'\@(-?\d+)\.\.\@(-?\d+)', t)
-        row_col = re.match(r'\@(-?\d+)\$(-?\d+)', t)
+        row_col = re.match(r'\@(\d+)\$(\d+)', t)
         debug([t, rg, row_col])
         if rg:
             start = int(rg.group(1))
-            start = start if start >= 0 else len(ref_table) + start
+            start = start if start >= 0 else row + start
             end = int(rg.group(2))
-            end = end  if end >= 0 else len(ref_table) + end 
+            end = end  if end >= 0 else row + end
             rval = [
                 r[col] for i, r in enumerate(ref_table) if start <= i <= end
             ]
@@ -303,6 +305,7 @@ def ref(t, row, col, table):
                 rval = ref_table[t_row][t_col]
         else:
             target_row = int(t[1:])
+            target_row = target_row if target_row > 0 else row + target_row
             if (target_row < len(ref_table)):
                 rval = table[target_row][col]
     if not rval:
@@ -351,12 +354,14 @@ def tokenize2(text):
 def compile(words, row=0, col=0, table=[]):
     code = []  # Compiled code
     c_stack = []  # Contrl Stack
+    debug(words)
     while words:
         word = words[0]
         words = words[1:]
         if word.tag == NUM:
+            num=float(word.val) if '.' in word.val else int(word.val)
             code.append(
-                Fn('push_num:'+word.val, lambda vm, v=float(word.val): vm.s.append(v)))
+                Fn('push_num:'+word.val, lambda vm, v=num: vm.s.append(v)))
         elif word.tag == STR:
             code.append(
                 Fn('push_str:'+word.val,
@@ -372,7 +377,7 @@ def compile(words, row=0, col=0, table=[]):
                 code.append(StackFn("Py:"+word.val, call_python(word.val)))
         elif word.tag == REF:
             rval, status = ref(word.val, row, col, table)
-            debug([rval, status])
+            debug([word, rval, status])
             if status == DEFER or status == ERROR:
                 return '', status
             else:
@@ -382,8 +387,7 @@ def compile(words, row=0, col=0, table=[]):
                         Fn('push_list', lambda vm, v=lst: vm.s.append(v)))
                 elif rval[0] == CELL_NUM:
                     code.append(
-                        Fn('push_num',
-                           lambda vm, v=float(rval[1]): vm.s.append(v)))
+                        Fn('push_num',lambda vm, v=rval[1]: vm.s.append(v)))
                 else:
                     code.append(
                         Fn('push_str',
@@ -457,7 +461,7 @@ def rpn_table_vm(m):
                 row_env.append((CELL_FUN, v[1:]))
             else:
                 try:
-                    value = float(v)
+                    value = float(v) if '.' in v else int(v)
                     row_env.append((CELL_NUM, value))
                     continue
                 except:
@@ -481,13 +485,13 @@ def rpn_table_vm(m):
                         vm = VM(pcode)
                         vm.execute()
                         table_env[row_i][col_i] = vm.result()
-                elif cell_val and type(cell_val) == str and cell_val[0] in [
-                        '@', '$'
-                ]:
-                    rval, status = ref(cell_val, row_i, col_i, table_env)
-                    debug([rval,status])
-                    if type(rval[1]) != list and status != DEFER:
-                        table_env[row_i][col_i] = (rval[0], rval[1])
+                # elif cell_val and type(cell_val) == str and cell_val[0] in [
+                #         '@', '$'
+                # ]:
+                #     rval, status = ref(cell_val, row_i, col_i, table_env)
+                #     debug([rval,status])
+                #     if type(rval[1]) != list and status != DEFER:
+                #         table_env[row_i][col_i] = (rval[0], rval[1])
                 else:
                     pass
         if any([s == DEFER for s in row_status]):
@@ -504,7 +508,7 @@ def rpn_table_vm(m):
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-    p = '@1..@-2 '
+    p = '@-1 1 +'
     words, status = tokenize2(p)
     print words
     pcode, status = compile(words)
