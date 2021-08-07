@@ -209,7 +209,7 @@ runtime_fn = {
     '+': lambda s, out: s.append(op.add(s.pop(-2), s.pop())),
     '-': lambda s, out: s.append(op.sub(s.pop(-2), s.pop())),
     '*': lambda s, out: s.append(op.mul(s.pop(-2), s.pop())),
-    '/': lambda s, out: s.append(op.div(s.pop(-2), s.pop())),
+    '/': lambda s, out: s.append(op.div(float(s.pop(-2)), float(s.pop()))),
     '^': lambda s, out: s.append(pow(s.pop(-2), s.pop())),
     'log': lambda s, out: s.append(math.log(s.pop(), s.pop())),
     'randint': lambda s, out: s.append(random.randint(s.pop(-2), s.pop())),
@@ -537,9 +537,7 @@ if __name__ == "__main__":
     PRINT=True
     import doctest
     doctest.testmod()
-    p = '''1 1 +  \ some comment
-2 2 + 
-'''
+    p = '''100 9 5 / * 32 + '''
     words, status = tokenize2(p)
     print words
     pcode, status = compile(words)
