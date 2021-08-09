@@ -57,8 +57,8 @@ fs = lambda s: re.sub(
         (pre, '<pre><code>\g<1></code></pre>'), ('^# (.*)$', hl1),
         ('^(\|[^\n]+\|\r?\n)((?:\|:?[-]+:?)+\|)(\n(?:\|[^\n]+\|\r?\n?)*)?$',
          lambda m: '<table><tr><th>' + '</th><th>'.join(
-             m.group(1).strip(' |\n').split('|')) + '\n'.join([
-                 '<tr><td>' + '</td><td>'.join(line.strip(' |\n').split('|')) +
+             m.group(1).strip('|\n').split('|')) + '\n'.join([
+                 '<tr><td>' + '</td><td>'.join(line.strip('|\n').split('|')) +
                  '</td></tr>' for line in m.group(3).strip('\n').splitlines()
              ]) + '</table>'), ('^## (.*)$', hl2), ('^### (.*)$', hl3),
         ('\*\*([^\*]+)\*\*', '<b>\g<1></b>'),
