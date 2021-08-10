@@ -1,12 +1,13 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-# This version has no external dependencies. However, it doesn't support RPN.
+# This is a simplified version that doesn't support Forth.
+# It uses github style table syntax.
 import sys, re, os, cgi
 from datetime import timedelta as td, datetime as dt
 
 home = 'WyPy'
 head = '<head><meta content="width=device-width, initial-scale=1" name="viewport"><link rel="stylesheet" href="../sakura.css"></head>'
-edit = '✎'
+edit = '(edit)'
 pre = '(?:^|\n)```((?:.|\n)+?)\n```'
 pre_h = '<pre><code>((?:.|\n)+?)</code></pre>'
 t = '</textarea>'
@@ -36,8 +37,9 @@ def load_rec(f):
 
 f = cgi.FormContent()
 y = f.get('p', [''])[0]
-y = dt.now().strftime("%b%d").replace(
-    '0', '') if y == 'Today' else (home, y)[y.isalnum()]
+today = dt.now().strftime("%b%d")
+today = today if today[3] != '0' else today[:3] + today[4]
+y = today if y == 'Today' else (home, y)[y.isalnum()]
 se = '<form><input type="text"placeholder="Search.. "name="p"><input \
 type="hidden" name="q" value="f"><button type="submit">Search</button></form>'
 
@@ -85,15 +87,17 @@ do = lambda m, n: {
 <div id="editor"><textarea class="CodeMirror" name=t id=ta cols=80 rows=24>%s%s</div><p><input type=submit>'
     % (w, n, fs(n), n, q(load_tpl(n)), t),
     'find':
-    lambda: ('<h1>Links: %s</h1>' % fs(n)) + fs('\n---\n'.join(
-        sorted(
-            filter(lambda x: not x.endswith(':\n\n'), [
-                d if n == "All" or n.lower() in d.lower() else d + ':\n\n' +
-                '\n\n'.join([
-                    line for line in load(d).splitlines()
-                    if n.lower() in line.lower() and '@' + n not in line
-                ]) for d in os.listdir('w/')
-            ]))))
+    lambda:
+    ('<h1>Links: %s</h1><p>%s' %
+     (fs(n), se if edit else '')) + fs('\n---\n'.join(
+         sorted(
+             filter(lambda x: not x.endswith(':\n\n'), [
+                 "Match File Name: " + d if n == "All" or n.lower() in d.lower(
+                 ) else "Match Content in " + d + ':\n\n' + '\n\n'.join([
+                     line for line in load(d).splitlines()
+                     if n.lower() in line.lower() and '@' + n not in line
+                 ]) for d in os.listdir('w/')
+             ]))))
 }.get(m)()
 main=lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or not edit or ('t' in f or (os.remove('w/'+y) and False))\
     and open('w/'+y,'w').write(f['t'][0])`+`sys.stdout.write("Content-type: text/html; charset=utf-8\r\n\r\n" + head +
