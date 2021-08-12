@@ -2,12 +2,19 @@
 # -*- coding: utf-8 -*-
 # This is a single-file version that doesn't support Forth.
 # It uses github style table syntax.
-import sys, re, os, cgi, contextlib
+import sys, re, os, cgi
 from datetime import timedelta as td, datetime as dt
-from io import BytesIO as StringIO
+from run_python import run_python
 home = 'WyPy'
-head = '''<head><meta content="width=device-width, initial-scale=1" name="viewport"><link rel="stylesheet" href="../sakura.css"></head>
-<script src="../sorttable.js"></script>'''
+head = '''<head><meta content="width=device-width, initial-scale=1" name="viewport">
+<link rel="stylesheet" href="../sakura.css"></head>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.31.0/codemirror.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.31.0/codemirror.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.31.0/mode/markdown/markdown.min.js" ></script>
+<script src="../scripts/sorttable.js"></script>
+<script type="module" src="../scripts/mte-kernel.min.js" ></script>
+<script type="module" src="../scripts/editor.js" ></script>
+'''
 edit = ' (edit)'
 pre = '(?:^|\n)```((?:.|\n)+?)\n```'
 pre_h = '<pre><code>((?:.|\n)+?)</code></pre>'
@@ -32,23 +39,11 @@ def load_rec(f):
         load_rec(l[8:l.find(')')]) if l.startswith('INCLUDE(') else l
         for l in load(f).splitlines()
     ]
-
-@contextlib.contextmanager
-def stdoutIO(stdout=None):
-    old = sys.stdout
-    if stdout is None:
-        stdout = StringIO()
-    sys.stdout = stdout
-    yield stdout
-    sys.stdout = old
-    
-def run_python(m):
-    with stdoutIO() as s:
-        try:
-            exec(m.group(1), globals())
-        except Exception as e:
-            return str(e)
-    return s.getvalue()
+TableFn = lambda m: '<table class="sortable"><tr><th>' + '</th><th>'.join(
+    m.group(1).strip('|\n').split('|')) + '\n'.join([
+        '<tr><td>' + '</td><td>'.join(line.strip('|\n').split('|')) +
+        '</td></tr>' for line in m.group(3).strip('\n').splitlines()
+    ]) + '</table>'
             
 f = cgi.FormContent()
 y = f.get('p', [''])[0]
@@ -60,7 +55,8 @@ type="hidden" name="q" value="f"><button type="submit">Search</button></form>'
 fs = lambda s: re.sub(
     pre_h, remove_leading_space,
     reduce(lambda s, r: re.sub('(?m)' + r[0], r[1], s), (
-        ('\r', ''), ('\{\{NAME\}\}', y), ('(?:^|\n)PYTHON((?:.|\n)+?)\nPYTHON', run_python),
+        ('\r', ''), ('\{\{NAME\}\}', y),
+        ('(?:^|\n)PYTHON((?:.|\n)+?)\nPYTHON', lambda m:run_python(m.group(1))),
         ('^INCLUDE\((\w+)\)$', lambda m: '\n'.join(
             flatten(load_rec(m.group(1))))), 
         ('(^|[^=/\-_A-Za-z0-9?])@([A-Z][\w\+\-]+)', lambda m: m.group(1) + h + w + m.group(2) +
@@ -72,12 +68,8 @@ fs = lambda s: re.sub(
           )[x('w/' + m.group(2))]), ('^\{\{$', '\n<ul>'),
         ('^\*(.*)$', '<li>\g<1></li>'), ('^}}$', '</ul>'), ('^---$', '<hr>'),
         (pre, '<pre><code>\g<1></code></pre>'), ('^# (.*)$', hl1),
-        ('^(\|[^\n]+\|\r?\n)((?:\|:?[-]+:?)+\|)(\n(?:\|[^\n]+\|\r?\n?)*)?$',
-         lambda m: '<table class="sortable"><tr><th>' + '</th><th>'.join(
-             m.group(1).strip('|\n').split('|')) + '\n'.join([
-                 '<tr><td>' + '</td><td>'.join(line.strip('|\n').split('|')) +
-                 '</td></tr>' for line in m.group(3).strip('\n').splitlines()
-             ]) + '</table>'), ('^## (.*)$', hl2), ('^### (.*)$', hl3),
+        ('^(\|[^\n]+\|\r?\n)((?:\|\s?:?[-]+:?\s?)+\|)(\n(?:\|[^\n]+\|\r?\n?)*)',
+         TableFn), ('^## (.*)$', hl2), ('^### (.*)$', hl3),
         ('\*\*([^\*]+)\*\*', '<b>\g<1></b>'), 
         ('\!' + link, '<img src="\g<2>" alt="\g<1>">'),
         ('(^|[^!])' + link, "\g<1>" + h + '"\g<3>">\g<2></a>'),
@@ -131,3 +123,34 @@ main=lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or not edit or ('t' in f 
         '<title>%s</title><body>'%y+\
  do(({'e':'edit','f':'find'} if edit else {'f':'find'}).get(f.get('q',[None])[0],'get'),y))`
 (__name__ == "__main__") and main()
+
+'''<head><meta content="width=device-width, initial-scale=1" name="viewport"><link rel="stylesheet" href="../sakura.css"></head>
+<script src="../sorttable.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+import { ITextEditor, TableEditor, Point, options, Alignment }
+import { ITextEditor, TableEditor, Point, options, Alignment }
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/theme/monokai.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/markdown/markdown.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.js" ></script>
+<script src="../table.js" ></script>
+
+<script src="https://unpkg.com/meaw"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.js" ></script>
+<script type="module" src="../mte-kernel.min.js" ></script>
+<script type="module" src="../table.js" ></script>
+
+// <script>
+//$(document).ready(function(){
+//    var codeText = $("#ta")[0];
+//    var editor = CodeMirror.fromTextArea(codeText, {
+//       theme: "monokai"
+//    });
+//    editor.setSize("100%", "80%");
+//});
+// </script>
+'''
+

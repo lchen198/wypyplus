@@ -1,0 +1,64 @@
+# A personal wiki in 42 lines of code
+
+This is the development version of WyPyPlus
+
+It supports running python code and github style table with a built-in table editor.
+
+# Run Python Code
+You can run python code like this.
+```
+PYTHON
+print("Hello from Python!")
+PYTHON
+```
+
+PYTHON
+print("Hello from Python")
+PYTHON
+
+# Built-in Table Editor
+Here's a demo of the table editor.
+https://susisu.github.io/mte-demo/
+
+| foo | bar |
+| --- | --- |
+| baz | f   |
+
+## Commands
+If you are using Mac, use Cmd instead of Ctrl.
+
+### Basic commands
+| Command       | Description               | Keymap     |
+| ------------- | ------------------------- | ---------- |
+| Next Cell     | Move to the next cell     | Tab        |
+| Previous Cell | Move to the previous cell | Shift-Tab  |
+| Next Row      | Move to the next row      | Enter      |
+| Escape        | Escape from the table     | Ctrl-enter |
+
+### Move focus
+| Command    | Description      | Keymap     |
+| ---------- | ---------------- | ---------- |
+| Move Left  | Move focus left  | Ctrl-Left  |
+| Move Right | Move focus right | Ctrl-Right |
+| Move Up    | Move focus up    | Ctrl-Up    |
+| Move Down  | Move focus down  | Ctrl-Down  |
+
+### Alignment
+| Command      | Description           | Keymap           |
+| ------------ | --------------------- | ---------------- |
+| Align Left   | Align a column left   | Shift-Ctrl-Left  |
+| Align Right  | Align a column right  | Shift-Ctrl-Right |
+| Align Center | Align a column center | Shift-Ctrl-Up    |
+| Align None   | Unset alignment       | Shift-Ctrl-Down  |
+
+### Row/column operations
+| Command           | Description            | Keymap               |
+| ----------------- | ---------------------- | -------------------- |
+| Insert Row        | Insert an empty row    | Ctrl-K Ctrl-I        |
+| Delete Row        | Delete a row           | Ctrl-L Ctrl-I        |
+| Insert Column     | Insert an empty column | Ctrl-K Ctrl-J        |
+| Delete Column     | Delete a column        | Ctrl-L Ctrl-J        |
+| Move Row Up       | Move a row up          | Alt-Shift-Ctrl-Up    |
+| Move Row Down     | Move a row down        | Alt-Shift-Ctrl-Down  |
+| Move Column Left  | Move a column left     | Alt-Shift-Ctrl-Left  |
+| Move Column Right | Move a column right    | Alt-Shift-Ctrl-Right |
