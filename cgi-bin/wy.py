@@ -2,27 +2,60 @@
 # -*- coding: utf-8 -*-
 # This is a single-file version that doesn't support Forth.
 # It uses github style table syntax.
-import sys, re, os, cgi
+import sys, re, os, cgi,cgitb
 from datetime import timedelta as td, datetime as dt
 from run_python import run_python
+cgitb.enable()
 home = 'WyPy'
 head = '''<head><meta content="width=device-width, initial-scale=1" name="viewport">
-<link rel="stylesheet" href="../sakura.css"></head>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.31.0/codemirror.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.31.0/codemirror.min.js" ></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.31.0/mode/markdown/markdown.min.js" ></script>
+<link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap');
+html {
+  font-family: "Noto Serif";
+}
+</style>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+<script> // Press 'e' to edit the doc
+$(document).keypress(function(event){if(event.key=="e" && event.ctrlKey){$('#editlink')[0].click();}});
+$(document).keypress(function(event){if(event.key=="s" && event.ctrlKey){$('#textform').submit();}});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script><script>hljs.highlightAll();</script>
+'''
+edit = '✎'
+editor_head='''<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.31.0/codemirror.min.css">
+<link rel="stylesheet" type="text/css" href="https://codemirror.net/addon/dialog/dialog.css">
+<link rel="stylesheet" type="text/css" href="https://codemirror.net/addon/scroll/simplescrollbars.css">
+<style>
+.CodeMirror {
+  background:  #f9f9f9;
+}
+body {
+  max-width: 52em;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/markdown/markdown.min.js"></script>
+<script src="https://codemirror.net/addon/edit/matchbrackets.js"></script>
+<script src="https://codemirror.net/mode/python/python.js"></script>
+<script src="https://codemirror.net/addon/mode/multiplex.js"></script>
 <script src="../scripts/sorttable.js"></script>
 <script type="module" src="../scripts/mte-kernel.min.js" ></script>
 <script type="module" src="../scripts/editor.js" ></script>
-'''
-edit = ' (edit)'
+<script src="https://codemirror.net/addon/search/search.js"></script>
+<script src="https://codemirror.net/addon/search/searchcursor.js"> </script>
+<script src="https://codemirror.net/addon/dialog/dialog.js"></script>
+<script src="https://codemirror.net/addon/scroll/simplescrollbars.js"></script>
+<script>var wait=setTimeout('document.e.submit();',1.8e6);</script>'''
 pre = '(?:^|\n)```((?:.|\n)+?)\n```'
 pre_h = '<pre><code>((?:.|\n)+?)</code></pre>'
 t = '</textarea>'
 remove_leading_space = lambda m: '<pre><code>' + '\n'.join(
     [l[1:] for l in m.group(1).splitlines()]) + '</code></pre>'
-insert_leading_space = lambda m: '\n```' + '\n '.join(m.group(1).splitlines()
-                                                      ) + '\n```'
+insert_leading_space = lambda m: '\n```' + '\n '.join(m.group(1).splitlines()) + '\n```'
 q, x, h, w = cgi.escape, os.path.exists, '<a href=', 'wy.py?p='
 link = '\[([^]]*)]\(\s*((?:http[s]?://)?[^)]+)\s*\)'
 yt = "https://www.youtube.com/watch?v="
@@ -56,7 +89,7 @@ fs = lambda s: re.sub(
     pre_h, remove_leading_space,
     reduce(lambda s, r: re.sub('(?m)' + r[0], r[1], s), (
         ('\r', ''), ('\{\{NAME\}\}', y),
-        ('(?:^|\n)PYTHON((?:.|\n)+?)\nPYTHON', lambda m:run_python(m.group(1))),
+        ('(?:^|\n)\%\%((?:.|\n)+?)\n\%\%', lambda m:run_python(m.group(1))),
         ('^INCLUDE\((\w+)\)$', lambda m: '\n'.join(
             flatten(load_rec(m.group(1))))), 
         ('(^|[^=/\-_A-Za-z0-9?])@([A-Z][\w\+\-]+)', lambda m: m.group(1) + h + w + m.group(2) +
@@ -87,7 +120,7 @@ def search(kw, doc):
     terms = kw.lower().replace('+', ' ').split(' ')
     if not all([d_lower.count(t)>0 for t in terms]):
         return ''
-    matches = [ "   "+ line for line in d.splitlines()
+    matches = [ line for line in d.splitlines()
                 if any([term in line.lower() for term in terms])]
     if matches: 
         return '\n\n'.join(matches)
@@ -96,25 +129,25 @@ def search(kw, doc):
 do = lambda m, n: {
     'get':
     lambda: '<div class="navbar"><h1>%s%s%s>%s</a>' % (h, w, home, home) + (
-        (':%s%s%s&amp;q=f>%s</a>%s%s%s&amp;q=e>%s</a>' %
-         (h, w, n, n, h, w, n, edit))
+        (':%s%s%s&amp;q=f>%s</a><a id=editlink href=%s%s&amp;q=e>%s</a>' %
+         (h, w, n, n, w, n, edit))
         if edit else '') + '</h1></div><div class="main">%s<p>%s' %
     (se if edit else '',
      fs(load_g() + re.sub(pre, insert_leading_space, load_tpl(n))) or n),
     'edit':
     lambda:
-    '<form name="e" action=%s%s method=POST><h1>%s <input type=hidden name=p value=%s></h1>\
-<div id="editor"><textarea class="CodeMirror" name=t id=ta cols=80 rows=24>%s%s</div><p><input type=submit>'
+     editor_head+'<form id=textform name="e" action=%s%s method=POST><h1>%s <input type=hidden name=p value=%s></h1>\
+<div id="editor"><textarea class="CodeMirror" name=t id=ta cols=80 rows=24>%s%s</div><p><p><input type=submit>'
     % (w, n, fs(n), n, q(load_tpl(n)), t),
     'find':
     lambda:
-    ('<h1>%s%s%s>%s</a>: Search %s</h1><p>%s' %
-     (h, w, home, home, fs(n), se if edit else '')) + fs('\n---\n'.join(map(lambda x: x[1],
+    ('<h1>%s%s%s>%s</a>:%s</h1><p>%s' %
+     (h, w, home, home, fs(n), se if edit else '')) + fs('\n\n'.join(map(lambda x: x[1],
          sorted(
              filter(lambda x: not x[1].endswith(':\n\n'),
                     [(os.path.getmtime('w/'+d),
-                      "### " + d if n == "All" or n.lower() in d.lower(
-                      ) else "### " + d + ':\n\n' + search(n, d))
+                      "## " + d + ':' if n == "All" or n.lower() in d.lower(
+                      ) else "## " + d + ':\n\n' + search(n, d))
                      for d in os.listdir('w/')]),
              reverse = True))))
 }.get(m)()
@@ -123,34 +156,3 @@ main=lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or not edit or ('t' in f 
         '<title>%s</title><body>'%y+\
  do(({'e':'edit','f':'find'} if edit else {'f':'find'}).get(f.get('q',[None])[0],'get'),y))`
 (__name__ == "__main__") and main()
-
-'''<head><meta content="width=device-width, initial-scale=1" name="viewport"><link rel="stylesheet" href="../sakura.css"></head>
-<script src="../sorttable.js"></script>
-<script
-  src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-  crossorigin="anonymous"></script>
-import { ITextEditor, TableEditor, Point, options, Alignment }
-import { ITextEditor, TableEditor, Point, options, Alignment }
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/theme/monokai.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/markdown/markdown.min.js" ></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.js" ></script>
-<script src="../table.js" ></script>
-
-<script src="https://unpkg.com/meaw"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.js" ></script>
-<script type="module" src="../mte-kernel.min.js" ></script>
-<script type="module" src="../table.js" ></script>
-
-// <script>
-//$(document).ready(function(){
-//    var codeText = $("#ta")[0];
-//    var editor = CodeMirror.fromTextArea(codeText, {
-//       theme: "monokai"
-//    });
-//    editor.setSize("100%", "80%");
-//});
-// </script>
-'''
-

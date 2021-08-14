@@ -3,18 +3,21 @@
 This is the development version of WyPyPlus
 
 It supports running python code and github style table with a built-in table editor.
+# Basic Editing
+Click the pen button next the the title or press Ctrl-E to edit.
 
+Click the submit button or press Ctrl-S to save.
 # Run Python Code
 You can run python code like this.
 ```
-PYTHON
+%%
 print("Hello from Python!")
-PYTHON
+%%
 ```
 
-PYTHON
+%%
 print("Hello from Python")
-PYTHON
+%%
 
 # Built-in Table Editor
 Here's a demo of the table editor.

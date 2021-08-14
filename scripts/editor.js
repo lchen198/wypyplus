@@ -155,19 +155,32 @@ async function init() {
     if (!wrapper) {
 	return;
     }
+    CodeMirror.defineMode("markdownmixed", function(config) {
+	return CodeMirror.multiplexingMode(
+	    CodeMirror.getMode(config, "markdown"),
+	    {open: "%%", close: "%%",
+	     mode: CodeMirror.getMode(config, "python"),
+	     delimStyle: "delimit"}
+	    // .. more multiplexed styles can follow here
+	);
+    });
     var editor = CodeMirror.fromTextArea(wrapper, {
-	mode          : "markdown",
+	mode          : "markdownmixed",
 	lineSeparator : null,
-	indentUnit    : 2,
+	indentUnit    : 4,
 	smartIndent   : true,
-	tabSize       : 2,
+	tabSize       : 4,
 	indentWithTabs: false,
-	lineWrapping  : false,
+	lineWrapping  : true,
 	lineNumbers   : true,
 	autofocus     : true,
-	extraKeys     : null
+	extraKeys     : null,
+	matchBrackets : true,
+	inputStyle    : 'contenteditable',
+	spellcheck    : true,
+	scrollbarStyle: 'overlay',
     });
-    editor.setSize("100%", "100%");
+    editor.setSize("100%", "75%");
   // create an interface to the text editor
   const editorIntf = new TextEditorInterface(editor);
   // create a table editor object
