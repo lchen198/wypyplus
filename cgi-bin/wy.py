@@ -4,7 +4,8 @@
 # It uses github style table syntax.
 import sys, re, os, cgi,cgitb
 from datetime import timedelta as td, datetime as dt
-from run_python import run_python
+from run_python import run_python, PageDefault
+import Cookie
 cgitb.enable()
 home = 'WyPy'
 head = '''<head><meta content="width=device-width, initial-scale=1" name="viewport">
@@ -83,14 +84,41 @@ y = f.get('p', [''])[0]
 today = dt.now().strftime("%b%d")
 today = today if today[3] != '0' else today[:3] + today[4]
 y = today if y == 'Today' else (home, y)[y != '']
-se = '<form><input type="text"placeholder="Search.. "name="p"><input \
+cookie = Cookie.SimpleCookie(os.environ.get('HTTP_COOKIE',''))
+history = []
+if 'history' in cookie and cookie['history'].value:
+    history = cookie['history'].value.split(',')
+def set_cookie(f):
+    global history
+    if len(history) > 0 and f in history[1:]:
+        history.remove(f)
+    if f and f not in history:
+        history.append(f)
+    if len(history) > 4:
+        history = [history[0]]+history[-3:]
+    if f == home:
+        history = []
+    return 'Set-Cookie: history=' + ','.join(history) + '\n'
+new_cookie = set_cookie(y)
+def history_links():
+    global history
+    links = []
+    if not history:
+        return ''
+    if len(history) > 1:
+        for page in history:
+            links.append(h + w + page +'>' + page +'</a>')
+    return ','.join(links)
+back = history_links()
+se = back+'<form><input type="text"placeholder="Search.. "name="p"><input \
 type="hidden" name="q" value="f"><button type="submit">Search</button></form>'
 fs = lambda s: re.sub(
     pre_h, remove_leading_space,
     reduce(lambda s, r: re.sub('(?m)' + r[0], r[1], s), (
         ('\r', ''), ('\{\{NAME\}\}', y),
         ('(?:^|\n)\%\%((?:.|\n)+?)\n\%\%', lambda m:run_python(m.group(1))),
-        ('^INCLUDE\((\w+)\)$', lambda m: '\n'.join(
+        ('^INCLUDE\((\w+)\)$', lambda m:
+            ('### %s[%s](%s%s&q=e)\n'%(m.group(1),edit,w,m.group(1)) if PageDefault['include_title'] and edit else '')  + '\n'.join(
             flatten(load_rec(m.group(1))))), 
         ('(^|[^=/\-_A-Za-z0-9?])@([A-Z][\w\+\-]+)', lambda m: m.group(1) + h + w + m.group(2) +
          '&amp;q=f>@' + m.group(2) + '</a>'),
@@ -125,15 +153,17 @@ def search(kw, doc):
     if matches: 
         return '\n\n'.join(matches)
     return ''
+hide_nav = '<style>.navbar { display:none;}</style>'
     
 do = lambda m, n: {
     'get':
     lambda: '<div class="navbar"><h1>%s%s%s>%s</a>' % (h, w, home, home) + (
         (':%s%s%s&amp;q=f>%s</a><a id=editlink href=%s%s&amp;q=e>%s</a>' %
          (h, w, n, n, w, n, edit))
-        if edit else '') + '</h1></div><div class="main">%s<p>%s' %
+        if edit else '') + '</h1>%s<p></div><div class="main">%s' %
     (se if edit else '',
-     fs(load_g() + re.sub(pre, insert_leading_space, load_tpl(n))) or n),
+     fs(load_g() + re.sub(pre, insert_leading_space, load_tpl(n))) +\
+     (hide_nav if PageDefault['hide_nav_bar'] else '') or n),
     'edit':
     lambda:
      editor_head+'<form id=textform name="e" action=%s%s method=POST><h1>%s <input type=hidden name=p value=%s></h1>\
@@ -152,7 +182,7 @@ do = lambda m, n: {
              reverse = True))))
 }.get(m)()
 main=lambda f=f:`(os.getenv("REQUEST_METHOD")!="POST") or not edit or ('t' in f or (os.remove('w/'+y) and False))\
-    and open('w/'+y,'w').write(f['t'][0])`+`sys.stdout.write("Content-type: text/html; charset=utf-8\r\n\r\n" + head +
+    and open('w/'+y,'w').write(f['t'][0])`+`sys.stdout.write(new_cookie+"Content-type: text/html; charset=utf-8\r\n\r\n" + head +
         '<title>%s</title><body>'%y+\
  do(({'e':'edit','f':'find'} if edit else {'f':'find'}).get(f.get('q',[None])[0],'get'),y))`
 (__name__ == "__main__") and main()
