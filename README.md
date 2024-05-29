@@ -25,11 +25,13 @@ WyPyPlus is a journey to discover the essence of personal wiki and get rid of ev
 * You can use WyPyPlus to create presentations. It even produces
 [PDFs](https://github.com/lchen198/wypyplus/blob/main/example_hardcopy.pdf)!
 
-### A Simple Spreadsheet and a RPN calculator:
+### A Simple Spreadsheet and a [Forth language](https://en.wikipedia.org/wiki/Forth_(programming_language)) interpreter:
 * WyPyPlus has a built-in RPN calculator that suports
   * Basic math operations: +, -, *, and / 
   * Stack operations: dup, over, swap, drop, and rot
   * Other functions: ^, log, sqrt, abs, sin, cos, and tan
+  * Flow control commands: jmp, jnz, jz, gt, lt, eq
+* The tiny Forth language in WyPyPlus in turing complete. Its usage is beyound a simple RPN calcualtor. You can inline Forth code in a page to generate dyanmic content.  
 * You can define new functions using ```RPN(: <name> <content> ;)```
 ```
     RPN(: squire dup * ;)
