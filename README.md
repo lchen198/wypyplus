@@ -39,7 +39,7 @@ WyPyPlus is a journey to discover the essence of personal wiki and get rid of ev
     RPN(3 4 pythagoras) -> output 5
 ```
 
-In addition, you can use RPN in a table and reference rows and columes! See the [source code](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage) for details.
+In addition, you can use RPN in a table and reference rows and columes! Read the [Demo Page source code](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage) for details.
 ![](screenshots/rpn.png)
 
 ## Some Screenshots
