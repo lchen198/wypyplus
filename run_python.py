@@ -1,8 +1,7 @@
 import traceback
 import sys,contextlib
-from io import BytesIO as StringIO
-import HTMLParser
-parser = HTMLParser.HTMLParser()
+from io import StringIO
+import html
 
 PageDefault = {'include_title': True,
                'hide_nav_bar': False}
@@ -25,9 +24,8 @@ def run_python(m):
     m = m.replace('\t', '    ')
     with stdoutIO() as s:
         try:
-            exec(parser.unescape(m).lstrip('\n'), globals(), ldict)
+            exec(html.unescape(m).lstrip('\n'), globals(), ldict)
         except Exception as e:
-            f = StringIO()
             return "Error:%s\n\n"%('<br>'.join(traceback.format_exc().splitlines()))
     if 'export' in ldict:
         export = ldict['export']

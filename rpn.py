@@ -1,7 +1,7 @@
 import operator as op
 import math, re, random
 from collections import namedtuple
-import HTMLParser
+import html
 import types, sys, inspect
 from datetime import datetime, timedelta, date
 
@@ -130,10 +130,7 @@ def get_parameter_count(func):
         return -1  # *args
     else:
         try:
-            if (sys.version_info > (3, 0)):
-                argspec = inspect.getfullargspec(func)
-            else:
-                argspec = inspect.getargspec(func)
+            argspec = inspect.getfullargspec(func)
         except:
             raise TypeError("unable to determine parameter count")
 
@@ -148,7 +145,7 @@ top_level_fn = {
 def call_python(method):
     def fun(s, out, method=method):
         debug('method'+method)
-        m = re.match('^(\D+)(\d+)$', method)
+        m = re.match(r'^(\D+)(\d+)$', method)
         n = 0
         if m:
             method,n = m.group(1),int(m.group(2))
@@ -209,7 +206,7 @@ runtime_fn = {
     '+': lambda s, out: s.append(op.add(s.pop(-2), s.pop())),
     '-': lambda s, out: s.append(op.sub(s.pop(-2), s.pop())),
     '*': lambda s, out: s.append(op.mul(s.pop(-2), s.pop())),
-    '/': lambda s, out: s.append(op.div(float(s.pop(-2)), float(s.pop()))),
+    '/': lambda s, out: s.append(op.truediv(float(s.pop(-2)), float(s.pop()))),
     '^': lambda s, out: s.append(pow(s.pop(-2), s.pop())),
     'log': lambda s, out: s.append(math.log(s.pop(), s.pop())),
     'randint': lambda s, out: s.append(random.randint(s.pop(-2), s.pop())),
@@ -302,7 +299,7 @@ def ref(t, row, col, table):
     crt_row = ref_table[row]
     rval = None
     if t.startswith('$'):
-        rg = re.match('\$(-?\d+)\.\.\$(-?\d+)', t)
+        rg = re.match(r'\$(-?\d+)\.\.\$(-?\d+)', t)
         if rg:
             start, end = int(rg.group(1)), int(rg.group(2))
             start = start if start > 0 else col + start
@@ -357,10 +354,10 @@ def tokenize2(text):
     ([Token(tag=3, val='@10', pos=0, end=3), Token(tag=3, val='$10', pos=4, end=7), Token(tag=3, val='@1..@10', pos=8, end=15), Token(tag=3, val='$1..$10', pos=16, end=23), Token(tag=3, val='@10$10', pos=24, end=30)], 1)
     """
 
-    text = HTMLParser.HTMLParser().unescape(text)
+    text = html.unescape(text)
     rules = {
-        "\"([^\"\\\\]|\\\\.)*\"": STR,
-        "\'([^\'\\\\]|\\\\.)*\'": STR,
+        r"\"([^\"\\\\]|\\\\.)*\"": STR,
+        r"\'([^\'\\\\]|\\\\.)*\'": STR,
         r"[+-]?([0-9]*[.])?[0-9]+": NUM,
         r'[\w\+\-\*\/\^\.\:\;\=\>\<]+': FUN,
         r'[@|$][^ ]*': REF,
@@ -480,11 +477,11 @@ def rpn_table_vm(m):
     table_status = OK
     table_name = m.group(1)
 
-    for row_i, row in enumerate(re.split('\|-', m.group(2))):
+    for row_i, row in enumerate(re.split(r'\|-', m.group(2))):
         table_env.append([])
         row_env = table_env[-1]
         for col_i, v in enumerate(map(str.strip,
-                                      re.split('\|{1,2}', row)[1:])):
+                                      re.split(r'\|{1,2}', row)[1:])):
             if v.startswith('='):
                 row_env.append((CELL_FUN, v[1:]))
             else:
@@ -539,12 +536,12 @@ if __name__ == "__main__":
     doctest.testmod()
     p = '''100 9 5 / * 32 + '''
     words, status = tokenize2(p)
-    print words
+    print(words)
     pcode, status = compile(words)
-    print ' '.join([str(p) for p in pcode])
+    print(' '.join([str(p) for p in pcode]))
     if status != OK:
-        print status
+        print(status)
     else:
         vm = VM(pcode)
         vm.execute()
-        print vm.result()
+        print(vm.result())
