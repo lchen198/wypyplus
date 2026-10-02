@@ -184,3 +184,30 @@ label, legend, fieldset {
   display: block;
   margin-bottom: .5rem;
   font-weight: 600; }
+
+/* Responsive edit textarea & mobile button enhancements */
+textarea {
+  width: 100%;
+  max-width: 100%;
+  font-family: inherit;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  height: 55vh;
+  min-height: 260px;
+  resize: vertical;
+}
+
+@media (max-width: 684px) {
+  textarea {
+    font-size: 1.6rem;
+    height: 50vh;
+    padding: 10px 12px;
+  }
+  input[type="submit"] {
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 1.6rem;
+    margin-top: 4px;
+    border-radius: 4px;
+  }
+}
