@@ -15,6 +15,7 @@ se='<form><input type="text"placeholder="Search.. "name="p"><input type="hidden"
 fs=lambda s:re.sub(pre_h,remove_leading_space,reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),
 (r'^INCLUDE\((\w+)\)$',lambda m: '\n'.join(flatten(load_rec(m.group(1))))), (r'\{\{NAME\}\}', y),
 (r'(^|[^=/\-_A-Za-z0-9?])@([A-Z]\w+)',lambda m: h+w+m.group(2)+'&amp;q=f>@'+m.group(2)+'</a>'),
+(r'(?:\{\|(.*)\n)(.*[^\}]+)(\|\})',lambda m:'<table>'+'\n'.join('<tr><td>'+'</td><td>'.join(c.strip() for c in re.split(r'\|{1,2}',r)[1:])+'</td></tr>' for r in re.split(r'\|-',m.group(2)))+'</table>'),
 (r'(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]*){1,})',
      lambda m:(m.group(1)+'%s%s')%((m.group(2),h+w+m.group(2)+'&amp;q=e>?</a>' if edit else ''),('',h+w+m.group(2)+'>%s</a>'%m.group(2)))[x('w/'+m.group(2))]),
 (r'^\{\{$','\n<ul>'),(r'^\*(.*)$',r'<li>\g<1></li>'),('^}}$','</ul>'),('^---$','<hr>'),

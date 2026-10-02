@@ -67,6 +67,28 @@ def hello():
 
 ---
 
+## Table
+
+WyPyPlus supports [media wiki style table](https://www.mediawiki.org/wiki/Help:Tables).
+{|
+|Orange
+|Apple
+|-
+|Bread
+|Pie
+|-
+|Butter
+|Ice cream 
+|}
+
+{|
+|  Orange || Apple || more
+|-
+|   Bread || Pie || more
+|-
+|   Butter || Ice cream || and more
+|}
+
 ## Synatx Highlight with [highlight.js](https://highlightjs.org) (Optional) 
 
 Insert the following line to the <head> section at the end of wypyplus.py to support synatx highligh for over 150 languages.

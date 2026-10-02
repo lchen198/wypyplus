@@ -1,6 +1,6 @@
 # 🍦 WyPyPlus
 
-A personal wiki in one Python file. 41 lines. No dependencies.
+A personal wiki in one Python file. 42 lines. No dependencies.
 
 Pages are plain text files in the `w` folder. No database, no config, no build step.
 
