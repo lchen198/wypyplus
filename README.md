@@ -6,6 +6,21 @@ Pages are plain text files in the `w` folder. No database, no config, no build s
 
 ![WyPyPlus home page](screenshots/wypyplus.png)
 
+## Features
+
+* One Python file, 42 lines. Nothing to install except Python 3.
+* Runs on Mac, Linux and Windows.
+* Pages are plain text files in the `w` folder. No database, no config.
+* WikiWord links, markdown-style formatting and tables.
+* Full-text search and an index of all pages.
+* Tags: `@Tag` links to every page that mentions it.
+* Templates for new pages, and `INCLUDE(PageName)` to pull one page into another.
+* A `GlobalMenu` page that shows on every page.
+* Delete a page by saving it empty.
+* Optional read-only mode.
+* A clean, mobile-friendly look with [Sakura CSS](https://github.com/oxalorg/sakura).
+* An example [GetThingsDone](w/GetThingsDone) guide to set up a GTD system.
+
 ## Quick start
 
 You need Python 3.8 or newer.
