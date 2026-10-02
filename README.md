@@ -45,11 +45,62 @@ More examples are in the [DemoPage](w/DemoPage).
 * **See all pages:** search for `All`.
 * **Read-only mode:** in `wypyplus.py`, change `'✎'` to `''`. Editing, saving and search are turned off.
 
-## Hosting
+## Hosting with a password
 
-`wypyplus.py` is a standard [WSGI](https://peps.python.org/pep-3333/) app. Running it directly uses Python's built-in server, which only listens on your own machine. To serve it with something else, point any WSGI server at `wypyplus:app`, for example `gunicorn wypyplus:app`.
+WyPyPlus has no login, and anyone who can reach it can edit pages. To share it on your network, keep it running on 127.0.0.1 and put nginx or lighttpd in front of it with a password. Keep `python3 wypyplus.py` running in the background (for example in `tmux`, or as a systemd service).
 
-There is no login. Anyone who can reach the server can edit pages, so don't expose it to the internet without putting authentication in front of it.
+### nginx
+
+```
+sudo apt install nginx apache2-utils
+sudo htpasswd -c /etc/nginx/wiki.htpasswd alice    # asks for a password; drop -c to add more users
+sudo rm /etc/nginx/sites-enabled/default           # the default site would take port 80
+```
+
+Create `/etc/nginx/conf.d/wypyplus.conf`:
+
+```
+server {
+    listen 80;
+    location / {
+        auth_basic "WyPyPlus";
+        auth_basic_user_file /etc/nginx/wiki.htpasswd;
+        proxy_pass http://127.0.0.1:8000;
+    }
+}
+```
+
+Then run `sudo nginx -t && sudo systemctl reload nginx` and open http://your-server/.
+
+### lighttpd
+
+```
+sudo apt install lighttpd apache2-utils
+sudo htpasswd -c /etc/lighttpd/wiki.htpasswd alice
+```
+
+Add to the end of `/etc/lighttpd/lighttpd.conf`:
+
+```
+server.modules += ( "mod_auth", "mod_authn_file", "mod_proxy" )
+auth.backend = "htpasswd"
+auth.backend.htpasswd.userfile = "/etc/lighttpd/wiki.htpasswd"
+auth.require = ( "/" => ( "method" => "basic", "realm" => "WyPyPlus", "require" => "valid-user" ) )
+proxy.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 8000 ) ) )
+```
+
+Then run `sudo systemctl restart lighttpd` and open http://your-server/.
+
+Basic auth sends the password unencrypted over plain HTTP. That's fine on a network you trust; otherwise add HTTPS (for example with [Let's Encrypt](https://letsencrypt.org/)).
+
+`wypyplus.py` is a standard [WSGI](https://peps.python.org/pep-3333/) app, so you can also run it with any WSGI server, e.g. `gunicorn wypyplus:app`.
+
+## Security
+
+* Page text is HTML-escaped, and links and images only accept `http(s)://` or relative URLs.
+* Pages run no JavaScript: a `Content-Security-Policy` header blocks all scripts.
+* Other websites can't edit or delete your pages through your browser: cross-site form posts are rejected (in browsers that send `Sec-Fetch-Site`, which all current ones do).
+* Page names can only contain letters and digits, so they can't point outside the `w` folder.
 
 ## Credits
 
