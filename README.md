@@ -1,6 +1,7 @@
 # 🍦 WyPyPlus
 
-A personal wiki in one Python file. 42 lines. No dependencies.
+A personal wiki in one Python file. 42 lines. No dependencies. About 20 MB of RAM.
+Probably one of the smallest wikis you can run.
 
 Pages are plain text files in the `w` folder. No database, no config, no build step.
 
@@ -9,6 +10,7 @@ Pages are plain text files in the `w` folder. No database, no config, no build s
 ## Features
 
 * One Python file, 42 lines. Nothing to install except Python 3.
+* Tiny footprint: about 20 MB of RAM while running, and about 8 MB of that is Python itself. (Measured on Python 3.10–3.13, idle and after 1,400 requests from 8 clients.)
 * Runs on Mac, Linux and Windows.
 * Pages are plain text files in the `w` folder. No database, no config.
 * WikiWord links, markdown-style formatting and tables.
