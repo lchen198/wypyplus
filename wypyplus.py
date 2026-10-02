@@ -4,8 +4,8 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)));home,edit,i,L='WyPyPlus','â
 pre='(?:^|\n)```((?:.|\n)+?)\n```';pre_h='<pre><code>((?:.|\n)+?)</code></pre>';t='</textarea>'
 remove_leading_space=lambda m:'<pre><code>'+'\n'.join([l[1:] for l in m.group(1).splitlines()])+'</code></pre>'
 insert_leading_space=lambda m: '\n```'+'\n '.join(m.group(1).splitlines())+ '\n```'
-q,x,h,w=lambda s:html.escape(s,False),os.path.exists,'<a href=','wypyplus.py?p=';
-link=r'\[([^]]*)]\(\s*((?:http[s]?://)?[^)]+)\s*\)';yt="https://www.youtube.com/watch?v="
+q,x,h,w=html.escape,os.path.exists,'<a href=','wypyplus.py?p=';
+link=r'\[([^]]*)]\(\s*((?:https?://|(?![^/?#)]*:))[^)]+)\s*\)';yt="https://www.youtube.com/watch?v="
 hl=lambda m,n:'<h%d>%s</h%d>'%(n,m.group(1),n);hl1=lambda m:hl(m, 1);hl2=lambda m:hl(m, 2);hl3=lambda m:hl(m,3)
 load=lambda n:(x('w/'+n) and open('w/'+n,encoding='utf-8').read()) or '';
 load_tpl=lambda n: load(n) or load('Tpl'+n[:3]) or '';load_g=lambda:load('GlobalMenu')
@@ -20,7 +20,7 @@ fs=lambda s:re.sub(pre_h,remove_leading_space,reduce(lambda s,r:re.sub('(?m)'+r[
      lambda m:(m.group(1)+'%s%s')%((m.group(2),h+w+m.group(2)+'&amp;q=e>?</a>' if edit else ''),('',h+w+m.group(2)+'>%s</a>'%m.group(2)))[x('w/'+m.group(2))]),
 (r'^\{\{$','\n<ul>'),(r'^\*(.*)$',r'<li>\g<1></li>'),('^}}$','</ul>'),('^---$','<hr>'),
 (pre,r'<pre><code>\g<1></code></pre>'),('^# (.*)$',hl1),('^## (.*)$', hl2),('^### (.*)$',hl3),(r'\*\*([^\*]+)\*\*',r'<b>\g<1></b>'),
-(r'\!'+link,r'<img src="\g<2>" alt="\g<1>">'),('(^|[^!])'+link,r"\g<1>"+h+r'"\g<3>">\g<2></a>'),(r'(^|[^"])(http[s]?:[^<>"\s]+)',
+(r'\!'+link,r'<img src="\g<2>" alt="\g<1>">'),('(^|[^!])'+link,r"\g<1>"+h+r'"\g<3>">\g<2></a>'),(r'(^|[^";])(https?:(?:(?!&quot;)[^<>"\s])+)',
  lambda m: ('<iframe width="560" height="315" src="https://www.youtube.com/embed/%s" frameborder="0" allow="accelerometer; autoplay;\
  clipboard-write; encrypted-media;gyroscope; picture-in-picture" allowfullscreen></iframe>' % m.group(2)[len(yt):]) if m.group(2).startswith(yt)
  else (m.group(1)+h+m.group(2)+">"+m.group(2)+"</a>")),('\n\n','\n<p>')),q(s)),flags=re.M)
@@ -37,6 +37,6 @@ def app(e,r):
     global f,y;s=e['PATH_INFO'][1:]
     if s=='sakura.css':r('200 OK',[('Content-Type','text/css')]);return [open(s,'rb').read()]
     f=parse_qs((e['wsgi.input'].read(int(e.get('CONTENT_LENGTH') or 0)).decode() if e['REQUEST_METHOD']=='POST' else '')+'&'+e.get('QUERY_STRING',''));y=f.get('p',[''])[0];y=dt.now().strftime("%b")+str(dt.now().day) if y=='Today' else (home,y)[y.isalnum()]
-    if e['REQUEST_METHOD']=='POST' and edit:open('w/'+y,'w',encoding='utf-8',newline='').write(f['t'][0]) if 't' in f else x('w/'+y) and os.remove('w/'+y)
-    r('200 OK',[('Content-Type','text/html; charset=utf-8')]);return [('<head><meta content="width=device-width, initial-scale=1" name="viewport"><link rel="stylesheet" href="sakura.css"></head><title>%s</title>'%y+do(({'e':'edit','f':'find'} if edit else {'f':'find'}).get(f.get('q',[None])[0],'get'),y)).encode()]
+    if e['REQUEST_METHOD']=='POST' and edit and e.get('HTTP_SEC_FETCH_SITE','none') in ('same-origin','none'):open('w/'+y,'w',encoding='utf-8',newline='').write(f['t'][0]) if 't' in f else x('w/'+y) and os.remove('w/'+y)
+    r('200 OK',[('Content-Type','text/html; charset=utf-8'),('Content-Security-Policy',"script-src 'none'; frame-ancestors 'none'")]);return [('<head><meta content="width=device-width, initial-scale=1" name="viewport"><link rel="stylesheet" href="sakura.css"></head><title>%s</title>'%y+do(({'e':'edit','f':'find'} if edit else {'f':'find'}).get(f.get('q',[None])[0],'get'),y)).encode()]
 (__name__=="__main__") and (print('http://127.0.0.1:8000',flush=True) or make_server('127.0.0.1',8000,app,type('S',(ThreadingMixIn,WSGIServer),{'daemon_threads':True})).serve_forever())

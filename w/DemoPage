@@ -91,7 +91,7 @@ WyPyPlus supports [media wiki style table](https://www.mediawiki.org/wiki/Help:T
 
 ## Synatx Highlight with [highlight.js](https://highlightjs.org) (Optional) 
 
-Insert the following line to the <head> section at the end of wypyplus.py to support synatx highligh for over 150 languages.
+Insert the following line to the <head> section at the end of wypyplus.py to support synatx highligh for over 150 languages. Also change script-src 'none' in the Content-Security-Policy header to script-src https://cdnjs.cloudflare.com 'unsafe-inline', since wypyplus.py blocks all scripts by default.
 ```
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/styles/default.min.css">\
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.1.0/highlight.min.js"></script><script>hljs.highlightAll();</script>
