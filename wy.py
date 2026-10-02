@@ -2,13 +2,14 @@
 # A WSGI app. Run: python3 wy.py, then open http://127.0.0.1:8000/wy.py
 # This is a single-file version that doesn't support Forth.
 # It uses github style table syntax.
-import re, os, html, mimetypes
+import re, os, html, mimetypes, threading
 from functools import reduce
 from urllib.parse import parse_qs
 from datetime import timedelta as td, datetime as dt
 from run_python import run_python, PageDefault
 from http.cookies import SimpleCookie
-from wsgiref.simple_server import make_server
+from socketserver import ThreadingMixIn
+from wsgiref.simple_server import make_server, WSGIServer
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 home = 'WyPy'
 head = '''<head><meta content="width=device-width, initial-scale=1" name="viewport">
@@ -173,7 +174,11 @@ do = lambda m, n: {
                      for d in os.listdir('w/')]),
              reverse = True))))
 }.get(m)()
+lock = threading.Lock()
 def app(e, r):
+    with lock:
+        return render(e, r)
+def render(e, r):
     global f, y, history
     s = e['PATH_INFO'][1:]
     if s.endswith(('.css', '.js', '.ico', '.png')) and '..' not in s and x(s):
@@ -194,4 +199,8 @@ def app(e, r):
     r('200 OK', [('Content-Type', 'text/html; charset=utf-8'), ('Set-Cookie', set_cookie(y))])
     return [(head + '<title>%s</title><body>' % y +
         do(({'e':'edit','f':'find'} if edit else {'f':'find'}).get(f.get('q',[None])[0],'get'),y)).encode()]
-(__name__ == "__main__") and make_server('127.0.0.1', 8000, app).serve_forever()
+class Server(ThreadingMixIn, WSGIServer):
+    daemon_threads = True  # one slow/idle browser connection must not block the rest
+if __name__ == "__main__":
+    print('http://127.0.0.1:8000/wy.py', flush=True)
+    make_server('127.0.0.1', 8000, app, Server).serve_forever()

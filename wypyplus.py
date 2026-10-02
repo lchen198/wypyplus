@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-import re,os,html,mimetypes,rpn;from functools import reduce;from urllib.parse import parse_qs;from wsgiref.simple_server import make_server;from datetime import timedelta as td,datetime as dt;
-os.chdir(os.path.dirname(os.path.abspath(__file__)));home,edit,i='WyPyPlus','✎','put type';forth='(?:^|\n)FORTH((?:.|\n)+?)\nFORTH';
+import re,os,html,mimetypes,threading,rpn;from functools import reduce;from urllib.parse import parse_qs;from socketserver import ThreadingMixIn;from wsgiref.simple_server import make_server,WSGIServer;from datetime import timedelta as td,datetime as dt;
+os.chdir(os.path.dirname(os.path.abspath(__file__)));home,edit,i,L='WyPyPlus','✎','put type',threading.Lock();forth='(?:^|\n)FORTH((?:.|\n)+?)\nFORTH';
 pre='(?:^|\n)```((?:.|\n)+?)\n```';pre_h='<pre><code>((?:.|\n)+?)</code></pre>';t='</textarea>'
 remove_leading_space=lambda m:'<pre><code>'+'\n'.join([l[1:] for l in m.group(1).splitlines()])+'</code></pre>'
 insert_leading_space=lambda m: '\n```'+'\n '.join(m.group(1).splitlines())+ '\n```'
@@ -32,11 +32,11 @@ Opened at: %s AutoSave at: %s<textarea name=t id=ta rows=24>%s%s<in%s=submit>'%(
         sorted(filter(lambda x: not x.endswith(':\n\n'),[d if n == "All" or n.lower() in d.lower() else d+':\n\n'+'\n\n'.join(
             [line for line in load(d).splitlines() if n.lower() in line.lower() and '@'+n not in line]) for d in os.listdir('w/')]))))}.get(m)()
 def app(e,r):
+ with L:
     global f,y;s=e['PATH_INFO'][1:]
     if s.endswith(('.css','.js','.ico','.png')) and '..' not in s and x(s):r('200 OK',[('Content-Type',mimetypes.guess_type(s)[0])]);return [open(s,'rb').read()]
     f=parse_qs((e['wsgi.input'].read(int(e.get('CONTENT_LENGTH') or 0)).decode() if e['REQUEST_METHOD']=='POST' else '')+'&'+e.get('QUERY_STRING',''));y=f.get('p',[''])[0];y=dt.now().strftime("%b%d").replace('0', '') if y=='Today' else (home,y)[y.isalnum()]
     if e['REQUEST_METHOD']=='POST' and edit:open('w/'+y,'w',encoding='utf-8',newline='').write(f['t'][0]) if 't' in f else x('w/'+y) and os.remove('w/'+y)
     r('200 OK',[('Content-Type','text/html; charset=utf-8')]);return [('<head><meta content="width=device-width, initial-scale=1" name="viewport"><link rel="stylesheet" href="sakura.css">\
-<link rel="stylesheet" href="nav.css"><script type="text/javascript" src="ASCIIMathML.js"></script></head><title>%s</title>'%y+
-do(({'e':'edit','f':'find'} if edit else {'f':'find'}).get(f.get('q',[None])[0],'get'),y)).encode()]
-(__name__=="__main__") and make_server('127.0.0.1',8000,app).serve_forever()
+<link rel="stylesheet" href="nav.css"><script type="text/javascript" src="ASCIIMathML.js"></script></head><title>%s</title>'%y+do(({'e':'edit','f':'find'} if edit else {'f':'find'}).get(f.get('q',[None])[0],'get'),y)).encode()]
+(__name__=="__main__") and (print('http://127.0.0.1:8000',flush=True) or make_server('127.0.0.1',8000,app,type('S',(ThreadingMixIn,WSGIServer),{'daemon_threads':True})).serve_forever())
