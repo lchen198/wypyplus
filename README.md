@@ -1,85 +1,27 @@
-# 🍦WyPyPlus: A personal wiki in 42 lines of code
+# 🍦WyPyPlus: A personal wiki in 41 lines of code
 
-🍦WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 42 lines of code based on [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer in 2004 during a [ShortestWikiContest](http://wiki.c2.com/?ShortestWikiContest).
+🍦WyPyPlus (pronounced "whippy plus") is a minimalist wiki in 41 lines of Python, based on [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer in 2004 during a [ShortestWikiContest](http://wiki.c2.com/?ShortestWikiContest).
 
-WyPyPlus is a journey to discover the essence of personal wiki and get rid of everything else. It tries to keep the minimal set of useful features and pack them in the tiniest space possible. At the end of the day, don't you want a Wiki that just works?
+WyPyPlus is a journey to discover the essence of personal wiki and get rid of everything else. At the end of the day, don't you want a Wiki that just works?
 
+## Features
+* Auto-links WikiWords and supports common markdown syntax. See [DemoPage](w/DemoPage).
+* Full-text search and a reverse index (tags) for every page.
+* Templates, INCLUDE(WikiName) and a global menu, enough for a [GetThingsDone](w/GetThingsDone) system.
+* Stores pages as plain text files in the `w` folder. No database, no config files.
+* Read-only mode: set `edit=''` in `wypyplus.py`, then dump a static site with wget.
 
-## Some Use Cases
-
-### A Personal Wiki
-*  WyPyPlus supports auto-link on WikiWords and common markdown syntaxes. It also creates a reverse index for every page and supports full-text search.
-
-### An Outliner Focusing on Content Creation
-*  You can break down a big topic to small pages and focus on one
-   thing at a time. Using the INCLUDE(WikiName) syntax, you can move
-   content around easily and merge everything together automatically. This is inspired by the hot-list feature in [GrandView](https://welcometosherwood.wordpress.com/2009/10/10/grandview/), which I considered as one of the best outliner of all time.
-
-### A [GetThingsDone](https://en.wikipedia.org/wiki/Getting_Things_Done) System
-* WyPyPlus comes with a calendar and detailed instructions on setting up a complete GTD system. It also supports page templates, contextual tags and a global menu. 
-
-### A Static Site Generator:
-*  When you run WyPyPlus in read-only mode, you can dump the entire site using wget. Visit the [(Demo)](https://ctrl-c.club/~lchen/cgi-bin/wypyplus.py%3Fp=WyPyPlus.html) site to see for yourself.
- 
-### A Presentation Tool:
-* You can use WyPyPlus to create presentations. It even produces
-[PDFs](https://github.com/lchen198/wypyplus/blob/main/example_hardcopy.pdf)!
-
-### A Simple Spreadsheet and a [Forth language](https://en.wikipedia.org/wiki/Forth_(programming_language)) interpreter:
-* WyPyPlus has a built-in Forth interpreter that suports
-  * Basic math operations: +, -, *, and / 
-  * Stack operations: dup, over, swap, drop, and rot
-  * Other functions: ^, log, sqrt, abs, sin, cos, and tan
-  * Flow control commands: jmp, jnz, jz, gt, lt, eq
-* The tiny Forth language in WyPyPlus in turing complete. Its usage is beyound computing numbers in the spreadsheet. You can inline Forth code in a page to generate dyanmic content.  
-* You can define new functions using ```RPN(: <name> <content> ;)```
+## Install and Run
+You need Python 3 (3.8 or newer). Nothing else.
 ```
-    RPN(: squire dup * ;)
-    RPN(: pythagoras squire swap squire + sqrt ;)
-    RPN(3 4 pythagoras) -> output 5
+cd wypyplus
+python3 wypyplus.py
 ```
+Then open http://127.0.0.1:8000/ in your browser. Press Ctrl-C to stop.
 
-In addition, you can use RPN in a table and reference rows and columes! Read the [Demo Page source code](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage) for details.
-![](screenshots/rpn.png)
+WyPyPlus is a plain [WSGI](https://peps.python.org/pep-3333/) app (`app` in `wypyplus.py`). Running the file starts Python's built-in server on 127.0.0.1, so the wiki is only reachable from your own machine. You can also host it with any WSGI server, e.g. `gunicorn wypyplus:app`.
 
-## Some Screenshots
-![](screenshots/example.png)
-![](screenshots/editor.png)
-![](screenshots/calendar.png)
-![](screenshots/example2.png)
-
-
-# Core Features
-* Takes less than a minute to set up.
-* Only 42 lines of code with no external dependency except Python.
-* Runs on Mac, Linux and Windows.
-* Supports basic wiki syntax. [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage)
-* Stores wiki pages as plain text files. 
-* Works perfectly offline.
-* No config files.
-* No database.
-
-# Design Tradeoffs
-
-* To keep things minimal, WyPyPlus only supports a subset of markdown syntaxes. 
-* To avoid depending on an external parser, WyPyPlus uses regular expressions to match tags. It is not perfect, but fairly usable. 
-* WyPyPlus has no config file. You can't mis-configure it. If you really need something, just edit the source code.
-
-
-## Install and Run in 2 Minutes.
-
-* You need Python 3 (3.8 or newer). There are no other dependencies.
-
-* Put WyPyPlus to a folder (E.g wypy_wiki).
-```
-cd wypy_wiki
-python3 wypyplus.py      # or: python3 wy.py
-
-Open the URL in your browser:
-
-http://127.0.0.1:8000/
-```
-WyPyPlus is a plain [WSGI](https://peps.python.org/pep-3333/) app (`app` in
-`wypyplus.py` / `wy.py`). Running the file starts Python's built-in `wsgiref`
-server on 127.0.0.1, so the wiki is only reachable from your own machine.
-You can also host it with any WSGI server, e.g. `gunicorn wypyplus:app`.
+## Design Tradeoffs
+* Only a subset of markdown is supported.
+* Tags are matched with regular expressions instead of a real parser. Not perfect, but fairly usable.
+* No config file. If you really need something, edit the source code.
