@@ -1,19 +1,100 @@
-A personal wiki in one Python file. 41 lines, no dependencies.
+# A personal wiki in 41 lines of code
 
-[Source code](https://github.com/lchen198/wypyplus) | DemoPage | GetThingsDone | [All pages](wypyplus.py?p=All&q=f)
+| [Github](https://github.com/lchen198/wypyplus) | DemoPage | GetThingsDone |
 
-## Start here
+WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 41 lines of code. It is an extension of [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer. The original project implements a wiki in just 11 lines of Python code, which is an amazing achievement. However, wypy wiki doesn't have many features I consider as essential.
 
-* Click ✎ at the top to edit this page. Save to see the change.
-* Join two capitalised words into one, like the page names above, to link to a page. Click the ? after a new name to create it.
-* Save a page with no text to delete it.
-* Every page is a plain text file in the w folder.
+You can use WyPyPlus as
+* A personal Wiki
+* A GetThingsDone system
+* A static site generator
 
-## Learn more
+### You will be amazed by how much you can do with a simple tool
 
-* DemoPage shows all the formatting.
-* GetThingsDone shows how to organise your tasks with tags and templates.
+* Only 41 lines of Python code.
+* Run on Mac, Linux and Windows.
+* Support the basic wiki syntax. [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage)
+* Save plain text files under the /w folder.
 
-## Read-only mode
+### To make your life easier
+* An example GetThingsDone guide to help you set up GTD quickly.
+* A template system to insert pre-defined content.
+* Full-text search.
+* A modernized and mobile-friendly look using [Sakura CSS](https://github.com/oxalorg/sakura).
+* Delete a wiki page from disk by saving an empty content.
+* Each WikiPage has a reverse index. You can use this feature to group pages by tags.
+* An [index page](wypyplus.py?p=All&q=f) to show all your files in sorted order.
+* AutoSave after 30 minutes of editing.
+* Use INCLUDE(WikiPage) syntax to include content from another page (recursively)
+* (Optional) Syntax highlight with [highlight.js](https://highlightjs.org).
+* (Optional) Read-only mode.
+* (Optional) Include a GlobalMenu in every wiki page.
 
-In wypyplus.py, delete the ✎ character and keep the empty quotes around it. Editing, saving and search are turned off.
+
+## Text Formatting
+* WikiNames are replaced with internal links.
+* Markdown style ****bold****.
+* "\n{{" starts an unordered list.
+* "\n* [text]" is a list item in an unordered list.
+* "\n}}" ends an unordered list.
+* "\n#" inserts H1.
+* "\n##" inserts H2.
+* "\n###" inserts H3.
+* To format code or text into its own distinct block, use triple back-ticks.
+* "---" creates an <hr> element.
+* Markdown style [link](https://www.markdownguide.org/basic-syntax/#links) and [image tag](https://www.markdownguide.org/basic-syntax/#images-1)
+* Use INCLUDE(WikiPage) at the begging of the line to include another file.
+* All HTML is replaced with its quoted equivalent (i.e. is forbidden).
+
+## Install and Use
+
+* You need Python 3 (3.8 or newer). There are no other dependencies.
+
+* Download WyPyPlus and extract it to a folder (E.g wypy_wiki).
+```
+cd wypy_wiki
+
+python3 wypyplus.py
+
+Open this url in your browser. It takes a few moments to start.
+http://127.0.0.1:8000/
+```
+
+### How to use the read-only mode
+
+You can modify the **edit** variable in wypyplus.py. It holds the icon of the edit button. If you set it to an empty string, WyPyPlus will run in read-only mode.
+
+In read-only mode, WyPyPlus
+
+* Will not generate the edit link.
+* Will not generate links for WikiWords when they don't exist.
+* Will not handle the POST method, which means that your data is read-only.
+* Will hide the search bar.
+
+You can generate a static site using wget. The following command dumps the entire site.
+```
+wget \
+     --recursive \
+     --page-requisites \
+     --html-extension \
+     --convert-links\
+     --no-parent \
+         http://127.0.0.1:8000/wypyplus.py
+```
+
+After that, you can create an index.html with the following content to redirect the index page to the wiki.
+
+```
+<meta http-equiv="Refresh" content="0; url='wypyplus.py.html'" />
+```
+
+
+### How to create tags
+You can create a tag by putting @ before a single word. Some examples are @HOME, @TODO, and @DONE. When you click a tag, WyPyPlus will find pages and 
+content that match the tag. A speciall @All tag will match every page in the wiki. 
+
+### How to define and use a template
+You can create a template just like any other wiki page. A template name must start with "Tpl" and follow by three characters. WyPyPlus will automatically insert its content to a new wiki page when the first three characters of the page matches the template
+
+For example, If you create a template page called TplJan, a new page called Jan23 will load the content from the template. 
+
