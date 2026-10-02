@@ -35,7 +35,7 @@ def app(e,r):
  with L:
     global f,y;s=e['PATH_INFO'][1:]
     if s=='sakura.css':r('200 OK',[('Content-Type','text/css')]);return [open(s,'rb').read()]
-    f=parse_qs((e['wsgi.input'].read(int(e.get('CONTENT_LENGTH') or 0)).decode() if e['REQUEST_METHOD']=='POST' else '')+'&'+e.get('QUERY_STRING',''));y=f.get('p',[''])[0];y=dt.now().strftime("%b%d").replace('0', '') if y=='Today' else (home,y)[y.isalnum()]
+    f=parse_qs((e['wsgi.input'].read(int(e.get('CONTENT_LENGTH') or 0)).decode() if e['REQUEST_METHOD']=='POST' else '')+'&'+e.get('QUERY_STRING',''));y=f.get('p',[''])[0];y=dt.now().strftime("%b")+str(dt.now().day) if y=='Today' else (home,y)[y.isalnum()]
     if e['REQUEST_METHOD']=='POST' and edit:open('w/'+y,'w',encoding='utf-8',newline='').write(f['t'][0]) if 't' in f else x('w/'+y) and os.remove('w/'+y)
     r('200 OK',[('Content-Type','text/html; charset=utf-8')]);return [('<head><meta content="width=device-width, initial-scale=1" name="viewport"><link rel="stylesheet" href="sakura.css"></head><title>%s</title>'%y+do(({'e':'edit','f':'find'} if edit else {'f':'find'}).get(f.get('q',[None])[0],'get'),y)).encode()]
 (__name__=="__main__") and (print('http://127.0.0.1:8000',flush=True) or make_server('127.0.0.1',8000,app,type('S',(ThreadingMixIn,WSGIServer),{'daemon_threads':True})).serve_forever())
