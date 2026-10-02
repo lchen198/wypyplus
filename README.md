@@ -1,85 +1,128 @@
-# 🍦WyPyPlus: A personal wiki in 42 lines of code
+# 🍦 WyPyPlus
 
-🍦WyPyPlus (pronounced "whippy plus") is a minimalist wiki server in 42 lines of code based on [wypy wiki](http://infomesh.net/2003/wypy/) written by Sean B. Palmer in 2004 during a [ShortestWikiContest](http://wiki.c2.com/?ShortestWikiContest).
+A personal wiki in one Python file. 42 lines. No dependencies. About 20 MB of RAM.
+Probably one of the smallest wikis you can run.
 
-WyPyPlus is a journey to discover the essence of personal wiki and get rid of everything else. It tries to keep the minimal set of useful features and pack them in the tiniest space possible. At the end of the day, don't you want a Wiki that just works?
+Pages are plain text files in the `w` folder. No database, no config, no build step.
 
+![WyPyPlus home page](screenshots/wypyplus.png)
 
-## Some Use Cases
+## Features
 
-### A Personal Wiki
-*  WyPyPlus supports auto-link on WikiWords and common markdown syntaxes. It also creates a reverse index for every page and supports full-text search.
-
-### An Outliner Focusing on Content Creation
-*  You can break down a big topic to small pages and focus on one
-   thing at a time. Using the INCLUDE(WikiName) syntax, you can move
-   content around easily and merge everything together automatically. This is inspired by the hot-list feature in [GrandView](https://welcometosherwood.wordpress.com/2009/10/10/grandview/), which I considered as one of the best outliner of all time.
-
-### A [GetThingsDone](https://en.wikipedia.org/wiki/Getting_Things_Done) System
-* WyPyPlus comes with a calendar and detailed instructions on setting up a complete GTD system. It also supports page templates, contextual tags and a global menu. 
-
-### A Static Site Generator:
-*  When you run WyPyPlus in read-only mode, you can dump the entire site using wget. Visit the [(Demo)](https://ctrl-c.club/~lchen/cgi-bin/wypyplus.py%3Fp=WyPyPlus.html) site to see for yourself.
- 
-### A Presentation Tool:
-* You can use WyPyPlus to create presentations. It even produces
-[PDFs](https://github.com/lchen198/wypyplus/blob/main/example_hardcopy.pdf)!
-
-### A Simple Spreadsheet and a [Forth language](https://en.wikipedia.org/wiki/Forth_(programming_language)) interpreter:
-* WyPyPlus has a built-in Forth interpreter that suports
-  * Basic math operations: +, -, *, and / 
-  * Stack operations: dup, over, swap, drop, and rot
-  * Other functions: ^, log, sqrt, abs, sin, cos, and tan
-  * Flow control commands: jmp, jnz, jz, gt, lt, eq
-* The tiny Forth language in WyPyPlus in turing complete. Its usage is beyound computing numbers in the spreadsheet. You can inline Forth code in a page to generate dyanmic content.  
-* You can define new functions using ```RPN(: <name> <content> ;)```
-```
-    RPN(: squire dup * ;)
-    RPN(: pythagoras squire swap squire + sqrt ;)
-    RPN(3 4 pythagoras) -> output 5
-```
-
-In addition, you can use RPN in a table and reference rows and columes! Read the [Demo Page source code](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage) for details.
-![](screenshots/rpn.png)
-
-## Some Screenshots
-![](screenshots/example.png)
-![](screenshots/editor.png)
-![](screenshots/calendar.png)
-![](screenshots/example2.png)
-
-
-# Core Features
-* Takes less than a minute to set up.
-* Only 42 lines of code with no external dependency except Python.
+* One Python file, 42 lines. Nothing to install except Python 3.
+* Tiny footprint: about 20 MB of RAM while running, and about 8 MB of that is Python itself. (Measured on Python 3.10–3.13, idle and after 1,400 requests from 8 clients.)
 * Runs on Mac, Linux and Windows.
-* Supports basic wiki syntax. [DemoPage](https://github.com/lchen198/wypyplus/blob/main/w/DemoPage)
-* Stores wiki pages as plain text files. 
-* Works perfectly offline.
-* No config files.
-* No database.
+* Pages are plain text files in the `w` folder. No database, no config.
+* WikiWord links, markdown-style formatting and tables.
+* Full-text search and an index of all pages.
+* Tags: `@Tag` links to every page that mentions it.
+* Templates for new pages, and `INCLUDE(PageName)` to pull one page into another.
+* A `GlobalMenu` page that shows on every page.
+* Delete a page by saving it empty.
+* Optional read-only mode.
+* A clean, mobile-friendly look with [Sakura CSS](https://github.com/oxalorg/sakura).
+* An example [GetThingsDone](w/GetThingsDone) guide to set up a GTD system.
 
-# Design Tradeoffs
+## Quick start
 
-* To keep things minimal, WyPyPlus only supports a subset of markdown syntaxes. 
-* To avoid depending on an external parser, WyPyPlus uses regular expressions to match tags. It is not perfect, but fairly usable. 
-* WyPyPlus has no config file. You can't mis-configure it. If you really need something, just edit the source code.
+You need Python 3.8 or newer.
 
-
-## Install and Run in 2 Minutes.
-
-* You need Python 3 (3.8 or newer). There are no other dependencies.
-
-* Put WyPyPlus to a folder (E.g wypy_wiki).
 ```
-cd wypy_wiki
-python3 wypyplus.py      # or: python3 wy.py
-
-Open the URL in your browser:
-
-http://127.0.0.1:8000/
+git clone https://github.com/lchen198/wypyplus
+cd wypyplus
+python3 wypyplus.py
 ```
-WyPyPlus is a plain [WSGI](https://peps.python.org/pep-3333/) app (`app` in
-`wypyplus.py` / `wy.py`). Running the file starts Python's built-in `wsgiref`
-server on 127.0.0.1, so the wiki is only reachable from your own machine.
-You can also host it with any WSGI server, e.g. `gunicorn wypyplus:app`.
+
+Open http://127.0.0.1:8000 and start writing. Press Ctrl-C to stop.
+
+## Writing pages
+
+| You type | You get |
+| --- | --- |
+| `WikiWord` | A link to that page. Click the `?` to create it. |
+| `# Title`, `## Title`, `### Title` | Headings |
+| `**bold**` | **bold** |
+| `[text](https://example.com)` | A link |
+| `![alt](https://example.com/a.png)` | An image |
+| `---` | A horizontal line |
+| ```` ``` ```` on its own line, before and after | A code block |
+| `{{`, then `* item` lines, then `}}` | A bulleted list |
+| `@Tag` | A link to every page that mentions `@Tag` |
+| `INCLUDE(PageName)` on its own line | The content of another page |
+| A YouTube link | An embedded video |
+
+More examples are in the [DemoPage](w/DemoPage).
+
+## Good to know
+
+* **Delete a page:** save it with no text.
+* **Templates:** a page named `Tpl` plus three letters (e.g. `TplJan`) is the starting text for new pages that begin with those letters (e.g. `Jan23`).
+* **Today:** `?p=Today` opens a page named after today's date, such as `Oct2`.
+* **Menu:** text in a page named `GlobalMenu` appears on every page.
+* **See all pages:** search for `All`.
+* **Read-only mode:** in `wypyplus.py`, change `'✎'` to `''`. Editing, saving and search are turned off.
+
+## Hosting with a password
+
+WyPyPlus has no login, and anyone who can reach it can edit pages. To share it on your network, keep it running on 127.0.0.1 and put nginx or lighttpd in front of it with a password. Keep `python3 wypyplus.py` running in the background (for example in `tmux`, or as a systemd service).
+
+### nginx
+
+```
+sudo apt install nginx apache2-utils
+sudo htpasswd -c /etc/nginx/wiki.htpasswd alice    # asks for a password; drop -c to add more users
+sudo rm /etc/nginx/sites-enabled/default           # the default site would take port 80
+```
+
+Create `/etc/nginx/conf.d/wypyplus.conf`:
+
+```
+server {
+    listen 80;
+    location / {
+        auth_basic "WyPyPlus";
+        auth_basic_user_file /etc/nginx/wiki.htpasswd;
+        proxy_pass http://127.0.0.1:8000;
+    }
+}
+```
+
+Then run `sudo nginx -t && sudo systemctl reload nginx` and open http://your-server/.
+
+### lighttpd
+
+```
+sudo apt install lighttpd apache2-utils
+sudo htpasswd -c /etc/lighttpd/wiki.htpasswd alice
+```
+
+Add to the end of `/etc/lighttpd/lighttpd.conf`:
+
+```
+server.modules += ( "mod_auth", "mod_authn_file", "mod_proxy" )
+auth.backend = "htpasswd"
+auth.backend.htpasswd.userfile = "/etc/lighttpd/wiki.htpasswd"
+auth.require = ( "/" => ( "method" => "basic", "realm" => "WyPyPlus", "require" => "valid-user" ) )
+proxy.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 8000 ) ) )
+```
+
+Then run `sudo systemctl restart lighttpd` and open http://your-server/.
+
+Basic auth sends the password unencrypted over plain HTTP. That's fine on a network you trust; otherwise add HTTPS (for example with [Let's Encrypt](https://letsencrypt.org/)).
+
+`wypyplus.py` is a standard [WSGI](https://peps.python.org/pep-3333/) app, so you can also run it with any WSGI server, e.g. `gunicorn wypyplus:app`.
+
+## Security
+
+* Page text is HTML-escaped, and links and images only accept `http(s)://` or relative URLs.
+* Pages run no JavaScript: a `Content-Security-Policy` header blocks all scripts.
+* Other websites can't edit or delete your pages through your browser: cross-site form posts are rejected (in browsers that send `Sec-Fetch-Site`, which all current ones do).
+* Page names can only contain letters and digits, so they can't point outside the `w` folder.
+
+## Credits
+
+Based on [wypy](http://infomesh.net/2003/wypy/), an 11-line wiki written by Sean B. Palmer for the [ShortestWikiContest](http://wiki.c2.com/?ShortestWikiContest). Styled with [Sakura CSS](https://github.com/oxalorg/sakura).
+
+## License
+
+MIT. See [LICENSE](LICENSE).
