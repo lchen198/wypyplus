@@ -68,22 +68,18 @@ In addition, you can use RPN in a table and reference rows and columes! Read the
 
 ## Install and Run in 2 Minutes.
 
-* You need Python 2 to run this application. For Windows users, please install [Python 2.7](https://www.python.org/download/releases/2.7/).
+* You need Python 3 (3.8 or newer). There are no other dependencies.
 
 * Put WyPyPlus to a folder (E.g wypy_wiki).
 ```
 cd wypy_wiki
+python3 wypyplus.py      # or: python3 wy.py
 
-# For Python 2
-python -m CGIHTTPServer 8000 
-
-# For Python 3
-python3 -m http.server --cgi 8000 --bind 127.0.0.1
-
-Open either URL in your browser:
+Open the URL in your browser:
 
 http://127.0.0.1:8000/
-Or 
-http://127.0.0.1:8000/cgi-bin/wypyplus.py
 ```
-Note that Python2 exposes your page to your local network. You can add a password with this [launcher](https://github.com/lchen198/wypyplus/wiki#how-to-add-password-authentication-in-python-2)
+WyPyPlus is a plain [WSGI](https://peps.python.org/pep-3333/) app (`app` in
+`wypyplus.py` / `wy.py`). Running the file starts Python's built-in `wsgiref`
+server on 127.0.0.1, so the wiki is only reachable from your own machine.
+You can also host it with any WSGI server, e.g. `gunicorn wypyplus:app`.

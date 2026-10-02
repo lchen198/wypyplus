@@ -15,5 +15,5 @@ Use wkhtmltopdf to combine all pages to an output.pdf. You can adjust page orien
 and size based on your need.
 ```
 wkhtmltopdf -O Landscape --enable-local-file-access\
-  gen_site/cgi-bin/wypyplus.py?p=* output.pdf
+  gen_site/wypyplus.py?p=* output.pdf
 ```

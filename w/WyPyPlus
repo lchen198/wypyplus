@@ -53,18 +53,16 @@ You can use WyPyPlus as
 
 ## Install and Use
 
-* You need Python 2 to run this application. Mac and Linux already have Python 2. For Windows users, please install Python 2.7.
+* You need Python 3 (3.8 or newer). There are no other dependencies.
 
 * Download WyPyPlus and extract it to a folder (E.g wypy_wiki).
 ```
 cd wypy_wiki
 
-python -m CGIHTTPServer 8000 
-
-python3 -m http.server --cgi 8000 --bind 127.0.0.1
+python3 wypyplus.py
 
 Open this url in your browser. It takes a few moments to start.
-http://127.0.0.1:8000/cgi-bin/wypyplus.py
+http://127.0.0.1:8000/
 ```
 
 ### How to use the read-only mode
@@ -84,15 +82,15 @@ wget \
      --recursive \
      --page-requisites \
      --html-extension \
-     --convert-linksl\
+     --convert-links\
      --no-parent \
-         http://127.0.0.1:8000/cgi-bin/wypyplus.py
+         http://127.0.0.1:8000/wypyplus.py
 ```
 
-After that, you can create an index.html with the following content to redirect the index page to the cgi-bin folder.
+After that, you can create an index.html with the following content to redirect the index page to the wiki.
 
 ```
-<meta http-equiv="Refresh" content="0; url='cgi-bin/wypyplus.py.html'" />
+<meta http-equiv="Refresh" content="0; url='wypyplus.py.html'" />
 ```
 
 
