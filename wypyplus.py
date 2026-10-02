@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import re,os,html,threading;from functools import reduce;from urllib.parse import parse_qs;from socketserver import ThreadingMixIn;from wsgiref.simple_server import make_server,WSGIServer;from datetime import timedelta as td,datetime as dt;
+import re,os,html,threading;from functools import reduce;from urllib.parse import parse_qs;from socketserver import ThreadingMixIn;from wsgiref.simple_server import make_server,WSGIServer;from datetime import datetime as dt;
 os.chdir(os.path.dirname(os.path.abspath(__file__)));home,edit,i,L='WyPyPlus','✎','put type',threading.Lock();
 pre='(?:^|\n)```((?:.|\n)+?)\n```';pre_h='<pre><code>((?:.|\n)+?)</code></pre>';t='</textarea>'
 remove_leading_space=lambda m:'<pre><code>'+'\n'.join([l[1:] for l in m.group(1).splitlines()])+'</code></pre>'
@@ -27,8 +27,8 @@ fs=lambda s:re.sub(pre_h,remove_leading_space,reduce(lambda s,r:re.sub('(?m)'+r[
 do=lambda m,n:{'get':lambda:'<div class="navbar"><h1>%s%s%s>%s</a>'%(h,w,home,home) + ((':%s%s%s&amp;q=f>%s</a>%s%s%s&amp;q=e>%s</a>'%(h,w,n,n,h,w,n,edit)) if edit else '') +
       '</h1></div><div class="main">%s<p>%s'%(se if edit else '',fs(load_g()+re.sub(pre, insert_leading_space, load_tpl(n))) or n),
     'edit':lambda:'<form name="e" action=%s%s method=POST><h1>%s <in%s=hidden name=p value=%s></h1>\
-Opened at: %s AutoSave at: %s<textarea name=t id=ta rows=24>%s%s<in%s=submit>'%(
-        w,n,fs(n),i,n, dt.now().strftime("%m/%d/%Y %H:%M"), (dt.now()+td(minutes=30)).strftime("%H:%M"), q(load_tpl(n)),t,i),
+<textarea name=t id=ta rows=24>%s%s<in%s=submit>'%(
+        w,n,fs(n),i,n, q(load_tpl(n)),t,i),
     'find':lambda:('<h1>Links: %s</h1>'%fs(n))+fs('\n---\n'.join(
         sorted(filter(lambda x: not x.endswith(':\n\n'),[d if n == "All" or n.lower() in d.lower() else d+':\n\n'+'\n\n'.join(
             [line for line in load(d).splitlines() if n.lower() in line.lower() and '@'+n not in line]) for d in os.listdir('w/')]))))}.get(m)()
