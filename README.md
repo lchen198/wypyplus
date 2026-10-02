@@ -117,7 +117,11 @@ Basic auth sends the password unencrypted over plain HTTP. That's fine on a netw
 * Page text is HTML-escaped, and links and images only accept `http(s)://` or relative URLs.
 * Pages run no JavaScript: a `Content-Security-Policy` header blocks all scripts.
 * Other websites can't edit or delete your pages through your browser: cross-site form posts are rejected (in browsers that send `Sec-Fetch-Site`, which all current ones do).
-* Page names can only contain letters and digits, so they can't point outside the `w` folder.
+* Page names, including those in `INCLUDE(...)`, can only contain letters and digits, so they can't point outside the `w` folder. A page that includes itself is skipped instead of looping.
+
+## Reading the code
+
+`wypyplus.py` is written to be short. [`wypyplus_with_comments.py`](wypyplus_with_comments.py) is the same program, formatted and commented, for reading and auditing. Both behave exactly the same, and you can run either one.
 
 ## Credits
 
