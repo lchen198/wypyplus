@@ -7,10 +7,10 @@ insert_leading_space=lambda m: '\n```'+'\n '.join(m.group(1).splitlines())+ '\n`
 q,x,h,w=html.escape,os.path.exists,'<a href=','wypyplus.py?p=';
 link=r'\[([^]]*)]\(\s*((?:https?://|(?![^/?#)]*:))[^)]+)\s*\)';yt="https://www.youtube.com/watch?v="
 hl=lambda m,n:'<h%d>%s</h%d>'%(n,m.group(1),n);hl1=lambda m:hl(m, 1);hl2=lambda m:hl(m, 2);hl3=lambda m:hl(m,3)
-load=lambda n:(x('w/'+n) and open('w/'+n,encoding='utf-8').read()) or '';
+load=lambda n:(n.isalnum() and x('w/'+n) and open('w/'+n,encoding='utf-8').read()) or '';
 load_tpl=lambda n: load(n) or load('Tpl'+n[:3]) or '';load_g=lambda:load('GlobalMenu')
 flatten=lambda l: sum(map(flatten,l),[]) if isinstance(l,list) else [l]
-def load_rec(f):return [load_rec(l[8:l.find(')')]) if l.startswith('INCLUDE(') else l for l in load(f).splitlines()]
+def load_rec(f,s=()):s+=(f,);return [load_rec(n,s) if l.startswith('INCLUDE(') and (n:=l[8:l.find(')')]) not in s else l for l in load(f).splitlines()]
 se='<form><input type="text"placeholder="Search.. "name="p"><input type="hidden" name="q" value="f"><button type="submit">Search</button></form>'
 fs=lambda s:re.sub(pre_h,remove_leading_space,reduce(lambda s,r:re.sub('(?m)'+r[0],r[1],s),(('\r',''),
 (r'^INCLUDE\((\w+)\)$',lambda m: '\n'.join(flatten(load_rec(m.group(1))))), (r'\{\{NAME\}\}', y),
