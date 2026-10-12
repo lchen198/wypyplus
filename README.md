@@ -42,6 +42,10 @@ Open http://127.0.0.1:8000 and start writing. Press Ctrl-C to stop.
 
 ![Spreadsheet tables worked out by forth.py](screenshots/forth.png)
 
+You can also write small programs. DemoPage has if/else, factorial and Fibonacci examples:
+
+![If/else, factorial and Fibonacci examples](screenshots/forth-examples.png)
+
 It's on when `forth.py` is next to `wypyplus.py`. To run WyPyPlus without it, delete `forth.py` (or don't copy it). Nothing else needs to change, and `RPN(...)` and formulas are then shown as plain text.
 
 ## Writing pages
