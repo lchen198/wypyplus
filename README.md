@@ -40,6 +40,8 @@ Open http://127.0.0.1:8000 and start writing. Press Ctrl-C to stop.
 
 `forth.py` adds a small calculator language. `RPN(3 4 + 2 *)` on a page shows `14`, and a table cell like `=$1 $2 +` or `=@1..@3 sum` becomes a spreadsheet formula. See the RPN section of [DemoPage](w/DemoPage) for examples.
 
+![Spreadsheet tables worked out by forth.py](screenshots/forth.png)
+
 It's on when `forth.py` is next to `wypyplus.py`. To run WyPyPlus without it, delete `forth.py` (or don't copy it). Nothing else needs to change, and `RPN(...)` and formulas are then shown as plain text.
 
 ## Writing pages
