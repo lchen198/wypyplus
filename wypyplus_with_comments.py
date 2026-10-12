@@ -2,8 +2,9 @@
 """WyPyPlus, formatted and commented.
 
 This file behaves exactly like wypyplus.py. It exists so people can read and
-audit the code; run either one. Names match the 42-line version (load, fs, do,
-app, ...) so each part can be compared side by side.
+audit the code; run either one. Names match the 42-line version (load, word, url,
+fs, do, app, ...) so each part can be compared side by side; its RULES are
+the rules list in fs() below.
 
 How a request flows:
   1. app() parses the form fields, works out which page was asked for, and
@@ -78,16 +79,6 @@ link = r'\[([^]]*)]\(\s*((?:https?://|(?![^/?#)]*:))[^)]+)\s*\)'
 yt = "https://www.youtube.com/watch?v="   # These links become embedded videos.
 
 
-def hl(m, n):
-    """Heading of level n."""
-    return '<h%d>%s</h%d>' % (n, m.group(1), n)
-
-
-def hl1(m): return hl(m, 1)
-def hl2(m): return hl(m, 2)
-def hl3(m): return hl(m, 3)
-
-
 def load(n):
     """Return the text of page n, or '' if there is no such page.
 
@@ -145,26 +136,26 @@ def table(m):
         for r in rows) + '</table>'
 
 
-def wiki_word(m):
+def word(m):
     """WikiWord -> link to that page.
 
     If the page does not exist yet, show the word plus a '?' link to create
     it (or just the word in read-only mode).
     """
-    before, word = m.group(1), m.group(2)
-    if x('w/' + word):
-        return before + h + w + word + '>%s</a>' % word
-    return before + word + (h + w + word + '&amp;q=e>?</a>' if edit else '')
+    before, name = m.group(1), m.group(2)
+    if x('w/' + name):
+        return before + h + w + name + '>%s</a>' % name
+    return before + name + (h + w + name + '&amp;q=e>?</a>' if edit else '')
 
 
-def raw_url(m):
+def url(m):
     """A bare http(s) URL in the text: YouTube links become an embedded
     video, everything else a plain link."""
-    before, url = m.group(1), m.group(2)
-    if url.startswith(yt):
+    before, u = m.group(1), m.group(2)
+    if u.startswith(yt):
         return ('<iframe width="560" height="315" src="https://www.youtube.com/embed/%s" frameborder="0" allow="accelerometer; autoplay;'
-                ' clipboard-write; encrypted-media;gyroscope; picture-in-picture" allowfullscreen></iframe>' % url[len(yt):])
-    return before + h + url + ">" + url + "</a>"
+                ' clipboard-write; encrypted-media;gyroscope; picture-in-picture" allowfullscreen></iframe>' % u[len(yt):])
+    return before + h + u + ">" + u + "</a>"
 
 
 def fs(s, y):
@@ -182,24 +173,24 @@ def fs(s, y):
         (r'\{\{NAME\}\}', y),                                # {{NAME}} -> current page name.
         *X,                                                  # Rules from forth.py, if present.
         (r'(^|[^=/\-_A-Za-z0-9?])@([A-Z]\w+)',               # @Tag -> find every page mentioning it.
-         lambda m: h + w + m.group(2) + '&amp;q=f>@' + m.group(2) + '</a>'),
+         h + w + r'\g<2>&amp;q=f>@\g<2></a>'),
         (r'(?:\{\|(.*)\n)(.*[^\}]+)(\|\})', table),          # {| ... |} tables.
         (r'(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]*){1,})',  # WikiWords.
-         wiki_word),
+         word),
         (r'^\{\{$', '\n<ul>'),                               # {{ starts a list,
         (r'^\*(.*)$', r'<li>\g<1></li>'),                    # * is a list item,
         ('^}}$', '</ul>'),                                   # }} ends the list.
         ('^---$', '<hr>'),                                   # Horizontal line.
         (pre, r'<pre><code>\g<1></code></pre>'),             # ``` code blocks.
-        ('^# (.*)$', hl1),                                   # Headings.
-        ('^## (.*)$', hl2),
-        ('^### (.*)$', hl3),
+        ('^# (.*)$', r'<h1>\g<1></h1>'),                     # Headings.
+        ('^## (.*)$', r'<h2>\g<1></h2>'),
+        ('^### (.*)$', r'<h3>\g<1></h3>'),
         (r'\*\*([^\*]+)\*\*', r'<b>\g<1></b>'),              # **bold**
         (r'\!' + link, r'<img src="\g<2>" alt="\g<1>">'),    # ![alt](url) images.
         ('(^|[^!])' + link, r"\g<1>" + h + r'"\g<3>">\g<2></a>'),  # [text](url) links.
         # Bare URLs. Skipped right after a quote: either one this function
         # wrote (src="..., href="...) or an escaped one from the text (&quot;).
-        (r'(^|[^";])(https?:(?:(?!&quot;)[^<>"\s])+)', raw_url),
+        (r'(^|[^";])(https?:(?:(?!&quot;)[^<>"\s])+)', url),
         ('\n\n', '\n<p>'),                                   # Blank line -> new paragraph.
     )
     s = reduce(lambda s, r: re.sub('(?m)' + r[0], r[1], s), rules, q(s))
