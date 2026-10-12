@@ -14,6 +14,7 @@ Pages are plain text files in the `w` folder. No database, no config, no build s
 * Runs on Mac, Linux and Windows.
 * Pages are plain text files in the `w` folder. No database, no config.
 * WikiWord links, markdown-style formatting and tables.
+* Optional: a tiny [Forth](https://en.wikipedia.org/wiki/Forth_(programming_language)) calculator for pages and spreadsheet formulas in tables, in a separate `forth.py`.
 * Full-text search and an index of all pages.
 * Tags: `@Tag` links to every page that mentions it.
 * Templates for new pages, and `INCLUDE(PageName)` to pull one page into another.
@@ -35,6 +36,12 @@ python3 wypyplus.py
 
 Open http://127.0.0.1:8000 and start writing. Press Ctrl-C to stop.
 
+## Optional: Forth calculator and spreadsheets
+
+`forth.py` adds a small calculator language. `RPN(3 4 + 2 *)` on a page shows `14`, and a table cell like `=$1 $2 +` or `=@1..@3 sum` becomes a spreadsheet formula. See the RPN section of [DemoPage](w/DemoPage) for examples.
+
+It's on when `forth.py` is next to `wypyplus.py`. To run WyPyPlus without it, delete `forth.py` (or don't copy it). Nothing else needs to change, and `RPN(...)` and formulas are then shown as plain text.
+
 ## Writing pages
 
 | You type | You get |
@@ -45,6 +52,7 @@ Open http://127.0.0.1:8000 and start writing. Press Ctrl-C to stop.
 | `[text](https://example.com)` | A link |
 | `![alt](https://example.com/a.png)` | An image |
 | `---` | A horizontal line |
+| `{\|` … `\|}`, with cells as `\|cell\|\|cell` and rows separated by `\|-` | A table (see DemoPage) |
 | ```` ``` ```` on its own line, before and after | A code block |
 | `{{`, then `* item` lines, then `}}` | A bulleted list |
 | `@Tag` | A link to every page that mentions `@Tag` |
@@ -117,11 +125,12 @@ Basic auth sends the password unencrypted over plain HTTP. That's fine on a netw
 * Page text is HTML-escaped, and links and images only accept `http(s)://` or relative URLs.
 * Pages run no JavaScript: a `Content-Security-Policy` header blocks all scripts.
 * Other websites can't edit or delete your pages through your browser: cross-site form posts are rejected (in browsers that send `Sec-Fetch-Site`, which all current ones do).
+* The optional Forth calculator is a closed language with a fixed list of words. It can't call Python, uses floating-point numbers only, and stops after 10,000 steps.
 * Page names, including those in `INCLUDE(...)`, can only contain letters and digits, so they can't point outside the `w` folder. A page that includes itself is skipped instead of looping.
 
 ## Reading the code
 
-`wypyplus.py` is written to be short. [`wypyplus_with_comments.py`](wypyplus_with_comments.py) is the same program, formatted and commented, for reading and auditing. Both behave exactly the same, and you can run either one.
+`wypyplus.py` is written to be short. [`wypyplus_with_comments.py`](wypyplus_with_comments.py) is the same program, formatted and commented, for reading and auditing. Both behave exactly the same, and you can run either one. `forth.py` is written to be read as it is.
 
 ## Credits
 
