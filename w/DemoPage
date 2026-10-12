@@ -166,6 +166,85 @@ RPN(: pythagoras squire swap squire + sqrt ;)
 | "hello" . "world" . || RPN("hello" . "world" .)
 |} 
 
+### If and else
+
+if ... else ... then looks at the top of the stack. If it is not 0, it runs the words between if and else. Otherwise it runs the words between else and then. The else part is optional.
+
+{|
+| 7 0 > if "positive" else "not positive" then || RPN(7 0 > if "positive" else "not positive" then)
+|-
+| -3 0 > if "positive" else "not positive" then || RPN(-3 0 > if "positive" else "not positive" then)
+|-
+| 1 if "only when true" then || RPN(1 if "only when true" then)
+|}
+
+An if can sit inside another one. This word tells whether a number is positive, negative or zero:
+```
+: sign dup 0 > if drop "positive"
+  else 0 < if "negative" else "zero" then then ;
+```
+RPN(: sign dup 0 > if drop "positive" else 0 < if "negative" else "zero" then then ;)
+
+There is no built-in remainder, so we define mod first, then use it to tell even from odd:
+```
+: mod over over / int * - ;
+: evenodd 2 mod 0 = if "even" else "odd" then ;
+```
+RPN(: mod over over / int * - ;)
+RPN(: evenodd 2 mod 0 = if "even" else "odd" then ;)
+
+{|
+| 5 sign || RPN(5 sign)
+|-
+| -2 sign || RPN(-2 sign)
+|-
+| 0 sign || RPN(0 sign)
+|-
+| 10 evenodd || RPN(10 evenodd)
+|-
+| 7 evenodd || RPN(7 evenodd)
+|}
+
+### Factorial
+
+The factorial of n is 1 x 2 x ... x n. The word calls itself with n - 1 until n reaches 1, then multiplies the results on the way back:
+```
+: fact dup 1 > if dup 1 - fact * then ;
+```
+RPN(: fact dup 1 > if dup 1 - fact * then ;)
+
+{|
+| 5 fact || RPN(5 fact)
+|-
+| 10 fact || RPN(10 fact)
+|}
+
+### Fibonacci numbers
+
+Each Fibonacci number is the sum of the two before it: 0, 1, 1, 2, 3, 5, 8, 13, ... The simplest version calls itself twice:
+```
+: fib dup 1 > if dup 1 - fib swap 2 - fib + then ;
+```
+RPN(: fib dup 1 > if dup 1 - fib swap 2 - fib + then ;)
+
+It works out the same numbers again and again, so it gets slow quickly. For 13 and up it hits the 10,000-step limit and shows Err: too long. A faster version keeps the last two numbers on the stack and counts down:
+```
+: fibloop dup 0 > if 1 - rot rot swap over + rot fibloop then ;
+: fastfib 0 1 rot fibloop drop drop ;
+```
+RPN(: fibloop dup 0 > if 1 - rot rot swap over + rot fibloop then ;)
+RPN(: fastfib 0 1 rot fibloop drop drop ;)
+
+{|
+| 10 fib || RPN(10 fib)
+|-
+| 13 fib || RPN(13 fib)
+|-
+| 10 fastfib || RPN(10 fastfib)
+|-
+| 50 fastfib || RPN(50 fastfib)
+|}
+
 ### Use RPN in a Table
 
 You can create a simple spreadsheet by embedding RPN expressions in a table. A RPN expression in the table must start with '='.  
