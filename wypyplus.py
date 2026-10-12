@@ -16,7 +16,7 @@ word  = lambda m: (m.group(1) + '%s%s') % ((m.group(2), h + w + m.group(2) + '&a
 url   = lambda m: ('<iframe width="560" height="315" src="https://www.youtube.com/embed/%s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; '
                    'encrypted-media;gyroscope; picture-in-picture" allowfullscreen></iframe>' % m.group(2)[len(yt):]) if m.group(2).startswith(yt) else (m.group(1) + h + m.group(2) + '>' + m.group(2) + '</a>')
 RULES = (('\r', ''),  (r'^INCLUDE\((\w+)\)$', lambda m: '\n'.join(flatten(load_rec(m.group(1))))),  (r'\{\{NAME\}\}', lambda m: y),  *X,              # line ends, INCLUDE, {{NAME}}, add-ons
-         (r'(^|[^=/\-_A-Za-z0-9?])@([A-Z]\w+)',                          h + w + r'\g<2>&amp;q=f>@\g<2></a>'),                                        # @Tag
+         (r'(^|[^=/\-_A-Za-z0-9?])@([A-Z]\w+)',                          r'\g<1>' + h + w + r'\g<2>&amp;q=f>@\g<2></a>'),                                        # @Tag
          (r'(?:\{\|(.*)\n)(.*[^\}]+)(\|\})',                              table),                                                                     # {| tables |}
          (r'(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]*){1,})',  word),                                                                      # WikiWords
          (r'^\{\{$', '\n<ul>'),  (r'^\*(.*)$', r'<li>\g<1></li>'),  ('^}}$', '</ul>'),  ('^---$', '<hr>'),                                            # {{ lists }}, ---

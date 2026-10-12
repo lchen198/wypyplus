@@ -173,7 +173,7 @@ def fs(s, y):
         (r'\{\{NAME\}\}', y),                                # {{NAME}} -> current page name.
         *X,                                                  # Rules from forth.py, if present.
         (r'(^|[^=/\-_A-Za-z0-9?])@([A-Z]\w+)',               # @Tag -> find every page mentioning it.
-         h + w + r'\g<2>&amp;q=f>@\g<2></a>'),
+         r'\g<1>' + h + w + r'\g<2>&amp;q=f>@\g<2></a>'),   # (keeps the character before the @)
         (r'(?:\{\|(.*)\n)(.*[^\}]+)(\|\})', table),          # {| ... |} tables.
         (r'(^|[^=/\-_A-Za-z0-9?])([A-Z][a-z]+([A-Z0-9][a-z0-9]*){1,})',  # WikiWords.
          word),
