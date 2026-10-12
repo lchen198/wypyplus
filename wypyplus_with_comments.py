@@ -14,7 +14,8 @@ How a request flows:
      list of regular-expression rules in order.
 
 Pages are plain text files in the w/ folder. There are no other files,
-no database and no JavaScript.
+no database and no JavaScript. The optional forth.py adds a small
+calculator language; see X below.
 """
 import html
 import os
@@ -63,6 +64,11 @@ x = os.path.exists
 h = '<a href='        # Start of a link.
 w = 'wypyplus.py?p='  # Link to a page. The app ignores the URL path, so these
                       # links work whichever file name is running.
+
+# Optional add-on: if forth.py sits next to this file, load its formatting
+# rules (the RPN(...) calculator and spreadsheet tables) and run them right
+# after {{NAME}}. Without forth.py, X is empty and nothing changes.
+X = __import__('forth').R if x('forth.py') else ()
 
 # Markdown link or image: [text](url) / ![alt](url).
 # Security: the URL must start with http:// or https://, or have no scheme at
@@ -174,6 +180,7 @@ def fs(s, y):
         (r'^INCLUDE\((\w+)\)$',                              # INCLUDE(Page) on its own line.
          lambda m: '\n'.join(flatten(load_rec(m.group(1))))),
         (r'\{\{NAME\}\}', y),                                # {{NAME}} -> current page name.
+        *X,                                                  # Rules from forth.py, if present.
         (r'(^|[^=/\-_A-Za-z0-9?])@([A-Z]\w+)',               # @Tag -> find every page mentioning it.
          lambda m: h + w + m.group(2) + '&amp;q=f>@' + m.group(2) + '</a>'),
         (r'(?:\{\|(.*)\n)(.*[^\}]+)(\|\})', table),          # {| ... |} tables.
